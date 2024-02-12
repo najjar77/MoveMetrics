@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import 'primevue/resources/themes/aura-light-green/theme.css'
+import 'primevue/resources/themes/aura-dark-blue/theme.css'
 
 </script>
 
@@ -10,6 +10,6 @@ import 'primevue/resources/themes/aura-light-green/theme.css'
 </template>
 
 <style scoped>
-@import url("primevue/resources/themes/aura-light-green/theme.css");
+@import url("primevue/resources/themes/aura-dark-blue/theme.css");
 
 </style>

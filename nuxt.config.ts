@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         cssLayerOrder: 'reset,primevue',
         usePrimeVue: true
     },
-    css: ['primevue/resources/themes/aura-light-green/theme.css',
+    css: ['primevue/resources/themes/aura-dark-blue/theme.css',
         'primevue/resources/primevue.min.css',
         'primeicons/primeicons.css'
     ]
