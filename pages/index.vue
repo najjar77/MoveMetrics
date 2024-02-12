@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
 import Checkbox from 'primevue/checkbox';
-
-
+import {DataEntryForm} from "#components";
+import Card from "primevue/card";
 
 </script>
 
 <template>
-hello
-  <div>
-    <Button label="Klick mich" />
-    <Button label="Check" icon="pi pi-check" />
-  </div>
+  hello
+  <Button label="Check" icon="pi pi-check"/>
+  <DataEntryForm/>
+
+
 
 </template>
 
