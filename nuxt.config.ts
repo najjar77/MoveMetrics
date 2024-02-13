@@ -1,24 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    devtools: {enabled: true},
-    modules: [
-        'nuxt-primevue'
-    ],
-    primevue: {
-        components: {
-            prefix: 'Prime',
-            include: '*'
-        },
-        options: {
-            ripple: true
-        }
-        ,
-        cssLayerOrder: 'reset,primevue',
-        usePrimeVue: true
-    },
-    css: ['primevue/resources/themes/aura-dark-blue/theme.css',
-        'primevue/resources/primevue.min.css',
-        'primeicons/primeicons.css'
-    ]
+  devtools: { enabled: true },
+  modules: [
+    'nuxt-primevue'
+  ],
+  primevue: {
+    components:{
+      include:['Button','DataTable']
+    }
+  },
+  css:[
+    'primevue/resources/themes/aura-light-blue/theme.css',
+      'primeicons/primeicons.css'
+  ]
 
-});
+})

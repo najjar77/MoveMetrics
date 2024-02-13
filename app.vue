@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import 'primevue/resources/themes/aura-dark-blue/theme.css'
 
 </script>
 
 <template>
   <NuxtLayout>
-    <NuxtPage />
+    <NuxtPage/>
   </NuxtLayout>
 </template>
 
 <style scoped>
-@import url("primevue/resources/themes/aura-dark-blue/theme.css");
-
+@import url("primevue/resources/themes/aura-light-blue/theme.css");
 </style>

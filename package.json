@@ -13,15 +13,10 @@
     "nuxt": "^3.10.1",
     "primeicons": "^6.0.1",
     "primevue": "^3.48.1",
-    "vue": "^3.4.18",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.56.0",
-    "eslint-plugin-vue": "^9.21.1",
-    "nuxt-primevue": "^0.3.0",
-    "unplugin-vue-components": "^0.26.0"
+    "nuxt-primevue": "^0.3.0"
   }
 }
