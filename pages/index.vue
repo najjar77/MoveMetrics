@@ -4,7 +4,8 @@ import {NavigationBar} from "#components";
 
 <template>
 
-
+  <DataEntryForm/>
+  
   <!-- NavigationsBar
     <div class="navigationBar-container">
       <NavigationBar/>
