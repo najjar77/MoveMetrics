@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ],
   primevue: {
     components:{
-      include:['Button','DataTable']
+      include:['Button','DataTable','Sidebar', 'Menu']
     }
   },
   css:[

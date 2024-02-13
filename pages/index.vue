@@ -1,15 +1,21 @@
 <script setup lang="ts">
-
+import {NavigationBar} from "#components";
 </script>
 
 <template>
 
-  <Button/>
-  <Button icon="pi pi-check" aria-label="Submit" />
-  <Button label="Submit" icon="pi pi-check" />
-  <Button label="Submit" icon="pi pi-check" iconPos="right" />
+
+  <!-- NavigationsBar
+    <div class="navigationBar-container">
+      <NavigationBar/>
+    </div>
+  -->
 </template>
 
 <style scoped>
-
+.navigationBar-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 </style>
