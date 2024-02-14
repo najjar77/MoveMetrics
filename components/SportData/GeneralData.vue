@@ -4,6 +4,7 @@ import Calendar from "primevue/calendar";
 import InputText from "primevue/inputtext";
 import Dropdown from 'primevue/dropdown';
 import 'primeicons/primeicons.css';
+import MultiSelect from 'primevue/multiselect';
 
 
 
@@ -38,8 +39,8 @@ const activities = [
     </div>
     <div class="field-container">
       <label for="activities" class="label">Activities:</label>
-      <Dropdown id="activities" v-model="selectedActivities" :options="activities" optionLabel="name"
-                placeholder="Select Activities" />
+      <MultiSelect id="activities" v-model="selectedActivities" :options="activities" optionLabel="name"
+                placeholder="Select Activities" display="chip"/>
     </div>
   </div>
 </template>

@@ -8,6 +8,8 @@ import Toolbar from 'primevue/toolbar';
 import CyclingData from "~/components/SportData/CyclingData.vue";
 import Tooltip from 'primevue/tooltip';
 import SupplementsIntake from "~/components/SportData/SupplementsIntake.vue";
+import SaunaData from "~/components/SportData/SaunaData.vue";
+import FeedbackData from "~/components/SportData/FeedbackData.vue";
 
 
 </script>
@@ -22,14 +24,17 @@ import SupplementsIntake from "~/components/SportData/SupplementsIntake.vue";
         </div>
       </template>
       <template #content>
-        <Divider/>
+
         <!-- General Information -->
         <GeneralData/>
         <!-- Cycling Information -->
         <CyclingData/>
         <!-- Supplements Intake Information -->
         <SupplementsIntake/>
-
+        <!-- Sauna Information -->
+        <SaunaData/>
+        <!-- Feedback Information -->
+        <FeedbackData/>
         <Divider/>
 
         <!-- Save / Cancel / Reset Interaction -->

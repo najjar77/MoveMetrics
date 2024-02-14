@@ -3,11 +3,20 @@ import {ref} from 'vue';
 import Checkbox from 'primevue/checkbox';
 import InputNumber from 'primevue/inputnumber';
 import InputSwitch from 'primevue/inputswitch';
+import Calendar from "primevue/calendar";
+import InputText from "primevue/inputtext";
+import MultiSelect from "primevue/multiselect";
 
-const creatin = ref("");
-const time=ref("");
-const inside=ref(true);
-const outside=!inside;
+const bcaa=ref(false);
+const creatin=ref(false);
+const eaa=ref(false);
+const  protein=ref(false);
+
+const bcaaAmount = ref('');
+const creatinAmount = ref('');
+const eaaAmount = ref('');
+const proteinAmount = ref('');
+
 
 </script>
 
@@ -15,29 +24,70 @@ const outside=!inside;
   <Divider align="center" type="solid">
     <b>Supplements Intake</b>
   </Divider>
-
+  <div class="container">
+    <div class="field-container">
+      <label for="bcaa" class="label">BCAA:</label>
+      <div class="input-container">
+        <Checkbox v-model="bcaa" inputId="bcaa" name="bcaa" :binary="true"/>
+        <InputNumber v-model="bcaaAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2" />
+      </div>
+    </div>
+    <div class="field-container">
+      <label for="creatin" class="label">Creatin:</label>
+      <div class="input-container">
+        <Checkbox v-model="creatin" inputId="creatin" name="creatin" :binary="true"/>
+        <InputNumber v-model="creatinAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+      </div>
+    </div>
+    <div class="field-container">
+      <label for="eaa" class="label">EAA:</label>
+      <div class="input-container">
+        <Checkbox v-model="eaa" inputId="eaa" name="eaa" :binary="true"/>
+        <InputNumber v-model="eaaAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+      </div>
+    </div>
+    <div class="field-container">
+      <label for="protein" class="label">Protein:</label>
+      <div class="input-container">
+        <Checkbox v-model="protein" inputId="protein" name="protein" :binary="true"/>
+        <InputNumber v-model="proteinAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+      </div>
+    </div>
+  </div>
 </template>
 
 
+
+
 <style scoped>
+/* Styles for the container wrapping all form elements. */
 .container {
-  display: flex;
-  flex-wrap: wrap; /* Allows items to wrap if not enough space */
-  gap: 20px; /* Adjusts space between elements */
-  justify-content: flex-start; /* Align the items to the left */
-  align-items: flex-start; /* Align items to the start vertically */
+  display: flex; /* Use flexbox layout to arrange child elements. */
+  flex-wrap: wrap; /* Allow child elements to wrap to the next line if there's not enough space. */
+  gap: 20px; /* Set the space between child elements. */
+  justify-content: flex-start; /* Align child elements to the start of the container (left alignment). */
+  align-items: flex-start; /* Vertically align child elements to the start of the container (top alignment). */
 }
 
+/* Styles for each individual field container, which wraps a label and its corresponding input(s). */
 .field-container {
-  display: flex;
-  flex-direction: column; /* Stack label and input vertically */
-  align-items: flex-start; /* Keep items aligned to the start of the container */
+  display: flex; /* Use flexbox layout to arrange child elements. */
+  flex-direction: column; /* Stack child elements vertically. */
+  align-items: flex-start; /* Align child elements to the start of the container (left alignment). */
+  gap: 5px; /* Set the space between stacked elements (between label and input). */
 }
 
+/* Styles for the input container, which wraps a checkbox and an input number side by side. */
+.input-container {
+  display: flex; /* Use flexbox layout to arrange child elements. */
+  flex-direction: row; /* Place child elements side by side horizontally. */
+  align-items: center; /* Vertically align child elements to the center of the container. */
+  gap: 10px; /* Set the space between the checkbox and the input number. */
+}
+
+/* Styles for labels associated with each input. */
 .label {
-  margin-bottom: 5px; /* Space between label and input */
-  text-align: left; /* Ensure label text is aligned to the left */
+  text-align: left; /* Align text within the label to the left. */
 }
 </style>
 
-s
