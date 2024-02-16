@@ -16,7 +16,7 @@ import FeedbackData from "~/components/SportData/FeedbackData.vue";
 
 <template>
   <div class="center-container-parent">
-    <Card style="width: 55rem">
+    <Card style="width: 60rem">
       <template #title>
         <div class="title-container">
           <i class="pi pi-plus" style="margin-right: 0.5rem;"></i>

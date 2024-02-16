@@ -13,15 +13,15 @@ const bio=ref(false);
   </Divider>
   <div class="container">
     <div class="flex align-items-center">
-      <Checkbox v-model="finnish" inputId="finnish" name="finnish" />
+      <Checkbox v-model="finnish" inputId="finnish" name="finnish" :binary="true"/>
       <label for="finnish" class="label-margin"> Finnish Sauna</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="bio" inputId="bio" name="bio" />
+      <Checkbox v-model="bio" inputId="bio" name="bio" :binary="true"/>
       <label for="bio" class="label-margin"> Bio Sauna</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="steam" inputId="steam" name="steam" />
+      <Checkbox v-model="steam" inputId="steam" name="steam" :binary="true"/>
       <label for="steam" class="label-margin"> Steam Sauna</label>
     </div>
   </div>

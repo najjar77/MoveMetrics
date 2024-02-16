@@ -7,15 +7,15 @@ import Calendar from "primevue/calendar";
 import InputText from "primevue/inputtext";
 import MultiSelect from "primevue/multiselect";
 
-const bcaa=ref(false);
-const creatin=ref(false);
-const eaa=ref(false);
-const  protein=ref(false);
+const bcaa = ref(true);
+const creatin = ref(true);
+const eaa = ref(true);
+const protein = ref(true);
 
 const bcaaAmount = ref('');
-const creatinAmount = ref('');
-const eaaAmount = ref('');
-const proteinAmount = ref('');
+const creatinAmount = ref(7);
+const eaaAmount = ref(9);
+const proteinAmount = ref(100);
 
 
 </script>
@@ -29,7 +29,7 @@ const proteinAmount = ref('');
       <label for="bcaa" class="label">BCAA:</label>
       <div class="input-container">
         <Checkbox v-model="bcaa" inputId="bcaa" name="bcaa" :binary="true"/>
-        <InputNumber v-model="bcaaAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2" />
+        <InputNumber v-model="bcaaAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
       </div>
     </div>
     <div class="field-container">
@@ -55,8 +55,6 @@ const proteinAmount = ref('');
     </div>
   </div>
 </template>
-
-
 
 
 <style scoped>
