@@ -1,13 +1,9 @@
-<script setup lang="ts">
-import {NavigationBar} from "#components";
-import Dialog from 'primevue/dialog';
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
 
   <TopToolbar/>
-  <DataEntryForm/>
+
   <!--
   <DataEntryForm/>
     NavigationsBar

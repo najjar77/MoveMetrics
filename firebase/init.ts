@@ -1,5 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import {initializeApp} from "firebase/app";
+import {addDoc, collection, getFirestore} from "@firebase/firestore";
+import type {WorkoutData} from "~/models/formData/workoutData";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,4 +17,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+
+async function addWorkoutDataToFirestore(workoutData: WorkoutData) {
+    try {
+        const docRef = await addDoc(collection(db, "WorkoutSet"), workoutData);
+        console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
