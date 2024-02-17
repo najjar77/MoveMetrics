@@ -1,4 +1,4 @@
-export interface SupplementsIntakeInformation {
+export interface SuppIntakeInfo {
     bcaa: boolean;
     creatin: boolean;
     eaa: boolean;

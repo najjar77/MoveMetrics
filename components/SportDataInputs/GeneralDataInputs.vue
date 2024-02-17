@@ -39,11 +39,16 @@ console.log(props.generalInformation)
     </div>
     <div class="field-container">
       <label for="date" class="label">Date:</label>
-      <Calendar id="date" :modelValue="generalInformation.date" placeholder="Date" :showIcon="true"/>
+      <Calendar id="date" :modelValue="generalInformation.date"
+                @update:modelValue="$emit('update:generalInformation', {...generalInformation, date: $event})"
+                dateFormat="dd/mm/yy" placeholder="Date"
+                :showIcon="true"/>
     </div>
     <div class="field-container">
       <label for="activities" class="label">Activities:</label>
-      <MultiSelect id="activities" :modelValue="generalInformation.activities" :options="activityOptions"
+      <MultiSelect id="activities" :modelValue="generalInformation.activities"
+                   @update:modelValue="$emit('update:generalInformation', {...generalInformation, activities: $event})"
+                   :options="activityOptions"
                    optionLabel="name"
                    placeholder="Select Activities" display="chip"/>
     </div>

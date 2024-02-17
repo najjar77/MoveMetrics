@@ -2,6 +2,11 @@
 import {ref} from 'vue';
 import InputNumber from 'primevue/inputnumber';
 import InputSwitch from 'primevue/inputswitch';
+import type {CyclingInformation} from "~/models/formData/cyclingInformation";
+
+const props = defineProps<{
+  cyclingInformation: CyclingInformation
+}>();
 
 const distanceInKm = ref(0);
 const time = ref("");
@@ -17,15 +22,21 @@ const outside = !inside;
   <div class="container">
     <div class="field-container">
       <label for="distance" class="label">Distance in KM:</label>
-      <InputNumber v-model="distanceInKm" inputId="distance" locale="de-DE" :minFractionDigits="2"/>
+      <InputNumber :modelValue="cyclingInformation.distanceInKm"
+                   @update:modelValue="$emit('update:cyclingInformation', {...cyclingInformation, distanceInKm: $event})"
+                   inputId="distance" locale="de-DE"
+                   :minFractionDigits="2"/>
     </div>
     <div class="field-container">
       <label for="time" class="label">Time:</label>
-      <Calendar id="calendar-timeonly" v-model="time" timeOnly/>
+      <Calendar id="calendar-timeonly" :modelValue="cyclingInformation.time"
+                @update:modelValue="$emit('update:cyclingInformation', {...cyclingInformation, time: $event})"
+                timeOnly/>
     </div>
     <div class="field-container">
       <label for="where" class="label">Outside / Inside</label>
-      <InputSwitch v-model="inside"/>
+      <InputSwitch :modelValue="cyclingInformation.inside"
+                   @update:modelValue="$emit('update:cyclingInformation', {...cyclingInformation, inside: $event})"/>
     </div>
 
   </div>

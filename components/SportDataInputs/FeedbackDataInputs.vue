@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import {ref} from 'vue';
 import Slider from 'primevue/slider';
 import Textarea from 'primevue/textarea';
-import 'primeicons/primeicons.css'; // Stellen Sie sicher, dass Sie die PrimeIcons importieren, falls benötigt
+import 'primeicons/primeicons.css';
+import type {FeedbackInformation} from "~/models/formData/feedbackInformation";
 
-const sliderFeedback = ref(50);
-const textFeedback = ref('');
+const prop = defineProps<{
+  feedbackInformation: FeedbackInformation
+}>();
+
 </script>
 
 <template>
@@ -15,14 +17,18 @@ const textFeedback = ref('');
   <div class="container">
     <div class="field-container">
       <label for="sliderFeedback" class="label">
-        How was the Workout? <span class="bold-value"> {{ sliderFeedback }} %</span>
+        How was the Workout? <span class="bold-value"> {{ feedbackInformation.sliderFeedback }} %</span>
       </label>
     </div>
-    <Slider v-model="sliderFeedback" class="w-14rem" id="sliderFeedback"/>
+    <Slider :modelValue="feedbackInformation.sliderFeedback"
+            @update:modelValue="$emit('update:feedbackInformation', {...feedbackInformation, sliderFeedback: $event})"
+            class="w-14rem" id="sliderFeedback"/>
 
     <div class="field-container">
       <label for="textFeedback" class="label">Notes:</label>
-      <Textarea v-model="textFeedback" rows="5" cols="70" id="textFeedback"/>
+      <Textarea :modelValue="feedbackInformation.textFeedback"
+                @update:modelValue="$emit('update:feedbackInformation', {...feedbackInformation, textFeedback: $event})"
+                rows="5" cols="70" id="textFeedback"/>
     </div>
   </div>
 </template>

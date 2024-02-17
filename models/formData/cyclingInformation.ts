@@ -1,6 +1,6 @@
 export interface CyclingInformation {
     distanceInKm: number;
-    time: Date;
+    time: string;
     inside: boolean;
 
 }

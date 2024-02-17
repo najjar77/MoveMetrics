@@ -9,11 +9,40 @@ import SaunaDataInputs from "~/components/SportDataInputs/SaunaDataInputs.vue";
 import FeedbackDataInputs from "~/components/SportDataInputs/FeedbackDataInputs.vue";
 import type {WorkoutData} from "~/models/formData/workoutData";
 
-const formData = reactive<WorkoutData>({generalInformation: {name: (''), date: new Date(), activities: []}});
+//TODO: time should have another Date format!
+const getDefaultWorkoutData = (): WorkoutData => ({
+  generalInformation: {name: (''), date: new Date(), activities: []},
+  cyclingInformation: {distanceInKm: (0), time: "00:00", inside: true},
+  suppIntakeInfo: {
+    bcaa: false,
+    creatin: true,
+    eaa: true,
+    protein: true,
+    bcaaAmount: (0),
+    creatinAmount: (7),
+    eaaAmount: (9),
+    proteinAmount: (100)
+  },
+  saunaInformation: {finnish: false, steam: false, bio: false},
+  feedbackInformation: {sliderFeedback: (50), textFeedback: ('')}
+});
 
+const workoutData = reactive(getDefaultWorkoutData());
+
+
+// Reset function to reset workoutData to its default state
+function resetWorkoutData() {
+  Object.assign(workoutData, getDefaultWorkoutData());
+}
+
+// Test Function for the data Inputs
 function MyTestFunction(event: string) {
   console.log('i got event', event);
-  console.log(formData.generalInformation?.name)
+  //console.log(workoutData.generalInformation?.name);
+  //console.log(workoutData.cyclingInformation?.distanceInKm);
+  console.log(workoutData.suppIntakeInfo?.protein);
+  console.log(workoutData.suppIntakeInfo?.proteinAmount);
+
 }
 
 </script>
@@ -30,16 +59,20 @@ function MyTestFunction(event: string) {
       <template #content>
 
         <!-- General Information -->
-        <GeneralDataInputs v-model:generalInformation="formData.generalInformation"
+        <GeneralDataInputs v-model:generalInformation="workoutData.generalInformation"
                            @update:generalInformation="MyTestFunction"/>
         <!-- Cycling Information -->
-        <CyclingDataInputs/>
+        <CyclingDataInputs v-model:cyclingInformation="workoutData.cyclingInformation"
+                           @update:cyclingInformation="MyTestFunction"/>
         <!-- Supplements Intake Information -->
-        <SupplementsIntakeInputs/>
+        <SupplementsIntakeInputs v-model:suppIntakeInfo="workoutData.suppIntakeInfo"
+                                 @update:suppIntakeInfo="MyTestFunction"/>
         <!-- Sauna Information -->
-        <SaunaDataInputs/>
+        <SaunaDataInputs v-model:saunaInformation="workoutData.saunaInformation"
+                         @update:saunaInformation="MyTestFunction"/>
         <!-- Feedback Information -->
-        <FeedbackDataInputs/>
+        <FeedbackDataInputs v-model:feedbackInformation="workoutData.feedbackInformation"
+                            @update:feedbackInformation="MyTestFunction"/>
         <Divider/>
 
         <!-- Save / Cancel / Reset Interaction -->
@@ -49,7 +82,8 @@ function MyTestFunction(event: string) {
 
           </template>
           <template #center>
-            <Button lable="Reset" v-tooltip.top="'Reset Form'" severity="secondary" icon="pi pi-refresh"/>
+            <Button lable="Reset" @click="resetWorkoutData" v-tooltip.top="'Reset Form'" severity="secondary"
+                    icon="pi pi-refresh"/>
           </template>
           <template #end>
             <Button label="Save" icon="pi pi-plus"/>

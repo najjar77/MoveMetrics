@@ -1,21 +1,12 @@
 <script setup lang="ts">
-import {ref} from 'vue';
 import Checkbox from 'primevue/checkbox';
 import InputNumber from 'primevue/inputnumber';
-import InputSwitch from 'primevue/inputswitch';
-import Calendar from "primevue/calendar";
-import InputText from "primevue/inputtext";
-import MultiSelect from "primevue/multiselect";
+import type {SuppIntakeInfo} from "~/models/formData/suppIntakeInfo";
 
-const bcaa = ref(true);
-const creatin = ref(true);
-const eaa = ref(true);
-const protein = ref(true);
 
-const bcaaAmount = ref(0);
-const creatinAmount = ref(7);
-const eaaAmount = ref(9);
-const proteinAmount = ref(100);
+const prop = defineProps<{
+  suppIntakeInfo: SuppIntakeInfo
+}>();
 
 
 </script>
@@ -28,29 +19,45 @@ const proteinAmount = ref(100);
     <div class="field-container">
       <label for="bcaa" class="label">BCAA:</label>
       <div class="input-container">
-        <Checkbox v-model="bcaa" inputId="bcaa" name="bcaa" :binary="true"/>
-        <InputNumber v-model="bcaaAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox :modelValue="suppIntakeInfo.bcaa"
+                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, bcaa: $event})"
+                  inputId="bcaa" name="bcaa" :binary="true"/>
+        <InputNumber :modelValue="suppIntakeInfo.bcaaAmount"
+                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, bcaaAmount: $event})"
+                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
       </div>
     </div>
     <div class="field-container">
       <label for="creatin" class="label">Creatin:</label>
       <div class="input-container">
-        <Checkbox v-model="creatin" inputId="creatin" name="creatin" :binary="true"/>
-        <InputNumber v-model="creatinAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox :modelValue="suppIntakeInfo.creatin"
+                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, creatin: $event})"
+                  inputId="creatin" name="creatin" :binary="true"/>
+        <InputNumber :modelValue="suppIntakeInfo.creatinAmount"
+                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, creatinAmount: $event})"
+                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
       </div>
     </div>
     <div class="field-container">
       <label for="eaa" class="label">EAA:</label>
       <div class="input-container">
-        <Checkbox v-model="eaa" inputId="eaa" name="eaa" :binary="true"/>
-        <InputNumber v-model="eaaAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox :modelValue="suppIntakeInfo.eaa"
+                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, eaa: $event})"
+                  inputId="eaa" name="eaa" :binary="true"/>
+        <InputNumber :modelValue="suppIntakeInfo.eaaAmount"
+                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, eaaAmount: $event})"
+                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
       </div>
     </div>
     <div class="field-container">
       <label for="protein" class="label">Protein:</label>
       <div class="input-container">
-        <Checkbox v-model="protein" inputId="protein" name="protein" :binary="true"/>
-        <InputNumber v-model="proteinAmount" placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox :modelValue="suppIntakeInfo.protein"
+                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, protein: $event})"
+                  inputId="protein" name="protein" :binary="true"/>
+        <InputNumber :modelValue="suppIntakeInfo.proteinAmount"
+                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, proteinAmount: $event})"
+                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
       </div>
     </div>
   </div>

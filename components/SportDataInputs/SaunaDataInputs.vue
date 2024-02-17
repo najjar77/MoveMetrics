@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import Checkbox from 'primevue/checkbox';
+import type {SaunaInformation} from "~/models/formData/saunaInformation";
 
-const finnish=ref(false);
-const steam=ref(false);
-const bio=ref(false);
+const prop = defineProps<{
+  saunaInformation: SaunaInformation
+}>();
+
+const finnish = ref(false);
+const steam = ref(false);
+const bio = ref(false);
 </script>
 
 <template>
@@ -13,15 +18,21 @@ const bio=ref(false);
   </Divider>
   <div class="container">
     <div class="flex align-items-center">
-      <Checkbox v-model="finnish" inputId="finnish" name="finnish" :binary="true"/>
+      <Checkbox :modelValue="saunaInformation.finnish"
+                @update:modelValue="$emit('update:saunaInformation', {...saunaInformation, finnish: $event})"
+                inputId="finnish" name="finnish" :binary="true"/>
       <label for="finnish" class="label-margin"> Finnish Sauna</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="bio" inputId="bio" name="bio" :binary="true"/>
+      <Checkbox :modelValue="saunaInformation.bio"
+                @update:modelValue="$emit('update:saunaInformation', {...saunaInformation, bio: $event})"
+                inputId="bio" name="bio" :binary="true"/>
       <label for="bio" class="label-margin"> Bio Sauna</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="steam" inputId="steam" name="steam" :binary="true"/>
+      <Checkbox :modelValue="saunaInformation.steam"
+                @update:modelValue="$emit('update:saunaInformation', {...saunaInformation, steam: $event})"
+                inputId="steam" name="steam" :binary="true"/>
       <label for="steam" class="label-margin"> Steam Sauna</label>
     </div>
   </div>
