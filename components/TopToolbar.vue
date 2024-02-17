@@ -8,14 +8,14 @@ import Avatar from "primevue/avatar";
 <template>
   <Toolbar style="border-radius: 4rem;">
     <template #start>
-      <img src="../assets/MMLogo.png" alt="Icon" class="toolbar-icon">
+      <img src="../assets/MMLogo2.png" alt="Icon" class="toolbar-icon">
       <label class="toolbar-label">MoveMetrics</label>
-      <Button icon="pi pi-bars" severity="secondary" class="toolbar-button"/>
+      <Button size="large" icon="pi pi-bars" severity="secondary" class="toolbar-button"/>
     </template>
     <template #center>
     </template>
     <template #end>
-      <Button icon="pi pi-wrench" severity="secondary" label="Settings" class="toolbar-button"/>
+      <Button size="large" icon="pi pi-wrench" severity="secondary"  class="toolbar-button"/>
       <Avatar image="https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp" class="toolbar-avatar"/>
     </template>
   </Toolbar>

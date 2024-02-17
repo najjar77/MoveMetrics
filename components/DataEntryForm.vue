@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-
 import Card from 'primevue/card';
 import Divider from "primevue/divider";
-import GeneralData from "~/components/SportData/GeneralData.vue";
+import GeneralDataInputs from "~/components/SportDataInputs/GeneralDataInputs.vue";
 import Toolbar from 'primevue/toolbar';
-import CyclingData from "~/components/SportData/CyclingData.vue";
-import Tooltip from 'primevue/tooltip';
-import SupplementsIntake from "~/components/SportData/SupplementsIntake.vue";
-import SaunaData from "~/components/SportData/SaunaData.vue";
-import FeedbackData from "~/components/SportData/FeedbackData.vue";
+import CyclingDataInputs from "~/components/SportDataInputs/CyclingDataInputs.vue";
+import SupplementsIntakeInputs from "~/components/SportDataInputs/SupplementsIntakeInputs.vue";
+import SaunaDataInputs from "~/components/SportDataInputs/SaunaDataInputs.vue";
+import FeedbackDataInputs from "~/components/SportDataInputs/FeedbackDataInputs.vue";
+import type {WorkoutData} from "~/models/formData/workoutData";
 
+const formData = reactive<WorkoutData>({generalInformation: {name: (''), date: new Date(), activities: []}});
+
+function MyTestFunction(event: string) {
+  console.log('i got event', event);
+  console.log(formData.generalInformation?.name)
+}
 
 </script>
 
@@ -26,15 +30,16 @@ import FeedbackData from "~/components/SportData/FeedbackData.vue";
       <template #content>
 
         <!-- General Information -->
-        <GeneralData/>
+        <GeneralDataInputs v-model:generalInformation="formData.generalInformation"
+                           @update:generalInformation="MyTestFunction"/>
         <!-- Cycling Information -->
-        <CyclingData/>
+        <CyclingDataInputs/>
         <!-- Supplements Intake Information -->
-        <SupplementsIntake/>
+        <SupplementsIntakeInputs/>
         <!-- Sauna Information -->
-        <SaunaData/>
+        <SaunaDataInputs/>
         <!-- Feedback Information -->
-        <FeedbackData/>
+        <FeedbackDataInputs/>
         <Divider/>
 
         <!-- Save / Cancel / Reset Interaction -->

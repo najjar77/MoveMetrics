@@ -3,10 +3,10 @@ import {ref} from 'vue';
 import InputNumber from 'primevue/inputnumber';
 import InputSwitch from 'primevue/inputswitch';
 
-const distanceInKm = ref("");
-const time=ref("");
-const inside=ref(true);
-const outside=!inside;
+const distanceInKm = ref(0);
+const time = ref("");
+const inside = ref(true);
+const outside = !inside;
 
 </script>
 
@@ -21,11 +21,11 @@ const outside=!inside;
     </div>
     <div class="field-container">
       <label for="time" class="label">Time:</label>
-      <Calendar id="calendar-timeonly" v-model="time" timeOnly />
+      <Calendar id="calendar-timeonly" v-model="time" timeOnly/>
     </div>
     <div class="field-container">
-      <label for="where" class="label" >Outside / Inside</label>
-      <InputSwitch v-model="inside" />
+      <label for="where" class="label">Outside / Inside</label>
+      <InputSwitch v-model="inside"/>
     </div>
 
   </div>
