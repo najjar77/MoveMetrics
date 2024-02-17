@@ -1,9 +1,10 @@
 <script setup lang="ts">
-
+import Card from "primevue/card";
+import Button from "primevue/button";
 </script>
 
 <template>
-Dashboard
+<NavigationCards/>
 </template>
 
 <style scoped>

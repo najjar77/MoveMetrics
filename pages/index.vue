@@ -6,8 +6,11 @@ import Dialog from 'primevue/dialog';
 
 <template>
 
+  <TopToolbar/>
+
+  <!--
   <DataEntryForm/>
-  <!-- NavigationsBar
+NavigationsBar
     <div class="navigationBar-container">
       <NavigationBar/>
     </div>

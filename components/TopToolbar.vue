@@ -16,7 +16,7 @@ import Avatar from "primevue/avatar";
     </template>
     <template #end>
       <Button icon="pi pi-wrench" severity="secondary" label="Settings" class="toolbar-button"/>
-      <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" class="toolbar-avatar"/>
+      <Avatar image="https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp" class="toolbar-avatar"/>
     </template>
   </Toolbar>
 </template>
