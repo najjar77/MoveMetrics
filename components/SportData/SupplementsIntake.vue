@@ -12,7 +12,7 @@ const creatin = ref(true);
 const eaa = ref(true);
 const protein = ref(true);
 
-const bcaaAmount = ref('');
+const bcaaAmount = ref(0);
 const creatinAmount = ref(7);
 const eaaAmount = ref(9);
 const proteinAmount = ref(100);
