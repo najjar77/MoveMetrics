@@ -11,3 +11,9 @@ export interface WorkoutData {
     cyclingInformation?: CyclingInformation;
     saunaInformation?: SaunaInformation;
 }
+
+export interface TableDisplayWorkout {
+    name: string;
+    date: string; // or Date, depending on how you wish to handle it
+    // Add other fields here as needed for display
+}

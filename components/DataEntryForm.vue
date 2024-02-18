@@ -8,8 +8,9 @@ import SupplementsIntakeInputs from "~/components/SportDataInputs/SupplementsInt
 import SaunaDataInputs from "~/components/SportDataInputs/SaunaDataInputs.vue";
 import FeedbackDataInputs from "~/components/SportDataInputs/FeedbackDataInputs.vue";
 import type {WorkoutData} from "~/models/formData/workoutData";
+import {saveWorkoutData} from "~/firebase/DBController";
 
-//TODO: time should have another Date format!
+
 const getDefaultWorkoutData = (): WorkoutData => ({
   generalInformation: {name: (''), date: new Date(), activities: []},
   cyclingInformation: {distanceInKm: (0), time: "00:00", inside: true},
@@ -37,13 +38,23 @@ function resetWorkoutData() {
 
 // Test Function for the data Inputs
 function MyTestFunction(event: string) {
-  console.log('i got event', event);
+  //console.log('i got event', event);
   //console.log(workoutData.generalInformation?.name);
   //console.log(workoutData.cyclingInformation?.distanceInKm);
-  console.log(workoutData.suppIntakeInfo?.protein);
-  console.log(workoutData.suppIntakeInfo?.proteinAmount);
-
+  //console.log(workoutData.suppIntakeInfo?.protein);
+  //console.log(workoutData.suppIntakeInfo?.proteinAmount);
 }
+
+const submitData = async () => {
+  try {
+    const docId = await saveWorkoutData(workoutData);
+    console.log("Data saved with ID:", docId);
+    // Handle post-save actions here, e.g., showing a success message or resetting the form
+  } catch (error) {
+    console.error("Failed to save data:", error);
+    // Handle errors, e.g., showing an error message
+  }
+};
 
 </script>
 
@@ -86,7 +97,7 @@ function MyTestFunction(event: string) {
                     icon="pi pi-refresh"/>
           </template>
           <template #end>
-            <Button label="Save" icon="pi pi-plus"/>
+            <Button label="Save" @click="submitData" icon="pi pi-plus"/>
           </template>
         </Toolbar>
       </template>

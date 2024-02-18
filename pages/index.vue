@@ -3,6 +3,7 @@
 <template>
 
   <TopToolbar/>
+  <WorkoutDataTable/>
 
   <!--
   <DataEntryForm/>
