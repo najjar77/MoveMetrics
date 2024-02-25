@@ -5,6 +5,7 @@ import type {CyclingInformation} from "~/models/formData/cyclingInformation";
 import type {SaunaInformation} from "~/models/formData/saunaInformation";
 
 export interface WorkoutData {
+    id?: string;
     generalInformation?: GeneralInformation;
     feedbackInformation?: FeedbackInformation;
     suppIntakeInfo?: SuppIntakeInfo;

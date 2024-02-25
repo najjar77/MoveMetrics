@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <TopToolbar/>
   <NuxtLayout>
     <NuxtPage/>
   </NuxtLayout>

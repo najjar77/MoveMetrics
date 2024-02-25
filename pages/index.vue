@@ -1,17 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
 
 <template>
 
-  <TopToolbar/>
-  <WorkoutDataTable/>
+  <NuxtLink to="/tableOverview">
+    <Button> Navigate to TableOverview</Button>
+  </NuxtLink>
+
 
   <!--
-  <DataEntryForm/>
-    NavigationsBar
-    <div class="navigationBar-container">
-      <NavigationBar/>
-    </div>
-  -->
+
+<DataEntryForm/>
+  NavigationsBar
+  <div class="navigationBar-container">
+    <NavigationBar/>
+  </div>
+-->
 </template>
 
 <style scoped>
