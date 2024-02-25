@@ -1,5 +1,5 @@
 // DBController.ts
-import {addDoc, collection, getDocs, Timestamp} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDocs, Timestamp} from "firebase/firestore";
 import {db} from '~/firebase/init';
 import type {WorkoutData} from "~/models/formData/workoutData";
 
@@ -16,6 +16,7 @@ export async function saveWorkoutData(workoutData: any) {
     }
 }
 
+//Fetching the data from database
 export async function fetchWorkoutData(): Promise<WorkoutData[]> {
     const querySnapshot = await getDocs(collection(db, "WorkoutSet"));
     const workouts = querySnapshot.docs.map(doc => {
@@ -45,5 +46,16 @@ export async function fetchAndLogAllData() {
         });
     } catch (error) {
         console.error("Error fetching documents: ", error);
+    }
+}
+
+//Method to delete selected Data Entries
+export async function deleteWorkoutData(documentId: string) {
+    try {
+        await deleteDoc(doc(db, "WorkoutSet", documentId));
+        console.log("Document successfully deleted!");
+    } catch (error) {
+        console.error("Error removing document: ", error);
+        throw new Error("Error deleting workout data");
     }
 }
