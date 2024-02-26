@@ -20,6 +20,7 @@ export async function saveWorkoutData(workoutData: any) {
 export async function fetchWorkoutData(): Promise<WorkoutData[]> {
     const querySnapshot = await getDocs(collection(db, "WorkoutSet"));
     const workouts = querySnapshot.docs.map(doc => {
+        //console.log(doc.id)
         const data = doc.data();
         // Ensure the date is a Date object
         const date = data.generalInformation && data.generalInformation.date
@@ -27,6 +28,7 @@ export async function fetchWorkoutData(): Promise<WorkoutData[]> {
             : new Date();
 
         return {
+            id: doc.id,
             ...data,
             generalInformation: {
                 ...data.generalInformation,
@@ -42,7 +44,7 @@ export async function fetchAndLogAllData() {
     try {
         const querySnapshot = await getDocs(collection(db, "WorkoutSet"));
         querySnapshot.forEach(doc => {
-            console.log(doc.id, " => ", doc.data());
+            //console.log(doc.id, " => ", doc.data());
         });
     } catch (error) {
         console.error("Error fetching documents: ", error);

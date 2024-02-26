@@ -2,44 +2,34 @@
 import {ref} from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {fetchAndLogAllData, fetchWorkoutData} from "~/firebase/DBController";
+import {deleteWorkoutData, fetchAndLogAllData, fetchWorkoutData} from "~/firebase/DBController";
 import {type WorkoutData} from "~/models/formData/workoutData"
 import Toolbar from "primevue/toolbar";
 
+
 const workouts = ref<WorkoutData[]>([]);
-const currentWorkoutSelection = ref<WorkoutData[]>([]);
+const currentWorkoutSelection = ref<WorkoutData | null>(null);
 
 
 // TODO: Format the data to dd/mm/yyyy
 // TODO: Add Remove and modify functionality to DataTable
 onMounted(async () => {
   const data = await fetchWorkoutData();
-  // Add row numbers (nr)
+  //console.log('data => ', data)
   workouts.value = data.map((workout, index) => ({
     ...workout,
     id: workout.id,
-    nr: index + 1 // Assuming you want numbering to start at 1
+    nr: index + 1
+
   }));
   // For Debugging purposes
-  //console.log(data);
+  console.log(data);
 });
 
 onMounted(() => {
   fetchAndLogAllData();
 });
 
-
-// Computed property to get the selected workout
-const selectedWorkout = computed(() => currentWorkoutSelection.value[0]);
-
-// Example usage within a component method
-function logSelectedWorkout(event: string) {
-  if (selectedWorkout.value) {
-    console.log("Selected Workout: ", selectedWorkout.value);
-  } else {
-    console.log("No workout selected");
-  }
-}
 
 const dataEntryFormVisible = ref(false); // Controls the visibility of DataEntryForm
 function toggleDataEntryForm() {
@@ -62,13 +52,13 @@ async function refreshData() {
   }));
 }
 
-//TODO: the awiat delete section musst be edited
-// Funktion zum Löschen des ausgewählten Workouts
 async function deleteSelectedWorkout() {
-  if (selectedWorkout.value) {
+  if (currentWorkoutSelection.value) {
     try {
-      //await deleteWorkoutData(selectedWorkout.value.id);
+      //@ts-ignore
+      await deleteWorkoutData(currentWorkoutSelection.value.id);
       await refreshData();
+      currentWorkoutSelection.value = null;
       console.log("Workout successfully deleted");
     } catch (error) {
       console.error("Failed to delete workout:", error);
@@ -77,6 +67,7 @@ async function deleteSelectedWorkout() {
     console.log("No workout selected for deletion");
   }
 }
+
 
 </script>
 
