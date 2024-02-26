@@ -67,6 +67,8 @@ watch(() => props.visible, (newVal) => {
 function closeDialog() {
   isVisible.value = false;
   emit('update:visible', false);
+  resetWorkoutData();
+
 }
 
 
@@ -85,13 +87,13 @@ function MyTestFunction(event: string) {
   //console.log(workoutData.suppIntakeInfo?.proteinAmount);
 }
 
+
 const submitData = async () => {
   try {
     const docId = await saveWorkoutData(workoutData);
     console.log("Data saved with ID:", docId);
     showSuccess();
     closeDialog();
-    resetWorkoutData();
     emit('data-saved');
     // Handle post-save actions here, e.g., showing a success message or resetting the form
   } catch (error) {

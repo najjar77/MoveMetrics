@@ -85,7 +85,7 @@ async function deleteSelectedWorkout() {
           <Button class="toolbar-button" label="Edit" icon="pi pi-file-edit" severity="secondary"/>
           <Button class="toolbar-button" label="Delete" icon="pi pi-trash" severity="danger"
                   @click="deleteSelectedWorkout"/>
-          <Button class="toolbar-button" label="Refresh Table" icon="pi pi-undo" severity="info"/>
+          <Button class="toolbar-button" label="Refresh Table" icon="pi pi-undo" severity="info" @click="refreshData"/>
         </template>
       </Toolbar>
     </div>
