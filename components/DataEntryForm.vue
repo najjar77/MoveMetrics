@@ -22,15 +22,6 @@ const props = defineProps({
 const emit = defineEmits(['update:visible', 'data-saved']);
 const isVisible = ref(props.visible);
 
-watch(() => props.visible, (newVal) => {
-  isVisible.value = newVal;
-});
-
-// Modify the closeDialog function to update the local reactive state
-function closeDialog() {
-  isVisible.value = false;
-  emit('update:visible', false);
-}
 
 const newFromText = 'Here you can add a new workout entry to your dataset.';
 const EditFormText = "Here you can Edit your Workout entry.";
@@ -54,12 +45,6 @@ const getDefaultWorkoutData = (): WorkoutData => ({
 
 const workoutData = reactive(getDefaultWorkoutData());
 
-
-// Reset function to reset workoutData to its default state
-function resetWorkoutData() {
-  Object.assign(workoutData, getDefaultWorkoutData());
-}
-
 const toast = useToast();
 
 const showSuccess = () => {
@@ -73,6 +58,23 @@ const showError = () => {
     life: 5000
   });
 };
+
+watch(() => props.visible, (newVal) => {
+  isVisible.value = newVal;
+});
+
+// Modify the closeDialog function to update the local reactive state
+function closeDialog() {
+  isVisible.value = false;
+  emit('update:visible', false);
+}
+
+
+// Reset function to reset workoutData to its default state
+function resetWorkoutData() {
+  Object.assign(workoutData, getDefaultWorkoutData());
+}
+
 
 // Test Function for the data Inputs
 function MyTestFunction(event: string) {
@@ -89,6 +91,7 @@ const submitData = async () => {
     console.log("Data saved with ID:", docId);
     showSuccess();
     closeDialog();
+    resetWorkoutData();
     emit('data-saved');
     // Handle post-save actions here, e.g., showing a success message or resetting the form
   } catch (error) {
@@ -97,6 +100,7 @@ const submitData = async () => {
     // Handle errors, e.g., showing an error message
   }
 };
+
 
 </script>
 
