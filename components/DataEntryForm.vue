@@ -23,7 +23,7 @@ const props = defineProps({
     }
 );
 
-const emit = defineEmits(['update:visible', 'dataSaved']);
+const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccessSave', 'showSuccessUpdate']);
 const isEditMode = ref(props.isEditMode);
 
 
@@ -52,7 +52,13 @@ const workoutData = reactive(props.prefilledWorkoutData ?? getDefaultWorkoutData
 const toast = useToast();
 
 const showSuccess = () => {
-  toast.add({severity: 'success', summary: 'Success Message', detail: 'Workout added successfully', life: 5000});
+  if (!isEditMode) {
+    toast.add({severity: 'success', summary: 'Success Message', detail: 'Workout added successfully', life: 5000});
+    emit('showSuccessSave');
+  } else {
+    toast.add({severity: 'success', summary: 'Update Message', detail: 'Workout updated successfully', life: 5000});
+    emit('showSuccessUpdate');
+  }
 };
 const showError = () => {
   toast.add({
@@ -91,6 +97,9 @@ const submitUpdateData = async () => {
   try {
     await updateWorkoutData(workoutData.id, workoutData);
     console.log("Data updated successfully with ID: ", workoutData.id);
+    showSuccess();
+    closeDialog();
+    emit('dataSaved', workoutData);
 
   } catch (error) {
     console.error("Failed to update entry set: ", error)
@@ -104,7 +113,6 @@ const submitData = async () => {
     showSuccess();
     closeDialog();
     emit('dataSaved', workoutData);
-    // Handle post-save actions here, e.g., showing a success message or resetting the form
   } catch (error) {
     console.error("Failed to save data: ", error);
     showError();
@@ -147,9 +155,10 @@ const submitData = async () => {
       <template #footer>
         <Button lable="Reset" @click="resetWorkoutData" v-tooltip.top="'Reset Form'" severity="secondary"
                 icon="pi pi-refresh"/>
-        <Button label="Cancel" @click="closeDialog" severity="secondary" icon="pi pi-times"/>
+        <Button label="Cancel" @click="closeDialog" severity="secondary" v-tooltip.top="'Close Dialog'"
+                icon="pi pi-times"/>
         <Button v-if="!isEditMode" label="Save" @click="submitData" icon="pi pi-plus"/>
-        <Button v-else label="Update" icon="pi pi-check"/>
+        <Button v-else label="Update" @click="submitUpdateData" icon="pi pi-check"/>
       </template>
 
       <!-- Save / Cancel / Reset Interaction -->
