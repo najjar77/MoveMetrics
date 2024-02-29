@@ -1,12 +1,29 @@
 <script setup lang="ts">
-import Dialog from 'primevue/dialog';
+import {fetchWorkoutData} from "~/firebase/DBController";
+import type {WorkoutData} from "~/models/formData/workoutData";
+import {ref} from "vue";
+
+const workouts = ref<WorkoutData[]>([]);
+const currentWorkoutSelection = ref<WorkoutData | null>(null);
+
+
+//refreshes the DataTAble when new data is added or removed
+async function refreshData() {
+  const data = await fetchWorkoutData();
+  workouts.value = data.map((workout, index) => ({
+    ...workout,
+    id: workout.id,
+    nr: index + 1
+  }));
+}
+
+
 </script>
 
 <template>
-  <Dialog>
 
-  </Dialog>
   <div class="page-container">
+    <DataEntryForm/>
     <WorkoutDataTable/>
   </div>
 </template>

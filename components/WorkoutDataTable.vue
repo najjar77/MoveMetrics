@@ -10,16 +10,34 @@ import Toolbar from "primevue/toolbar";
 const workouts = ref<WorkoutData[]>([]);
 const currentWorkoutSelection = ref<WorkoutData | null>(null);
 
+const props = defineProps({
+  workouts: Object,
+  currentWorkoutSelection: Object
+});
+
+function formatDate(date: Date): string {
+  const day = ('0' + date.getDate()).slice(-2);
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 
 // TODO: Format the data to dd/mm/yyyy
 // TODO: Add Remove and modify functionality to DataTable
-onMounted(async () => {
+onBeforeMount(async () => {
   const data = await fetchWorkoutData();
   //console.log('data => ', data)
+  //@ts-ignore
   workouts.value = data.map((workout, index) => ({
     ...workout,
     id: workout.id,
-    nr: index + 1
+    nr: index + 1,
+    generalInformation: {
+      ...workout.generalInformation,
+      //@ts-ignore
+      date: formatDate(workout.generalInformation.date)
+    }
 
   }));
   // For Debugging purposes
@@ -30,25 +48,26 @@ onMounted(() => {
   fetchAndLogAllData();
 });
 
-
+const isEditMode = ref(false);
 const dataEntryFormVisible = ref(false); // Controls the visibility of DataEntryForm
 function toggleDataEntryForm() {
+  isEditMode.value = false;
   dataEntryFormVisible.value = !dataEntryFormVisible.value;
-}
-
-// Changes the dataEntryForm Dialog visibility variable
-function onDataEntryFormClosed(visible: boolean) {
-  console.log('Dialog closed with visibility:', visible);
-  dataEntryFormVisible.value = visible;
 }
 
 //refreshes the DataTAble when new data is added or removed
 async function refreshData() {
   const data = await fetchWorkoutData();
+  //@ts-ignore
   workouts.value = data.map((workout, index) => ({
     ...workout,
     id: workout.id,
-    nr: index + 1
+    nr: index + 1,
+    generalInformation: {
+      ...workout.generalInformation,
+      //@ts-ignore
+      date: formatDate(workout.generalInformation.date)
+    }
   }));
 }
 
@@ -68,13 +87,36 @@ async function deleteSelectedWorkout() {
   }
 }
 
+async function openFormInEditMode() {
+  if (currentWorkoutSelection.value) {
+    try {
+      dataEntryFormVisible.value = true;
+      isEditMode.value = true;
+
+      //await updateWorkoutData(currentWorkoutSelection.value.id);
+      //await refreshData();
+      // currentWorkoutSelection.value = null;
+      console.log("Workout successfully edited");
+    } catch (error) {
+      console.error("Failed to edit workout:", error);
+    }
+  } else {
+    console.log("No workout selected for deletion")
+  }
+}
+
+watch(currentWorkoutSelection, (newValue) => {
+  console.log(JSON.stringify(newValue))
+})
 
 </script>
 
 <template>
 
-  <DataEntryForm v-model:visible="dataEntryFormVisible" @update:visible="onDataEntryFormClosed"
-                 @data-saved="refreshData"/>
+  <DataEntryForm v-if="!isEditMode" v-model:visible="dataEntryFormVisible" :isEditMode="false"
+                 @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection"/>
+  <DataEntryForm v-else v-model:visible="dataEntryFormVisible" :isEditMode="true"
+                 @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection"/>
 
 
   <div class="table-toolbar-container">
@@ -82,7 +124,8 @@ async function deleteSelectedWorkout() {
       <Toolbar>
         <template #start>
           <Button class="toolbar-button" label="New" icon="pi pi-plus" @click="toggleDataEntryForm"/>
-          <Button class="toolbar-button" label="Edit" icon="pi pi-file-edit" severity="secondary"/>
+          <Button class="toolbar-button" label="Edit" icon="pi pi-file-edit" severity="secondary"
+                  @click="openFormInEditMode"/>
           <Button class="toolbar-button" label="Delete" icon="pi pi-trash" severity="danger"
                   @click="deleteSelectedWorkout"/>
           <Button class="toolbar-button" label="Refresh Table" icon="pi pi-undo" severity="info" @click="refreshData"/>

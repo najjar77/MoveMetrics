@@ -3,7 +3,7 @@
 
 <template>
 
-  <NuxtLink to="/tableOverview">
+  <NuxtLink to="/workOutOverview">
     <Button> Navigate to TableOverview</Button>
   </NuxtLink>
 

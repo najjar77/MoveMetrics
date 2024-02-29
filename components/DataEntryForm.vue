@@ -6,25 +6,29 @@ import SupplementsIntakeInputs from "~/components/SportDataInputs/SupplementsInt
 import SaunaDataInputs from "~/components/SportDataInputs/SaunaDataInputs.vue";
 import FeedbackDataInputs from "~/components/SportDataInputs/FeedbackDataInputs.vue";
 import type {WorkoutData} from "~/models/formData/workoutData";
-import {saveWorkoutData} from "~/firebase/DBController";
+import {saveWorkoutData, updateWorkoutData} from "~/firebase/DBController";
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import {useToast} from 'primevue/usetoast';
 
 const props = defineProps({
-  visible: Boolean,
-  isNewForm: Boolean,
-  isEditForm: Boolean,
-  newFormText: String,
-  EditFormText: String
-});
+      visible: Boolean,
+      isEditMode: {
+        type: Boolean,
+        default: true
+      },
+      newFormText: String,
+      editFormText: String,
+      prefilledWorkoutData: Object
+    }
+);
 
-const emit = defineEmits(['update:visible', 'data-saved']);
-const isVisible = ref(props.visible);
+const emit = defineEmits(['update:visible', 'dataSaved']);
+const isEditMode = ref(props.isEditMode);
 
 
 const newFromText = 'Here you can add a new workout entry to your dataset.';
-const EditFormText = "Here you can Edit your Workout entry.";
+const editFormText = "Here you can Edit your Workout entry.";
 
 const getDefaultWorkoutData = (): WorkoutData => ({
   generalInformation: {name: (''), date: new Date(), activities: []},
@@ -43,7 +47,7 @@ const getDefaultWorkoutData = (): WorkoutData => ({
   feedbackInformation: {sliderFeedback: (50), textFeedback: ('')}
 });
 
-const workoutData = reactive(getDefaultWorkoutData());
+const workoutData = reactive(props.prefilledWorkoutData ?? getDefaultWorkoutData());
 
 const toast = useToast();
 
@@ -59,13 +63,9 @@ const showError = () => {
   });
 };
 
-watch(() => props.visible, (newVal) => {
-  isVisible.value = newVal;
-});
 
 // Modify the closeDialog function to update the local reactive state
 function closeDialog() {
-  isVisible.value = false;
   emit('update:visible', false);
   resetWorkoutData();
 
@@ -87,17 +87,26 @@ function MyTestFunction(event: string) {
   //console.log(workoutData.suppIntakeInfo?.proteinAmount);
 }
 
+const submitUpdateData = async () => {
+  try {
+    await updateWorkoutData(workoutData.id, workoutData);
+    console.log("Data updated successfully with ID: ", workoutData.id);
+
+  } catch (error) {
+    console.error("Failed to update entry set: ", error)
+  }
+}
 
 const submitData = async () => {
   try {
     const docId = await saveWorkoutData(workoutData);
-    console.log("Data saved with ID:", docId);
+    console.log("Data saved with ID: ", docId);
     showSuccess();
     closeDialog();
-    emit('data-saved');
+    emit('dataSaved', workoutData);
     // Handle post-save actions here, e.g., showing a success message or resetting the form
   } catch (error) {
-    console.error("Failed to save data:", error);
+    console.error("Failed to save data: ", error);
     showError();
     // Handle errors, e.g., showing an error message
   }
@@ -109,11 +118,12 @@ const submitData = async () => {
 <template>
   <Toast/>
   <div class="center-container-parent">
-    <Dialog v-model:visible="isVisible" modal style="width: 60rem"
-            header="Add New Workout Entry">
+    <Dialog :visible="visible" @update:visible="$emit('update:visible', $event)" modal style="width: 60rem"
+            @hide="resetWorkoutData"
+            :header="!isEditMode ?  'Add New Workout Entry':'Edit Workout Entry'">
       <div class="intro-text">
         <i class="pi pi-plus" style="margin-right: 0.5rem;"/>
-        Here you can add a new workout entry to your dataset
+        {{ !isEditMode ? newFromText : editFormText }}
       </div>
 
 
@@ -137,8 +147,9 @@ const submitData = async () => {
       <template #footer>
         <Button lable="Reset" @click="resetWorkoutData" v-tooltip.top="'Reset Form'" severity="secondary"
                 icon="pi pi-refresh"/>
-        <Button label="Cancel / Close" @click="closeDialog" severity="secondary" icon="pi pi-times"/>
-        <Button label="Save" @click="submitData" icon="pi pi-plus"/>
+        <Button label="Cancel" @click="closeDialog" severity="secondary" icon="pi pi-times"/>
+        <Button v-if="!isEditMode" label="Save" @click="submitData" icon="pi pi-plus"/>
+        <Button v-else label="Update" icon="pi pi-check"/>
       </template>
 
       <!-- Save / Cancel / Reset Interaction -->
