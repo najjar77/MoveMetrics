@@ -1,5 +1,5 @@
 // DBController.ts
-import {addDoc, collection, deleteDoc, doc, getDocs, Timestamp} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDocs, Timestamp, updateDoc} from "firebase/firestore";
 import {db} from '~/firebase/init';
 import type {WorkoutData} from "~/models/formData/workoutData";
 
@@ -59,5 +59,25 @@ export async function deleteWorkoutData(documentId: string) {
     } catch (error) {
         console.error("Error removing document: ", error);
         throw new Error("Error deleting workout data");
+    }
+}
+
+
+// Method to update a WorkoutData document by documentId without including the id in the document
+export async function updateWorkoutData(documentId: string, workoutData: WorkoutData) {
+    try {
+        // Destructure the workoutData to exclude the id property if it exists
+        const {id, ...dataToUpdate} = workoutData;
+
+        // Get a reference to the specific document
+        const docRef = doc(db, "WorkoutSet", documentId);
+
+        // Update the document with the dataToUpdate, which excludes the id
+        await updateDoc(docRef, dataToUpdate);
+
+        console.log("Document successfully updated with ID:", documentId);
+    } catch (error) {
+        console.error("Error updating document:", error);
+        throw new Error("Error updating workout data");
     }
 }
