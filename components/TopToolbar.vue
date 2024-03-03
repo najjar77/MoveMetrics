@@ -2,7 +2,6 @@
 import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
-
 </script>
 
 <template>
@@ -10,12 +9,12 @@ import Avatar from "primevue/avatar";
     <template #start>
       <img src="../assets/MMLogo2.png" alt="Icon" class="toolbar-icon">
       <label class="toolbar-label">MoveMetrics</label>
-      <Button size="large" icon="pi pi-bars" severity="secondary" class="toolbar-button"/>
+      <Button size="medium" icon="pi pi-bars" severity="secondary" class="toolbar-button"/>
     </template>
     <template #center>
     </template>
     <template #end>
-      <Button size="large" icon="pi pi-wrench" severity="secondary"  class="toolbar-button"/>
+      <Button size="medium" icon="pi pi-wrench" severity="secondary" class="toolbar-button"/>
       <Avatar image="https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp" class="toolbar-avatar"/>
     </template>
   </Toolbar>
@@ -25,8 +24,8 @@ import Avatar from "primevue/avatar";
 /* Styles for the icon in the toolbar, adds space to its right */
 .toolbar-icon {
   margin-right: 10px;
-  width: 50px; /* Sets the width of the Logo */
-  height: 50px; /* Sets the height of the Logo */
+  width: 30px; /* Sets the width of the Logo */
+  height: 30px; /* Sets the height of the Logo */
 }
 
 /* Styles for the label in the toolbar, adds bold font weight and space to its right */
@@ -42,8 +41,8 @@ import Avatar from "primevue/avatar";
 
 /* For the last element in the #end slot, no right margin is needed. Styles for the avatar, sets its size */
 .toolbar-avatar {
-  width: 50px; /* Sets the width of the avatar */
-  height: 50px; /* Sets the height of the avatar */
+  width: 30px; /* Sets the width of the avatar */
+  height: 30px; /* Sets the height of the avatar */
 }
 
 </style>
