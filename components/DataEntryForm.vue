@@ -9,7 +9,6 @@ import type {WorkoutData} from "~/models/formData/workoutData";
 import {saveWorkoutData, updateWorkoutData} from "~/firebase/DBController";
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
-import {useToast} from 'primevue/usetoast';
 
 const props = defineProps({
       visible: Boolean,
@@ -17,13 +16,11 @@ const props = defineProps({
         type: Boolean,
         default: true
       },
-      newFormText: String,
-      editFormText: String,
       prefilledWorkoutData: Object
     }
 );
 
-const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccessSave', 'showSuccessUpdate']);
+const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccess', 'showError']);
 const isEditMode = ref(props.isEditMode);
 
 
@@ -49,24 +46,12 @@ const getDefaultWorkoutData = (): WorkoutData => ({
 
 const workoutData = reactive(props.prefilledWorkoutData ?? getDefaultWorkoutData());
 
-const toast = useToast();
 
 const showSuccess = () => {
-  if (!isEditMode) {
-    toast.add({severity: 'success', summary: 'Success Message', detail: 'Workout added successfully', life: 5000});
-    emit('showSuccessSave');
-  } else {
-    toast.add({severity: 'success', summary: 'Update Message', detail: 'Workout updated successfully', life: 5000});
-    emit('showSuccessUpdate');
-  }
+  emit('showSuccess');
 };
 const showError = () => {
-  toast.add({
-    severity: 'error',
-    summary: 'Missing Data',
-    detail: 'Please fill out the mandatory fields',
-    life: 5000
-  });
+  emit('showError')
 };
 
 

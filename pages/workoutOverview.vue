@@ -3,11 +3,13 @@ import {deleteWorkoutData, fetchAndLogAllData, fetchWorkoutData} from "~/firebas
 import type {WorkoutData} from "~/models/formData/workoutData";
 import {ref} from "vue";
 import Toolbar from "primevue/toolbar";
+import {useToast} from "primevue/usetoast";
 
 const workouts = ref<WorkoutData[]>([]);
 const currentWorkoutSelection = ref<WorkoutData | null>(null);
 const isEditMode = ref(false);
 const dataEntryFormVisible = ref(false);
+const toast = useToast();
 
 
 onBeforeMount(async () => {
@@ -75,9 +77,9 @@ async function openFormInEditMode() {
     try {
       dataEntryFormVisible.value = true;
       isEditMode.value = true;
-      await refreshData();
-      currentWorkoutSelection.value = null;
-      console.log("Workout successfully edited");
+      //await refreshData();
+      //currentWorkoutSelection.value = null;
+      //console.log("Workout successfully edited");
     } catch (error) {
       console.error("Failed to edit workout:", error);
     }
@@ -95,15 +97,34 @@ watch(currentWorkoutSelection, (newValue) => {
   console.log(JSON.stringify(newValue))
 })
 
+const showSuccess = () => {
+  if (isEditMode.value === false) {
+    toast.add({severity: 'success', summary: 'Success Message', detail: 'Workout added successfully', life: 5000});
+  } else {
+    toast.add({severity: 'success', summary: 'Update Message', detail: 'Workout updated successfully', life: 5000});
+  }
+};
+const showError = () => {
+  toast.add({
+    severity: 'error',
+    summary: 'Missing Data',
+    detail: 'Please fill out the mandatory fields',
+    life: 5000
+  });
+};
+
+
 </script>
 
 <template>
 
   <div class="page-container">
     <DataEntryForm v-if="!isEditMode" v-model:visible="dataEntryFormVisible" :isEditMode="false"
-                   @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection"/>
+                   @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection" @showSuccess="showSuccess"
+                   @showError="showError"/>
     <DataEntryForm v-else v-model:visible="dataEntryFormVisible" :isEditMode="true"
-                   @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection"/>
+                   @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection" @showSuccess="showSuccess"
+                   @showError="showError"/>
     <div class="table-toolbar-container">
       <div class="toolbar-container">
         <Toolbar>
