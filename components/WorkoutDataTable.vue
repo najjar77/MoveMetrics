@@ -22,7 +22,11 @@ watch(currentWorkoutSelection, (newSelection) => {
   <DataTable v-model:selection="currentWorkoutSelection" dataKey="id" :value="props.workouts" showGridlines
              class="custom-table-Design" resizableColumns columnResizeMode="fit">
     <Column selectionMode="single" headerStyle="width: 3rem"></Column>
-    <Column field="nr" header="Nr" style="width: 10%"></Column>
+    <Column header="Nr" style="width: 5%">
+      <template #body="{index}">
+        {{ index + 1 }}
+      </template>
+    </Column>
     <Column field="generalInformation.date" header="Date" sortable style="width: 30%"/>
     <Column field="generalInformation.name" header="Name" sortable style="width: 30%"/>
     <Column field="suppIntakeInfo.bcaa" header="BCAA" style="width: 5%"/>
