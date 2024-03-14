@@ -19,7 +19,7 @@ watch(currentWorkoutSelection, (newSelection) => {
 </script>
 
 <template>
-  <DataTable v-model:selection="currentWorkoutSelection" dataKey="nr" :value="props.workouts" showGridlines
+  <DataTable v-model:selection="currentWorkoutSelection" dataKey="id" :value="props.workouts" showGridlines
              class="custom-table-Design" resizableColumns columnResizeMode="fit">
     <Column selectionMode="single" headerStyle="width: 3rem"></Column>
     <Column field="nr" header="Nr" style="width: 10%"></Column>

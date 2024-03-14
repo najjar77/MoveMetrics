@@ -19,7 +19,6 @@ onBeforeMount(async () => {
   workouts.value = data.map((workout, index) => ({
     ...workout,
     id: workout.id,
-    nr: index + 1
   }));
   // For Debugging purposes
   console.log(data);
@@ -37,7 +36,6 @@ async function refreshData() {
   workouts.value = data.map((workout, index) => ({
     ...workout,
     id: workout.id,
-    nr: index + 1
   }));
 
 }
