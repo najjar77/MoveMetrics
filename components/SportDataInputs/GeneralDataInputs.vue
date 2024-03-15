@@ -27,41 +27,74 @@ console.log(props.generalInformation)
 </script>
 
 <template>
-  <Divider align="center" type="Solid">
+  <Divider
+    align="center"
+    type="Solid"
+  >
     <b>General Information</b>
   </Divider>
   <div class="container">
+    <div class="row">
+      <!-- New wrapper div for the row -->
+      <div class="field-container">
+        <label
+          for="name"
+          class="label"
+        >Name:</label>
+        <InputText
+          id="name"
+          :model-value="generalInformation.name"
+          placeholder="Name"
+          @update:model-value="$emit('update:generalInformation', {...generalInformation, name: $event})"
+        />
+      </div>
+      <div class="field-container">
+        <label
+          for="date"
+          class="label"
+        >Date:</label>
+        <Calendar
+          id="date"
+          :model-value="generalInformation.date"
+          date-format="dd/mm/yy"
+          placeholder="Date"
+          :show-icon="true"
+          @update:model-value="$emit('update:generalInformation', {...generalInformation, date: $event})"
+        />
+      </div>
+    </div> <!-- Close the row div -->
     <div class="field-container">
-      <label for="name" class="label">Name:</label>
-      <InputText id="name" :modelValue="generalInformation.name"
-                 @update:modelValue="$emit('update:generalInformation', {...generalInformation, name: $event})"
-                 placeholder="Name"/>
-    </div>
-    <div class="field-container">
-      <label for="date" class="label">Date:</label>
-      <Calendar id="date" :modelValue="generalInformation.date"
-                @update:modelValue="$emit('update:generalInformation', {...generalInformation, date: $event})"
-                dateFormat="dd/mm/yy" placeholder="Date"
-                :showIcon="true"/>
-    </div>
-    <div class="field-container">
-      <label for="activities" class="label">Activities:</label>
-      <MultiSelect id="activities" :modelValue="generalInformation.activities"
-                   @update:modelValue="$emit('update:generalInformation', {...generalInformation, activities: $event})"
-                   :options="activityOptions"
-                   optionLabel="name"
-                   placeholder="Select Activities" display="chip"/>
+      <label
+        for="activities"
+        class="label"
+      >Activities:</label>
+      <MultiSelect
+        id="activities"
+        :model-value="generalInformation.activities"
+        :options="activityOptions"
+        option-label="name"
+        placeholder="Select Activities"
+        display="chip"
+        @update:model-value="$emit('update:generalInformation', {...generalInformation, activities: $event})"
+      />
     </div>
   </div>
 </template>
 
+
 <style scoped>
 .container {
   display: flex;
-  flex-wrap: wrap; /* Allows items to wrap if not enough space */
+  flex-direction: column; /* Stack elements vertically */
   gap: 20px; /* Adjusts space between elements */
-  justify-content: flex-start; /* Center the items horizontally */
-  align-items: flex-start; /* Align the items vertically */
+}
+
+.row {
+  display: flex;
+  gap: 20px; /* Adjusts space between the "Name" and "Date" fields */
+  justify-content: flex-start; /* Align the items to the start */
+  align-items: flex-start; /* Align items at the top */
+  flex-wrap: wrap; /* Allows items to wrap if not enough space */
 }
 
 .field-container {
@@ -75,4 +108,5 @@ console.log(props.generalInformation)
   text-align: left; /* Ensure label text is aligned to the left */
 }
 </style>
+
 
