@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {deleteWorkoutData, fetchAndLogAllData, fetchWorkoutData} from "~/firebase/DBController";
-import type {WorkoutData} from "~/models/formData/workoutData";
-import {ref} from "vue";
+import { deleteWorkoutData, fetchAndLogAllData, fetchWorkoutData } from "~/firebase/DBController";
+import type { WorkoutData } from "~/models/formData/workoutData";
+import { ref } from "vue";
 import Toolbar from "primevue/toolbar";
-import {useToast} from "primevue/usetoast";
+import { useToast } from "primevue/usetoast";
 
 const workouts = ref<WorkoutData[]>([]);
 const currentWorkoutSelection = ref<WorkoutData | null>(null);
@@ -84,9 +84,6 @@ async function openFormInEditMode() {
   }
 }
 
-function updateCurrentSelection(selectedWorkout: WorkoutData) {
-  currentWorkoutSelection.value = selectedWorkout;
-}
 
 // for debugging purposes
 watch(currentWorkoutSelection, (newValue) => {
@@ -95,9 +92,9 @@ watch(currentWorkoutSelection, (newValue) => {
 
 const showSuccess = () => {
   if (isEditMode.value === false) {
-    toast.add({severity: 'success', summary: 'Success Message', detail: 'Workout added successfully', life: 5000});
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Workout added successfully', life: 5000 });
   } else {
-    toast.add({severity: 'success', summary: 'Update Message', detail: 'Workout updated successfully', life: 5000});
+    toast.add({ severity: 'success', summary: 'Update Message', detail: 'Workout updated successfully', life: 5000 });
   }
 };
 const showError = () => {
@@ -119,49 +116,52 @@ function buttonVisibilityChecker() {
 
   <div class="page-container">
     <DataEntryForm v-if="!isEditMode" v-model:visible="dataEntryFormVisible" :isEditMode="false"
-                   @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection" @showSuccess="showSuccess"
-                   @showError="showError"/>
-    <DataEntryForm v-else v-model:visible="dataEntryFormVisible" :isEditMode="true"
-                   @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection" @showSuccess="showSuccess"
-                   @showError="showError"/>
+      @dataSaved="refreshData" :prefilledWorkoutData="currentWorkoutSelection" @showSuccess="showSuccess"
+      @showError="showError" />
+    <DataEntryForm v-else v-model:visible="dataEntryFormVisible" :isEditMode="true" @dataSaved="refreshData"
+      :prefilledWorkoutData="currentWorkoutSelection" @showSuccess="showSuccess" @showError="showError" />
     <div class="table-toolbar-container">
       <div class="toolbar-container">
         <Toolbar>
           <template #start>
-            <Button class="toolbar-button" label="New" icon="pi pi-plus" @click="toggleDataEntryForm"/>
+            <Button class="toolbar-button" label="New" icon="pi pi-plus" @click="toggleDataEntryForm" />
             <Button class="toolbar-button" label="Edit" icon="pi pi-file-edit" severity="secondary"
-                    @click="openFormInEditMode" :disabled="!buttonVisibility"/>
+              @click="openFormInEditMode" :disabled="!buttonVisibility" />
             <Button class="toolbar-button" label="Delete" icon="pi pi-trash" severity="danger"
-                    @click="deleteSelectedWorkout" :disabled="!buttonVisibility"/>
+              @click="deleteSelectedWorkout" :disabled="!buttonVisibility" />
             <Button class="toolbar-button" label="Refresh Table" icon="pi pi-undo" severity="info"
-                    @click="refreshData"/>
+              @click="refreshData" />
           </template>
         </Toolbar>
       </div>
-      <WorkoutDataTable :workouts="workouts" @updateSelection="updateCurrentSelection"/>
+      <WorkoutDataTable :workouts="workouts" v-model="currentWorkoutSelection" />
     </div>
   </div>
 </template>
 
 <style scoped>
-
-
 .page-container {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: calc(2vh - var(--top-toolbar-height)); /* Adjust height based on the toolbar height */
-  padding-top: var(--top-toolbar-height); /* If toolbar is fixed at the top */
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  height: calc(2vh - var(--top-toolbar-height));
+  /* Adjust height based on the toolbar height */
+  padding-top: var(--top-toolbar-height);
+  /* If toolbar is fixed at the top */
 }
 
 :root {
-  --top-toolbar-height: 60px; /* Example: Adjust this value to match your TopToolbar's height */
+  --top-toolbar-height: 60px;
+  /* Example: Adjust this value to match your TopToolbar's height */
 }
 
 .table-toolbar-container {
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* Ensures children (toolbar and table) fill the container */
+  align-items: stretch;
+  /* Ensures children (toolbar and table) fill the container */
 }
 
 .custom-table-Design {
@@ -169,11 +169,12 @@ function buttonVisibilityChecker() {
 }
 
 .toolbar-container {
-  margin-bottom: 10px; /* Space between the toolbar and the DataTable */
+  margin-bottom: 10px;
+  /* Space between the toolbar and the DataTable */
 }
 
 .toolbar-button:not(:last-child) {
-  margin-right: 10px; /* Adjust the space as needed */
+  margin-right: 10px;
+  /* Adjust the space as needed */
 }
-
 </style>

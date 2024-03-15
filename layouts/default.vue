@@ -3,10 +3,10 @@
 </script>
 
 <template>
-  <TopToolbar/>
-  <slot/>
+  <div>
+    <TopToolbar />
+    <slot />
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
