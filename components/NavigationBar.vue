@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import {ref} from "vue";
 import Menu from 'primevue/menu';
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const router = useRouter();
 const visible = ref(false);
@@ -27,18 +27,26 @@ const menuOptions = ref([{
 
 <template>
   <div>
-    <Sidebar v-model:visible="visible" header="MoveMetrics" >
+    <Sidebar
+      v-model:visible="visible"
+      header="MoveMetrics"
+    >
       <div class="sidebar-content">
-        <Menu :model="menuOptions"/>
+        <Menu :model="menuOptions" />
         <div class="logout-menu">
-          <Menu :model="[{
-                    label: 'Logout',
-                    icon: 'pi pi-power-off'
-                }]"/>
+          <Menu
+            :model="[{
+              label: 'Logout',
+              icon: 'pi pi-power-off'
+            }]"
+          />
         </div>
       </div>
     </Sidebar>
-    <Button icon="pi pi-bars" @click="visible = true"/>
+    <Button
+      icon="pi pi-bars"
+      @click="visible = true"
+    />
   </div>
 </template>
 

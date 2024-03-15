@@ -6,7 +6,6 @@ import SupplementsIntakeInputs from "~/components/SportDataInputs/SupplementsInt
 import SaunaDataInputs from "~/components/SportDataInputs/SaunaDataInputs.vue";
 import FeedbackDataInputs from "~/components/SportDataInputs/FeedbackDataInputs.vue";
 import type {WorkoutData} from "~/models/formData/workoutData";
-import {saveWorkoutData, updateWorkoutData} from "~/firebase/DBController";
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 
@@ -20,12 +19,11 @@ const props = defineProps({
     }
 );
 
-const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccess', 'showError']);
 const isEditMode = ref(props.isEditMode);
-
-
 const newFromText = 'Here you can add a new workout entry to your dataset.';
 const editFormText = "Here you can Edit your Workout entry.";
+
+const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccess', 'showError', 'submitData', 'submitUpdatedData']);
 
 const getDefaultWorkoutData = (): WorkoutData => ({
   generalInformation: {name: (''), date: new Date(), activities: []},
@@ -54,104 +52,100 @@ const showError = () => {
   emit('showError')
 };
 
-
-// Modify the closeDialog function to update the local reactive state
 function closeDialog() {
   emit('update:visible', false);
   resetWorkoutData();
-
 }
-
 
 // Reset function to reset workoutData to its default state
 function resetWorkoutData() {
   Object.assign(workoutData, getDefaultWorkoutData());
 }
 
-
-// Test Function for the data Inputs
-function MyTestFunction(event: string) {
-  //console.log('i got event', event);
-  //console.log(workoutData.generalInformation?.name);
-  //console.log(workoutData.cyclingInformation?.distanceInKm);
-  //console.log(workoutData.suppIntakeInfo?.protein);
-  //console.log(workoutData.suppIntakeInfo?.proteinAmount);
+async function submitUpdatedData() {
+  emit('submitUpdatedData', workoutData.id, workoutData)
 }
 
-const submitUpdateData = async () => {
-  try {
-    await updateWorkoutData(workoutData.id, workoutData);
-    console.log("Data updated successfully with ID: ", workoutData.id);
-    showSuccess();
-    closeDialog();
-    emit('dataSaved', workoutData);
-
-  } catch (error) {
-    console.error("Failed to update entry set: ", error)
-  }
+async function submitData() {
+  emit('submitData', workoutData);
 }
-
-const submitData = async () => {
-  try {
-    const docId = await saveWorkoutData(workoutData);
-    console.log("Data saved with ID: ", docId);
-    showSuccess();
-    closeDialog();
-    emit('dataSaved', workoutData);
-  } catch (error) {
-    console.error("Failed to save data: ", error);
-    showError();
-    // Handle errors, e.g., showing an error message
-  }
-};
-
 
 </script>
 
 <template>
-  <Toast/>
+  <Toast />
   <div class="center-container-parent">
-    <Dialog :visible="visible" @update:visible="$emit('update:visible', $event)" modal style="width: 60rem"
-            @hide="resetWorkoutData"
-            :header="!isEditMode ?  'Add New Workout Entry':'Edit Workout Entry'">
+    <Dialog
+      :visible="visible"
+      modal
+      style="width: 60rem"
+      :header="!isEditMode ? 'Add New Workout Entry':'Edit Workout Entry'"
+      @update:visible="$emit('update:visible', $event)"
+      @hide="resetWorkoutData"
+    >
       <div class="intro-text">
-        <i class="pi pi-plus" style="margin-right: 0.5rem;"/>
+        <i
+          class="pi pi-plus"
+          style="margin-right: 0.5rem;"
+        />
         {{ !isEditMode ? newFromText : editFormText }}
       </div>
 
 
       <!-- General Information -->
-      <GeneralDataInputs v-model:generalInformation="workoutData.generalInformation"
-                         @update:generalInformation="MyTestFunction"/>
+      <GeneralDataInputs
+        v-model:generalInformation="workoutData.generalInformation"
+      />
       <!-- Cycling Information -->
-      <CyclingDataInputs v-model:cyclingInformation="workoutData.cyclingInformation"
-                         @update:cyclingInformation="MyTestFunction"/>
+      <CyclingDataInputs
+        v-model:cyclingInformation="workoutData.cyclingInformation"
+      />
       <!-- Supplements Intake Information -->
-      <SupplementsIntakeInputs v-model:suppIntakeInfo="workoutData.suppIntakeInfo"
-                               @update:suppIntakeInfo="MyTestFunction"/>
+      <SupplementsIntakeInputs
+        v-model:suppIntakeInfo="workoutData.suppIntakeInfo"
+      />
       <!-- Sauna Information -->
-      <SaunaDataInputs v-model:saunaInformation="workoutData.saunaInformation"
-                       @update:saunaInformation="MyTestFunction"/>
+      <SaunaDataInputs
+        v-model:saunaInformation="workoutData.saunaInformation"
+      />
       <!-- Feedback Information -->
-      <FeedbackDataInputs v-model:feedbackInformation="workoutData.feedbackInformation"
-                          @update:feedbackInformation="MyTestFunction"/>
-      <Divider/>
+      <FeedbackDataInputs
+        v-model:feedbackInformation="workoutData.feedbackInformation"
+      />
+      <Divider />
 
       <template #footer>
-        <Button lable="Reset" @click="resetWorkoutData" v-tooltip.top="'Reset Form'" severity="secondary"
-                icon="pi pi-refresh"/>
-        <Button label="Cancel" @click="closeDialog" severity="secondary" v-tooltip.top="'Close Dialog'"
-                icon="pi pi-times"/>
-        <Button v-if="!isEditMode" label="Save" @click="submitData" icon="pi pi-plus"/>
-        <Button v-else label="Update" @click="submitUpdateData" icon="pi pi-check"/>
+        <Button
+          v-tooltip.top="'Reset Form'"
+          lable="Reset"
+          severity="secondary"
+          icon="pi pi-refresh"
+          @click="resetWorkoutData"
+        />
+        <Button
+          v-tooltip.top="'Close Dialog'"
+          label="Cancel"
+          severity="secondary"
+          icon="pi pi-times"
+          @click="closeDialog"
+        />
+        <Button
+          v-if="!isEditMode"
+          label="Save"
+          icon="pi pi-plus"
+          @click="submitData"
+        />
+        <Button
+          v-else
+          label="Update"
+          icon="pi pi-check"
+          @click="submitUpdatedData"
+        />
       </template>
 
       <!-- Save / Cancel / Reset Interaction -->
-
     </Dialog>
   </div>
-
-
 </template>
 
 
