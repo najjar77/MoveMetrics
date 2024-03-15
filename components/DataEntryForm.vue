@@ -8,6 +8,7 @@ import FeedbackDataInputs from "~/components/SportDataInputs/FeedbackDataInputs.
 import type {WorkoutData} from "~/models/formData/workoutData";
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
+import GymDataInput from "~/components/SportDataInputs/GymDataInput.vue";
 
 const props = defineProps({
       visible: Boolean,
@@ -96,6 +97,7 @@ async function submitData() {
       <GeneralDataInputs
         v-model:generalInformation="workoutData.generalInformation"
       />
+      <GymDataInput />
       <!-- Cycling Information -->
       <CyclingDataInputs
         v-model:cyclingInformation="workoutData.cyclingInformation"
