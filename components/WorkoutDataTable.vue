@@ -16,6 +16,10 @@ watch(currentWorkoutSelection, (newSelection) => {
   emits('updateSelection', newSelection);
 });
 
+const resetSelection = () => {
+  currentWorkoutSelection.value = null;
+};
+
 </script>
 
 <template>
@@ -38,6 +42,7 @@ watch(currentWorkoutSelection, (newSelection) => {
     <Column field="suppIntakeInfo.protein" header="Protein" style="width: 5%"/>
     <Column field="suppIntakeInfo.proteinAmount" header="gr" style="width: 2%"/>
   </DataTable>
+  <Button label="reset selection" @click="resetSelection"/>
 </template>
 
 <style scoped>

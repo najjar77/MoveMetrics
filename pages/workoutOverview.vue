@@ -10,7 +10,7 @@ const currentWorkoutSelection = ref<WorkoutData | null>(null);
 const isEditMode = ref(false);
 const dataEntryFormVisible = ref(false);
 const toast = useToast();
-
+const buttonVisibility = computed(() => currentWorkoutSelection.value !== null);
 
 onBeforeMount(async () => {
   const data = await fetchWorkoutData();
@@ -37,6 +37,7 @@ async function refreshData() {
     ...workout,
     id: workout.id,
   }));
+  currentWorkoutSelection.value = null;
 
 }
 
@@ -47,7 +48,6 @@ async function deleteSelectedWorkout() {
       //@ts-ignore
       await deleteWorkoutData(currentWorkoutSelection.value.id);
       await refreshData();
-      currentWorkoutSelection.value = null;
       console.log("Workout successfully deleted");
     } catch (error) {
       console.error("Failed to delete workout:", error);
@@ -70,14 +70,12 @@ function toggleDataEntryForm() {
   dataEntryFormVisible.value = !dataEntryFormVisible.value;
 }
 
+//TODO: needs to be edited
 async function openFormInEditMode() {
   if (currentWorkoutSelection.value) {
     try {
       dataEntryFormVisible.value = true;
       isEditMode.value = true;
-      //await refreshData();
-      //currentWorkoutSelection.value = null;
-      //console.log("Workout successfully edited");
     } catch (error) {
       console.error("Failed to edit workout:", error);
     }
@@ -111,6 +109,9 @@ const showError = () => {
   });
 };
 
+function buttonVisibilityChecker() {
+
+}
 
 </script>
 
@@ -129,9 +130,9 @@ const showError = () => {
           <template #start>
             <Button class="toolbar-button" label="New" icon="pi pi-plus" @click="toggleDataEntryForm"/>
             <Button class="toolbar-button" label="Edit" icon="pi pi-file-edit" severity="secondary"
-                    @click="openFormInEditMode"/>
+                    @click="openFormInEditMode" :disabled="!buttonVisibility"/>
             <Button class="toolbar-button" label="Delete" icon="pi pi-trash" severity="danger"
-                    @click="deleteSelectedWorkout"/>
+                    @click="deleteSelectedWorkout" :disabled="!buttonVisibility"/>
             <Button class="toolbar-button" label="Refresh Table" icon="pi pi-undo" severity="info"
                     @click="refreshData"/>
           </template>

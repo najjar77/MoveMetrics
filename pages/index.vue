@@ -6,16 +6,7 @@
   <NuxtLink to="/workOutOverview">
     <Button> Navigate to TableOverview</Button>
   </NuxtLink>
-
-
-  <!--
-
-<DataEntryForm/>
-  NavigationsBar
-  <div class="navigationBar-container">
-    <NavigationBar/>
-  </div>
--->
+  
 </template>
 
 <style scoped>
