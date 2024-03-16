@@ -40,7 +40,8 @@ const getDefaultWorkoutData = (): WorkoutData => ({
     proteinAmount: (100)
   },
   saunaInformation: {finnish: false, steam: false, bio: false},
-  feedbackInformation: {sliderFeedback: (50), textFeedback: ('')}
+  feedbackInformation: {sliderFeedback: (50), textFeedback: ('')},
+  gymInformation: {back: false, biceps: false, chest: false, legs: false, triceps: false}
 });
 
 const workoutData = reactive(props.prefilledWorkoutData ?? getDefaultWorkoutData());
@@ -97,7 +98,9 @@ async function submitData() {
       <GeneralDataInputs
         v-model:generalInformation="workoutData.generalInformation"
       />
-      <GymDataInput />
+      <GymDataInput
+        v-model:gymInformation="workoutData.gymInformation"
+      />
       <!-- Cycling Information -->
       <CyclingDataInputs
         v-model:cyclingInformation="workoutData.cyclingInformation"

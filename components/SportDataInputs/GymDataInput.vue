@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import {ref} from 'vue';
 import Checkbox from "primevue/checkbox";
+import type {GymInformation} from "~/models/formData/gymInformation";
 
+const prop = defineProps<{
+  gymInformation: GymInformation
+}>()
 const back = ref(false);
 const biceps = ref(false);
 const chest = ref(false);
@@ -19,9 +24,11 @@ const triceps = ref(false);
   <div class="container">
     <div class="flex align-items-center">
       <Checkbox
+        :model-value="gymInformation.back"
         input-id="back"
         name="back"
         :binary="true"
+        @update:model-value="$emit('update:gymInformation',{...gymInformation,back:$event})"
       />
       <label
         for="back"
@@ -30,9 +37,11 @@ const triceps = ref(false);
     </div>
     <div class="flex align-items-center">
       <Checkbox
+        :model-value="gymInformation.biceps"
         input-id="biceps"
         name="biceps"
         :binary="true"
+        @update:model-value="$emit('update:gymInformation',{...gymInformation,biceps:$event})"
       />
       <label
         for="biceps"
@@ -41,9 +50,11 @@ const triceps = ref(false);
     </div>
     <div class="flex align-items-center">
       <Checkbox
+        :model-value="gymInformation.chest"
         input-id="chest"
         name="chest"
         :binary="true"
+        @update:model-value="$emit('update:gymInformation',{...gymInformation,chest:$event})"
       />
       <label
         for="chest"
@@ -52,9 +63,11 @@ const triceps = ref(false);
     </div>
     <div class="flex align-items-center">
       <Checkbox
+        :model-value="gymInformation.legs"
         input-id="legs"
         name="legs"
         :binary="true"
+        @update:model-value="$emit('update:gymInformation',{...gymInformation,legs:$event})"
       />
       <label
         for="legs"
@@ -63,9 +76,11 @@ const triceps = ref(false);
     </div>
     <div class="flex align-items-center">
       <Checkbox
+        :model-value="gymInformation.triceps"
         input-id="triceps"
         name="triceps"
         :binary="true"
+        @update:model-value="$emit('update:gymInformation',{...gymInformation,triceps:$event})"
       />
       <label
         for="triceps"

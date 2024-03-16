@@ -13,27 +13,51 @@ const bio = ref(false);
 </script>
 
 <template>
-  <Divider align="center" type="solid">
+  <Divider
+    align="center"
+    type="solid"
+  >
     <b>Sauna</b>
   </Divider>
   <div class="container">
     <div class="flex align-items-center">
-      <Checkbox :modelValue="saunaInformation.finnish"
-                @update:modelValue="$emit('update:saunaInformation', {...saunaInformation, finnish: $event})"
-                inputId="finnish" name="finnish" :binary="true"/>
-      <label for="finnish" class="label-margin"> Finnish Sauna</label>
+      <Checkbox
+        :model-value="saunaInformation.finnish"
+        input-id="finnish"
+        name="finnish"
+        :binary="true"
+        @update:model-value="$emit('update:saunaInformation', {...saunaInformation, finnish: $event})"
+      />
+      <label
+        for="finnish"
+        class="label-margin"
+      > Finnish Sauna</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox :modelValue="saunaInformation.bio"
-                @update:modelValue="$emit('update:saunaInformation', {...saunaInformation, bio: $event})"
-                inputId="bio" name="bio" :binary="true"/>
-      <label for="bio" class="label-margin"> Bio Sauna</label>
+      <Checkbox
+        :model-value="saunaInformation.bio"
+        input-id="bio"
+        name="bio"
+        :binary="true"
+        @update:model-value="$emit('update:saunaInformation', {...saunaInformation, bio: $event})"
+      />
+      <label
+        for="bio"
+        class="label-margin"
+      > Bio Sauna</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox :modelValue="saunaInformation.steam"
-                @update:modelValue="$emit('update:saunaInformation', {...saunaInformation, steam: $event})"
-                inputId="steam" name="steam" :binary="true"/>
-      <label for="steam" class="label-margin"> Steam Sauna</label>
+      <Checkbox
+        :model-value="saunaInformation.steam"
+        input-id="steam"
+        name="steam"
+        :binary="true"
+        @update:model-value="$emit('update:saunaInformation', {...saunaInformation, steam: $event})"
+      />
+      <label
+        for="steam"
+        class="label-margin"
+      > Steam Sauna</label>
     </div>
   </div>
 </template>
