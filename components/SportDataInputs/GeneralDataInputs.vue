@@ -14,6 +14,8 @@ const name = ref('');
 const date = ref(null);
 const activities = ref([]); // To hold selected activities
 
+const emits = defineEmits(['update:generalInformation']);
+
 // Define the options for the dropdown
 const activityOptions = [
   {name: 'Cycling', value: 'Cycling', icon: 'pi pi-bicycle'},
@@ -23,7 +25,13 @@ const activityOptions = [
   {name: 'Bouldering', value: 'Bouldering', icon: 'pi pi-mountain'},
 ];
 
+function handleActivitiesUpdate(updatedActivities: Object[]) {
+  // Log the changes
+  console.log('Activities updated:', updatedActivities);
 
+  // Emit the event with the updated information
+  emits('update:generalInformation', {...props.generalInformation, activities: updatedActivities});
+}
 </script>
 
 <template>
@@ -74,7 +82,7 @@ const activityOptions = [
         option-label="name"
         placeholder="Select Activities"
         display="chip"
-        @update:model-value="$emit('update:generalInformation', {...generalInformation, activities: $event})"
+        @update:model-value="handleActivitiesUpdate($event)"
       />
     </div>
   </div>

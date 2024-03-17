@@ -1,6 +1,10 @@
 export interface GeneralInformation {
     name: string;
     date: Date;
-    activities: string[];
+    activities: {
+        name: string
+        value: string
+        icon: string
+    }[];
 }
 

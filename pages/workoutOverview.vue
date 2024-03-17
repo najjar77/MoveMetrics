@@ -112,10 +112,6 @@ const showError = () => {
   });
 };
 
-function buttonVisibilityChecker() {
-
-}
-
 const submitData = async (workoutData: WorkoutData) => {
   try {
     const docId = await saveWorkoutData(workoutData);

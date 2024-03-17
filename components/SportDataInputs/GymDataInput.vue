@@ -4,13 +4,14 @@ import Checkbox from "primevue/checkbox";
 import type {GymInformation} from "~/models/formData/gymInformation";
 
 const prop = defineProps<{
-  gymInformation: GymInformation
+  gymInformation: GymInformation,
 }>()
 const back = ref(false);
 const biceps = ref(false);
 const chest = ref(false);
 const legs = ref(false);
 const triceps = ref(false);
+
 
 </script>
 

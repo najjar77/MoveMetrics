@@ -29,7 +29,7 @@ const editFormText = "Here you can Edit your Workout entry.";
 
 const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccess', 'showError', 'submitData', 'submitUpdatedData']);
 
-const getDefaultWorkoutData = (): WorkoutData => ({
+const defaultWorkoutData = {
   generalInformation: {name: (''), date: new Date(), activities: []},
   cyclingInformation: {distanceInKm: (0), time: "00:00", inside: true},
   suppIntakeInfo: {
@@ -48,11 +48,47 @@ const getDefaultWorkoutData = (): WorkoutData => ({
   runningInformation: {distanceInKm: (0), time: "00:00"},
   swimmingInformation: {distanceInM: (0), time: "00:00"},
   boulderingInformation: {inside: false, time: "00:00"}
-});
+};
 
-const workoutData = reactive(props.prefilledWorkoutData ?? getDefaultWorkoutData());
+const workoutData = reactive<WorkoutData>(props.prefilledWorkoutData ?? defaultWorkoutData);
+const visibilityOfGym = ref(workoutDataIncludesSport('Gym'));
+const visibilityOfCycling = ref(workoutDataIncludesSport('Cycling'));
+const visibilityOfSwimming = ref(workoutDataIncludesSport('Swimming'));
+const visibilityOfRunning = ref(workoutDataIncludesSport('Running'));
+const visibilityOfBouldering = ref(workoutDataIncludesSport('Bouldering'));
 
-const showGymSection = computed(() => workoutData.generalInformation.activities.includes('Gym'));
+watch(workoutData, () => {
+  //console.log('newWorkoutData: ', workoutData)
+  //console.log("genaeralllle: ", workoutData.generalInformation)
+  const selectedActivities = workoutData.generalInformation?.activities;
+
+  console.log("selected Activities :", selectedActivities)
+  selectedActivities?.forEach(activity => {
+    //console.log('activity value is: ', activity.value)
+    if (activity.value === 'Gym') {
+      visibilityOfGym.value = true;
+    }
+    if (activity.value === 'Cycling') {
+      visibilityOfCycling.value = true;
+    }
+    if (activity.value === 'Swimming') {
+      visibilityOfSwimming.value = true;
+    }
+    if (activity.value === 'Running') {
+      visibilityOfRunning.value = true;
+    }
+    if (activity.value === 'Bouldering') {
+      visibilityOfBouldering.value = true;
+    }
+
+  })
+})
+
+function workoutDataIncludesSport(sportName: string): boolean {
+  return workoutData.generalInformation?.activities?.some((activity: {
+    value: string
+  }) => activity.value === sportName) ?? false;
+}
 
 const showSuccess = () => {
   emit('showSuccess');
@@ -68,7 +104,15 @@ function closeDialog() {
 
 // Reset function to reset workoutData to its default state
 function resetWorkoutData() {
-  Object.assign(workoutData, getDefaultWorkoutData());
+  workoutData.generalInformation = defaultWorkoutData.generalInformation;
+  workoutData.cyclingInformation = defaultWorkoutData.cyclingInformation;
+  workoutData.suppIntakeInfo = defaultWorkoutData.suppIntakeInfo;
+  workoutData.saunaInformation = defaultWorkoutData.saunaInformation;
+  workoutData.feedbackInformation = defaultWorkoutData.feedbackInformation;
+  workoutData.runningInformation = defaultWorkoutData.runningInformation;
+  workoutData.gymInformation = defaultWorkoutData.gymInformation;
+  workoutData.swimmingInformation = defaultWorkoutData.swimmingInformation;
+  workoutData.boulderingInformation = defaultWorkoutData.boulderingInformation;
 }
 
 async function submitUpdatedData() {
@@ -105,17 +149,34 @@ const time = ref("");
 
 
       <!-- General Information -->
-      <GeneralDataInputs v-model:generalInformation="workoutData.generalInformation" />
+      <GeneralDataInputs
+        v-model:generalInformation="workoutData.generalInformation"
+      />
       <!-- Gym Information -->
-      <GymDataInput v-model:gymInformation="workoutData.gymInformation" />
+      <GymDataInput
+        v-if="visibilityOfGym"
+        v-model:gymInformation="workoutData.gymInformation"
+      />
       <!-- Swimming Information -->
-      <SwimmingDataInput v-model:swimmingInformation="workoutData.swimmingInformation" />
+      <SwimmingDataInput
+        v-if="visibilityOfSwimming"
+        v-model:swimmingInformation="workoutData.swimmingInformation"
+      />
       <!-- Running Information -->
-      <RunningDataInput v-model:runningInformation="workoutData.runningInformation" />
-      <!-- Running Information -->
-      <BoulderingDataInput v-model:boulderingInformation="workoutData.boulderingInformation" />
+      <RunningDataInput
+        v-if="visibilityOfRunning"
+        v-model:runningInformation="workoutData.runningInformation"
+      />
+      <!-- Bouldering Information -->
+      <BoulderingDataInput
+        v-if="visibilityOfBouldering"
+        v-model:boulderingInformation="workoutData.boulderingInformation"
+      />
       <!-- Cycling Information -->
-      <CyclingDataInputs v-model:cyclingInformation="workoutData.cyclingInformation" />
+      <CyclingDataInputs
+        v-if="visibilityOfCycling"
+        v-model:cyclingInformation="workoutData.cyclingInformation"
+      />
       <!-- Supplements Intake Information -->
       <SupplementsIntakeInputs v-model:suppIntakeInfo="workoutData.suppIntakeInfo" />
       <!-- Sauna Information -->
