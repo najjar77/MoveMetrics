@@ -18,11 +18,11 @@ const emits = defineEmits(['update:generalInformation']);
 
 // Define the options for the dropdown
 const activityOptions = [
+  {name: 'Bouldering', value: 'Bouldering', icon: 'pi pi-mountain'},
   {name: 'Cycling', value: 'Cycling', icon: 'pi pi-bicycle'},
   {name: 'Gym', value: 'Gym', icon: 'pi pi-dumbbell'},
   {name: 'Swimming', value: 'Swimming', icon: 'pi pi-swimmer'},
-  {name: 'Running', value: 'Running', icon: 'pi pi-running'},
-  {name: 'Bouldering', value: 'Bouldering', icon: 'pi pi-mountain'},
+  {name: 'Running', value: 'Running', icon: 'pi pi-running'}
 ];
 
 function handleActivitiesUpdate(updatedActivities: Object[]) {

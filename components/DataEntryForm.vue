@@ -5,7 +5,7 @@ import CyclingDataInputs from "~/components/SportDataInputs/CyclingDataInputs.vu
 import SupplementsIntakeInputs from "~/components/SportDataInputs/SupplementsIntakeInputs.vue";
 import SaunaDataInputs from "~/components/SportDataInputs/SaunaDataInputs.vue";
 import FeedbackDataInputs from "~/components/SportDataInputs/FeedbackDataInputs.vue";
-import type { WorkoutData } from "~/models/formData/workoutData";
+import type {WorkoutData} from "~/models/formData/workoutData";
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import GymDataInput from "~/components/SportDataInputs/GymDataInput.vue";
@@ -14,13 +14,13 @@ import SwimmingDataInput from "~/components/SportDataInputs/SwimmingDataInput.vu
 import BoulderingDataInput from "~/components/SportDataInputs/BoulderingDataInput.vue";
 
 const props = defineProps({
-  visible: Boolean,
-  isEditMode: {
-    type: Boolean,
-    default: true
-  },
-  prefilledWorkoutData: Object
-}
+      visible: Boolean,
+      isEditMode: {
+        type: Boolean,
+        default: true
+      },
+      prefilledWorkoutData: Object
+    }
 );
 
 const isEditMode = ref(props.isEditMode);
@@ -30,8 +30,8 @@ const editFormText = "Here you can Edit your Workout entry.";
 const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccess', 'showError', 'submitData', 'submitUpdatedData']);
 
 const defaultWorkoutData = {
-  generalInformation: { name: (''), date: new Date(), activities: [] },
-  cyclingInformation: { distanceInKm: (0), time: "00:00", inside: true },
+  generalInformation: {name: (''), date: new Date(), activities: []},
+  cyclingInformation: {distanceInKm: (0), time: "00:00", inside: true},
   suppIntakeInfo: {
     bcaa: false,
     creatin: true,
@@ -42,50 +42,30 @@ const defaultWorkoutData = {
     eaaAmount: (9),
     proteinAmount: (100)
   },
-  saunaInformation: { finnish: false, steam: false, bio: false },
-  feedbackInformation: { sliderFeedback: (50), textFeedback: ('') },
-  gymInformation: { back: false, biceps: false, chest: false, legs: false, triceps: false },
-  runningInformation: { distanceInKm: (0), time: "00:00" },
-  swimmingInformation: { distanceInM: (0), time: "00:00" },
-  boulderingInformation: { inside: false, time: "00:00" }
+  saunaInformation: {finnish: false, steam: false, bio: false},
+  feedbackInformation: {sliderFeedback: (50), textFeedback: ('')},
+  gymInformation: {back: false, biceps: false, chest: false, legs: false, triceps: false},
+  runningInformation: {distanceInKm: (0), time: "00:00"},
+  swimmingInformation: {distanceInM: (0), time: "00:00"},
+  boulderingInformation: {inside: false, time: "00:00"}
 };
 
 const workoutData = reactive<WorkoutData>(props.prefilledWorkoutData ?? defaultWorkoutData);
 const visibilityOfGym = computed(() => {
-  const selectedActivities = workoutData.generalInformation?.activities;
   return workoutDataIncludesSport('Gym');
-})
-const visibilityOfCycling = ref(workoutDataIncludesSport('Cycling'));
-const visibilityOfSwimming = ref(workoutDataIncludesSport('Swimming'));
-const visibilityOfRunning = ref(workoutDataIncludesSport('Running'));
-const visibilityOfBouldering = ref(workoutDataIncludesSport('Bouldering'));
-
-watch(workoutData, () => {
-  //console.log('newWorkoutData: ', workoutData)
-  //console.log("genaeralllle: ", workoutData.generalInformation)
-  const selectedActivities = workoutData.generalInformation?.activities;
-
-  console.log("selected Activities :", selectedActivities)
-  selectedActivities?.forEach(activity => {
-    //console.log('activity value is: ', activity.value)
-    if (activity.value === 'Gym') {
-      visibilityOfGym.value = true;
-    }
-    if (activity.value === 'Cycling') {
-      visibilityOfCycling.value = true;
-    }
-    if (activity.value === 'Swimming') {
-      visibilityOfSwimming.value = true;
-    }
-    if (activity.value === 'Running') {
-      visibilityOfRunning.value = true;
-    }
-    if (activity.value === 'Bouldering') {
-      visibilityOfBouldering.value = true;
-    }
-
-  })
-})
+});
+const visibilityOfCycling = computed(() => {
+  return workoutDataIncludesSport('Cycling');
+});
+const visibilityOfSwimming = computed(() => {
+  return workoutDataIncludesSport('Swimming');
+});
+const visibilityOfRunning = computed(() => {
+  return workoutDataIncludesSport('Running');
+});
+const visibilityOfBouldering = computed(() => {
+  return workoutDataIncludesSport('Bouldering');
+});
 
 function workoutDataIncludesSport(sportName: string): boolean {
   return workoutData.generalInformation?.activities?.some((activity: {
@@ -134,28 +114,50 @@ const time = ref("");
 <template>
   <Toast />
   <div class="center-container-parent">
-    <Dialog :visible="visible" modal style="width: 60rem"
+    <Dialog
+      :visible="visible"
+      modal
+      style="width: 60rem"
       :header="!isEditMode ? 'Add New Workout Entry' : 'Edit Workout Entry'"
-      @update:visible="$emit('update:visible', $event)" @hide="resetWorkoutData">
+      @update:visible="$emit('update:visible', $event)"
+      @hide="resetWorkoutData"
+    >
       <div class="intro-text">
-        <i class="pi pi-plus" style="margin-right: 0.5rem;" />
+        <i
+          class="pi pi-plus"
+          style="margin-right: 0.5rem;"
+        />
         {{ !isEditMode ? newFromText : editFormText }}
       </div>
 
 
       <!-- General Information -->
       <GeneralDataInputs v-model:generalInformation="workoutData.generalInformation" />
-      <!-- Gym Information -->
-      <GymDataInput v-if="visibilityOfGym" v-model:gymInformation="workoutData.gymInformation" />
-      <!-- Swimming Information -->
-      <SwimmingDataInput v-if="visibilityOfSwimming" v-model:swimmingInformation="workoutData.swimmingInformation" />
-      <!-- Running Information -->
-      <RunningDataInput v-if="visibilityOfRunning" v-model:runningInformation="workoutData.runningInformation" />
       <!-- Bouldering Information -->
-      <BoulderingDataInput v-if="visibilityOfBouldering"
-        v-model:boulderingInformation="workoutData.boulderingInformation" />
+      <BoulderingDataInput
+        v-if="visibilityOfBouldering"
+        v-model:boulderingInformation="workoutData.boulderingInformation"
+      />
       <!-- Cycling Information -->
-      <CyclingDataInputs v-if="visibilityOfCycling" v-model:cyclingInformation="workoutData.cyclingInformation" />
+      <CyclingDataInputs
+        v-if="visibilityOfCycling"
+        v-model:cyclingInformation="workoutData.cyclingInformation"
+      />
+      <!-- Gym Information -->
+      <GymDataInput
+        v-if="visibilityOfGym"
+        v-model:gymInformation="workoutData.gymInformation"
+      />
+      <!-- Swimming Information -->
+      <SwimmingDataInput
+        v-if="visibilityOfSwimming"
+        v-model:swimmingInformation="workoutData.swimmingInformation"
+      />
+      <!-- Running Information -->
+      <RunningDataInput
+        v-if="visibilityOfRunning"
+        v-model:runningInformation="workoutData.runningInformation"
+      />
       <!-- Supplements Intake Information -->
       <SupplementsIntakeInputs v-model:suppIntakeInfo="workoutData.suppIntakeInfo" />
       <!-- Sauna Information -->
@@ -165,12 +167,32 @@ const time = ref("");
       <Divider />
 
       <template #footer>
-        <Button v-tooltip.top="'Reset Form'" lable="Reset" severity="secondary" icon="pi pi-refresh"
-          @click="resetWorkoutData" />
-        <Button v-tooltip.top="'Close Dialog'" label="Cancel" severity="secondary" icon="pi pi-times"
-          @click="closeDialog" />
-        <Button v-if="!isEditMode" label="Save" icon="pi pi-plus" @click="submitData" />
-        <Button v-else label="Update" icon="pi pi-check" @click="submitUpdatedData" />
+        <Button
+          v-tooltip.top="'Reset Form'"
+          lable="Reset"
+          severity="secondary"
+          icon="pi pi-refresh"
+          @click="resetWorkoutData"
+        />
+        <Button
+          v-tooltip.top="'Close Dialog'"
+          label="Cancel"
+          severity="secondary"
+          icon="pi pi-times"
+          @click="closeDialog"
+        />
+        <Button
+          v-if="!isEditMode"
+          label="Save"
+          icon="pi pi-plus"
+          @click="submitData"
+        />
+        <Button
+          v-else
+          label="Update"
+          icon="pi pi-check"
+          @click="submitUpdatedData"
+        />
       </template>
 
       <!-- Save / Cancel / Reset Interaction -->
