@@ -9,6 +9,9 @@ import type {WorkoutData} from "~/models/formData/workoutData";
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import GymDataInput from "~/components/SportDataInputs/GymDataInput.vue";
+import RunningDataInput from "~/components/SportDataInputs/RunningDataInput.vue";
+import SwimmingDataInput from "~/components/SportDataInputs/SwimmingDataInput.vue";
+import BoulderingDataInput from "~/components/SportDataInputs/BoulderingDataInput.vue";
 
 const props = defineProps({
       visible: Boolean,
@@ -41,11 +44,15 @@ const getDefaultWorkoutData = (): WorkoutData => ({
   },
   saunaInformation: {finnish: false, steam: false, bio: false},
   feedbackInformation: {sliderFeedback: (50), textFeedback: ('')},
-  gymInformation: {back: false, biceps: false, chest: false, legs: false, triceps: false}
+  gymInformation: {back: false, biceps: false, chest: false, legs: false, triceps: false},
+  runningInformation: {distanceInKm: (0), time: "00:00"},
+  swimmingInformation: {distanceInM: (0), time: "00:00"},
+  boulderingInformation: {inside: false, time: "00:00"}
 });
 
 const workoutData = reactive(props.prefilledWorkoutData ?? getDefaultWorkoutData());
 
+const showGymSection = computed(() => workoutData.generalInformation.activities.includes('Gym'));
 
 const showSuccess = () => {
   emit('showSuccess');
@@ -72,6 +79,9 @@ async function submitData() {
   emit('submitData', workoutData);
 }
 
+const distanceInM = ref(0);
+const time = ref("");
+
 </script>
 
 <template>
@@ -95,28 +105,23 @@ async function submitData() {
 
 
       <!-- General Information -->
-      <GeneralDataInputs
-        v-model:generalInformation="workoutData.generalInformation"
-      />
-      <GymDataInput
-        v-model:gymInformation="workoutData.gymInformation"
-      />
+      <GeneralDataInputs v-model:generalInformation="workoutData.generalInformation" />
+      <!-- Gym Information -->
+      <GymDataInput v-model:gymInformation="workoutData.gymInformation" />
+      <!-- Swimming Information -->
+      <SwimmingDataInput v-model:swimmingInformation="workoutData.swimmingInformation" />
+      <!-- Running Information -->
+      <RunningDataInput v-model:runningInformation="workoutData.runningInformation" />
+      <!-- Running Information -->
+      <BoulderingDataInput v-model:boulderingInformation="workoutData.boulderingInformation" />
       <!-- Cycling Information -->
-      <CyclingDataInputs
-        v-model:cyclingInformation="workoutData.cyclingInformation"
-      />
+      <CyclingDataInputs v-model:cyclingInformation="workoutData.cyclingInformation" />
       <!-- Supplements Intake Information -->
-      <SupplementsIntakeInputs
-        v-model:suppIntakeInfo="workoutData.suppIntakeInfo"
-      />
+      <SupplementsIntakeInputs v-model:suppIntakeInfo="workoutData.suppIntakeInfo" />
       <!-- Sauna Information -->
-      <SaunaDataInputs
-        v-model:saunaInformation="workoutData.saunaInformation"
-      />
+      <SaunaDataInputs v-model:saunaInformation="workoutData.saunaInformation" />
       <!-- Feedback Information -->
-      <FeedbackDataInputs
-        v-model:feedbackInformation="workoutData.feedbackInformation"
-      />
+      <FeedbackDataInputs v-model:feedbackInformation="workoutData.feedbackInformation" />
       <Divider />
 
       <template #footer>

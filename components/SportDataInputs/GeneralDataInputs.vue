@@ -23,7 +23,7 @@ const activityOptions = [
   {name: 'Bouldering', value: 'Bouldering', icon: 'pi pi-mountain'},
 ];
 
-console.log(props.generalInformation)
+
 </script>
 
 <template>
@@ -35,7 +35,6 @@ console.log(props.generalInformation)
   </Divider>
   <div class="container">
     <div class="row">
-      <!-- New wrapper div for the row -->
       <div class="field-container">
         <label
           for="name"
@@ -62,7 +61,7 @@ console.log(props.generalInformation)
           @update:model-value="$emit('update:generalInformation', {...generalInformation, date: $event})"
         />
       </div>
-    </div> <!-- Close the row div -->
+    </div>
     <div class="field-container">
       <label
         for="activities"
