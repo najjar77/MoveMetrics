@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "chart.js": "^4.4.2",
     "firebase": "^10.8.0",
     "nuxt": "^3.10.1",
     "primeicons": "^6.0.1",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/eslint-module": "^4.1.0",
+    "@types/chart.js": "^2.9.41",
     "eslint": "^8.57.0",
     "nuxt-primevue": "^0.3.0"
   }
