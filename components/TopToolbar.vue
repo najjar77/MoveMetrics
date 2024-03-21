@@ -60,7 +60,14 @@ const menuItems = ref([{
         :popup="true"
       />
     </template>
-    <template #center />
+    <template #center>
+      <div
+        v-if="user"
+        class="user-info"
+      >
+        <span> Hello {{ user.displayName }}</span>
+      </div>
+    </template>
     <template #end>
       <Button
         size="medium"
@@ -72,12 +79,14 @@ const menuItems = ref([{
         v-if="user"
         class="user-info"
       >
-        <span> Hello {{ user.displayName }}</span>
         <Avatar
           :image="user && user.photoURL ? user.photoURL : 'https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp'"
           class="toolbar-avatar"
           shape="circle"
         />
+      </div>
+      <div>
+        <LoggingAndSignUp />
       </div>
     </template>
   </Toolbar>
@@ -111,7 +120,8 @@ const menuItems = ref([{
 .toolbar-avatar {
   width: 35px; /* Sets the width of the avatar */
   height: 35px; /* Sets the height of the avatar */
-  margin-left: 10px; /* Adds space to the right of the avatar */
+  margin-left: 10px; /* Adds space to the left of the avatar */
+  margin-right: 10px; /* Adds space to the right of the avatar */
 }
 
 </style>

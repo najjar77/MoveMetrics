@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import Card from "primevue/card";
-import Button from "primevue/button";
+definePageMeta({
+  middleware: 'auth'
+})
+
 </script>
 
 <template>
-<NavigationCards/>
+  Dashboard so you are logged in
 </template>
 
 <style scoped>

@@ -6,17 +6,17 @@ const {user} = useAuth();
 </script>
 
 <template>
-  <div class="login-container">
+  <div>
     <div v-if="user">
-      Signed in as : {{ user.displayName }}
       <Button
         label="Sign Out"
+        severity="secondary"
         @click="logout"
       />
     </div>
     <div v-else>
       <Button
-        label="login with Google"
+        label="login"
         @click="loginWithGoogle"
       />
     </div>
