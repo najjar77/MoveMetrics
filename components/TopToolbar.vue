@@ -2,11 +2,11 @@
 import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
+import {useAuth} from "~/composables/useAuth";
 
-const visibilityOfMenu = ref(false);
 
 const router = useRouter();
-
+const {user} = useAuth();
 const toggle = (event: Event) => {
   menu.value.toggle(event);
 };
@@ -68,10 +68,17 @@ const menuItems = ref([{
         severity="secondary"
         class="toolbar-button"
       />
-      <Avatar
-        image="https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp"
-        class="toolbar-avatar"
-      />
+      <div
+        v-if="user"
+        class="user-info"
+      >
+        <span> Hello {{ user.displayName }}</span>
+        <Avatar
+          :image="user && user.photoURL ? user.photoURL : 'https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp'"
+          class="toolbar-avatar"
+          shape="circle"
+        />
+      </div>
     </template>
   </Toolbar>
 </template>
@@ -82,6 +89,11 @@ const menuItems = ref([{
   margin-right: 10px;
   width: 30px; /* Sets the width of the Logo */
   height: 30px; /* Sets the height of the Logo */
+}
+
+.user-info {
+  display: flex;
+  align-items: center; /* Centers the elements vertically */
 }
 
 /* Styles for the label in the toolbar, adds bold font weight and space to its right */
@@ -97,8 +109,9 @@ const menuItems = ref([{
 
 /* For the last element in the #end slot, no right margin is needed. Styles for the avatar, sets its size */
 .toolbar-avatar {
-  width: 30px; /* Sets the width of the avatar */
-  height: 30px; /* Sets the height of the avatar */
+  width: 35px; /* Sets the width of the avatar */
+  height: 35px; /* Sets the height of the avatar */
+  margin-left: 10px; /* Adds space to the right of the avatar */
 }
 
 </style>

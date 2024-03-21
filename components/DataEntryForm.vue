@@ -51,19 +51,28 @@ const defaultWorkoutData = {
 };
 
 const workoutData = reactive<WorkoutData>(props.prefilledWorkoutData ?? defaultWorkoutData);
+//TODO: does not work here
+const recomputeTrigger = ref(false);
+
+
 const visibilityOfGym = computed(() => {
+  recomputeTrigger.value;
   return workoutDataIncludesSport('Gym');
 });
 const visibilityOfCycling = computed(() => {
+  recomputeTrigger.value;
   return workoutDataIncludesSport('Cycling');
 });
 const visibilityOfSwimming = computed(() => {
+  recomputeTrigger.value;
   return workoutDataIncludesSport('Swimming');
 });
 const visibilityOfRunning = computed(() => {
+  recomputeTrigger.value;
   return workoutDataIncludesSport('Running');
 });
 const visibilityOfBouldering = computed(() => {
+  recomputeTrigger.value;
   return workoutDataIncludesSport('Bouldering');
 });
 
@@ -81,13 +90,16 @@ const showError = () => {
 };
 
 function closeDialog() {
+  console.log("close Dialog");
   emit('update:visible', false);
   resetWorkoutData();
+  recomputeTrigger.value = !recomputeTrigger.value;
+
 }
 
 // Reset function to reset workoutData to its default state
 function resetWorkoutData() {
-  workoutData.generalInformation = defaultWorkoutData.generalInformation;
+  workoutData.generalInformation = {...defaultWorkoutData.generalInformation};
   workoutData.cyclingInformation = defaultWorkoutData.cyclingInformation;
   workoutData.suppIntakeInfo = defaultWorkoutData.suppIntakeInfo;
   workoutData.saunaInformation = defaultWorkoutData.saunaInformation;
@@ -109,6 +121,7 @@ async function submitData() {
 const distanceInM = ref(0);
 const time = ref("");
 
+//TODO: Add more space between all Activity sections
 </script>
 
 <template>

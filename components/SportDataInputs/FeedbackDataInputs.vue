@@ -11,24 +11,40 @@ const prop = defineProps<{
 </script>
 
 <template>
-  <Divider align="center" type="solid">
+  <Divider
+    align="center"
+    type="solid"
+  >
     <b>Feedback</b>
   </Divider>
   <div class="container">
     <div class="field-container">
-      <label for="sliderFeedback" class="label">
-        How was the Workout? <span class="bold-value"> {{ feedbackInformation.sliderFeedback }} %</span>
+      <label
+        for="sliderFeedback"
+        class="label"
+      >
+        How intense was the workout? <span class="bold-value"> {{ feedbackInformation.sliderFeedback }} %</span>
       </label>
     </div>
-    <Slider :modelValue="feedbackInformation.sliderFeedback"
-            @update:modelValue="$emit('update:feedbackInformation', {...feedbackInformation, sliderFeedback: $event})"
-            class="w-14rem" id="sliderFeedback"/>
+    <Slider
+      id="sliderFeedback"
+      :model-value="feedbackInformation.sliderFeedback"
+      class="w-14rem"
+      @update:model-value="$emit('update:feedbackInformation', {...feedbackInformation, sliderFeedback: $event})"
+    />
 
     <div class="field-container">
-      <label for="textFeedback" class="label">Notes:</label>
-      <Textarea :modelValue="feedbackInformation.textFeedback"
-                @update:modelValue="$emit('update:feedbackInformation', {...feedbackInformation, textFeedback: $event})"
-                rows="5" cols="70" id="textFeedback"/>
+      <label
+        for="textFeedback"
+        class="label"
+      >Notes:</label>
+      <Textarea
+        id="textFeedback"
+        :model-value="feedbackInformation.textFeedback"
+        rows="5"
+        cols="70"
+        @update:model-value="$emit('update:feedbackInformation', {...feedbackInformation, textFeedback: $event})"
+      />
     </div>
   </div>
 </template>
