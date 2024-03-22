@@ -19,6 +19,10 @@ function formatDate(dateString: string) {
   return new Intl.DateTimeFormat('en-GB', options).format(date) + ' ' + date.toTimeString().slice(0, 5);
 }
 
+function getIconClass(creatin: boolean) {
+  return creatin ? 'pi pi-check' : 'pi pi-times';
+}
+
 </script>
 
 <template>
@@ -64,7 +68,11 @@ function formatDate(dateString: string) {
       field="suppIntakeInfo.creatin"
       header="Creatin"
       style="width: 5%"
-    />
+    >
+      <template #body="slotProps">
+        <i :class="['center-icon', getIconClass(slotProps.data.suppIntakeInfo.creatin)]" />
+      </template>
+    </Column>
     <Column
       field="suppIntakeInfo.creatinAmount"
       header="gr"
@@ -93,4 +101,9 @@ function formatDate(dateString: string) {
   </DataTable>
 </template>
 
-<style scoped></style>
+<style scoped>
+.center-icon {
+  display: block;
+  text-align: center;
+}
+</style>
