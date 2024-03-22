@@ -2,14 +2,15 @@
 import {
   deleteWorkoutData,
   fetchAndLogAllData,
-  fetchWorkoutData,
-  saveWorkoutData,
+  fetchWorkoutDataByUser,
+  saveWorkoutDataByUserId,
   updateWorkoutData
 } from "~/firebase/DBController";
 import type {WorkoutData} from "~/models/formData/workoutData";
 import {ref} from "vue";
 import Toolbar from "primevue/toolbar";
 import {useToast} from "primevue/usetoast";
+import {useAuth} from "~/composables/useAuth";
 
 const workouts = ref<WorkoutData[]>([]);
 const currentWorkoutSelection = ref<WorkoutData | null>(null);
@@ -17,17 +18,20 @@ const isEditMode = ref(false);
 const dataEntryFormVisible = ref(false);
 const toast = useToast();
 const buttonVisibility = computed(() => currentWorkoutSelection.value !== null);
+const {user} = useAuth();
 
-onBeforeMount(async () => {
-  const data = await fetchWorkoutData();
-  //console.log('data => ', data)
-  //@ts-ignore
-  workouts.value = data.map((workout, index) => ({
-    ...workout,
-    id: workout.id,
-  }));
-  // For Debugging purposes
-  console.log(data);
+onMounted(async () => {
+  if (user.value) {
+    const data = await fetchWorkoutDataByUser(user.value.uid);
+    workouts.value = data.map((workout) => ({
+      ...workout,
+      id: workout.id,
+    }));
+    console.log("Data presented: ", JSON.stringify(data))
+  } else {
+    console.log("No user logged in");
+    //TODO: needs to be edited to something else cause it loads too fast and the user is not logged in.
+  }
 });
 
 // For debug purposes
@@ -37,14 +41,14 @@ onMounted(() => {
 
 //refreshes the DataTable when new data is added or removed
 async function refreshData() {
-  const data = await fetchWorkoutData();
-  //@ts-ignore
-  workouts.value = data.map((workout, index) => ({
-    ...workout,
-    id: workout.id,
-  }));
-  currentWorkoutSelection.value = null;
-
+  if (user.value) {
+    const data = await fetchWorkoutDataByUser(user.value.uid);
+    workouts.value = data.map((workout) => ({
+      ...workout,
+      id: workout.id,
+    }));
+    currentWorkoutSelection.value = null;
+  }
 }
 
 // deletes the current selected workout
@@ -61,14 +65,6 @@ async function deleteSelectedWorkout() {
   } else {
     console.log("No workout selected for deletion");
   }
-}
-
-// formates the date to dd/mm/yyy
-function formatDate(date: Date): string {
-  const day = ('0' + date.getDate()).slice(-2);
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
 }
 
 function toggleDataEntryForm() {
@@ -114,11 +110,12 @@ const showError = () => {
 
 const submitData = async (workoutData: WorkoutData) => {
   try {
-    const docId = await saveWorkoutData(workoutData);
+    const docId = await saveWorkoutDataByUserId(workoutData);
     console.log("Data saved with ID: ", docId);
     showSuccess();
     dataEntryFormVisible.value = false;
     await refreshData();
+    console.log("Data saved: ", JSON.stringify(workoutData));
 
   } catch (error) {
     console.error("Failed to save data: ", error);

@@ -65,15 +65,27 @@ export async function fetchWorkoutData(): Promise<WorkoutData[]> {
 // Method to fetch workout data by userId
 export async function fetchWorkoutDataByUser(userId: string): Promise<WorkoutData[]> {
     try {
+        // Erstellt eine Query mit einer where-Bedingung, die nach Dokumenten sucht, bei denen userId übereinstimmt
         const workoutsQuery = query(collection(db, "WorkoutSet"), where("userId", "==", userId));
         const querySnapshot = await getDocs(workoutsQuery);
 
         const workouts = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            // Stellt sicher, dass das Datum ein Date-Objekt ist
+            const date = data.generalInformation && data.generalInformation.date
+                ? new Timestamp(data.generalInformation.date.seconds, data.generalInformation.date.nanoseconds).toDate()
+                : new Date();
+
             return {
                 id: doc.id,
-                ...doc.data()
+                ...data,
+                generalInformation: {
+                    ...data.generalInformation,
+                    date: date
+                },
             };
         });
+
         return workouts;
     } catch (error) {
         console.error("Error fetching workouts by user ID:", error);
