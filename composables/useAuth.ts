@@ -3,7 +3,7 @@ import type {User} from "firebase/auth";
 
 const user = ref<User | null>(null);
 
-// Authentifizierungsstatus beim Start der Anwendung überwachen
+// Monitor authentication status when starting the application
 onAuthStateChange((firebaseUser) => {
     user.value = firebaseUser;
 });

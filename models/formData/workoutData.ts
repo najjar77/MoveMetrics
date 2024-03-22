@@ -9,6 +9,7 @@ import type {RunningInformation} from "~/models/formData/runningInformation";
 import type {BoulderingInformation} from "~/models/formData/boulderingInformation";
 
 export interface WorkoutData {
+    user?: string;
     id?: string;
     generalInformation?: GeneralInformation;
     feedbackInformation?: FeedbackInformation;
