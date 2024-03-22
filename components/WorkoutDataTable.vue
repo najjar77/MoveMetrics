@@ -12,6 +12,13 @@ const props = defineProps({
 const currentWorkoutSelection = defineModel({
   type: Object as PropType<WorkoutData | null>,
 })
+
+function formatDate(dateString: string) {
+  const options: Intl.DateTimeFormatOptions = {weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit'};
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-GB', options).format(date) + ' ' + date.toTimeString().slice(0, 5);
+}
+
 </script>
 
 <template>
@@ -41,23 +48,18 @@ const currentWorkoutSelection = defineModel({
       header="Date"
       sortable
       style="width: 30%"
-    />
+    >
+      <template #body="slotProps">
+        {{ formatDate(slotProps.data.generalInformation.date) }}
+      </template>
+    </Column>
     <Column
       field="generalInformation.name"
       header="Name"
       sortable
       style="width: 30%"
     />
-    <Column
-      field="suppIntakeInfo.bcaa"
-      header="BCAA"
-      style="width: 5%"
-    />
-    <Column
-      field="suppIntakeInfo.bcaaAmount"
-      header="gr"
-      style="width: 2%"
-    />
+
     <Column
       field="suppIntakeInfo.creatin"
       header="Creatin"
