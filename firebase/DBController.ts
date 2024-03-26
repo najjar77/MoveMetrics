@@ -1,5 +1,5 @@
 // DBController.ts
-import {addDoc, collection, deleteDoc, doc, getDocs, query, Timestamp, updateDoc, where} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDocs, query, Timestamp, updateDoc} from "firebase/firestore";
 import {db} from '~/firebase/init';
 import type {WorkoutData} from "~/models/formData/workoutData";
 import {useAuth} from "~/composables/useAuth";
@@ -27,9 +27,9 @@ export async function saveWorkoutDataByUserId(workoutData: any) {
         }
         const workoutDataWithUserId = {
             ...workoutData,
-            userId: user.value.uid
+            //userId: user.value.uid // Add the user ID to the workout data
         };
-        const docRef = await addDoc(collection(db, "WorkoutSet"), workoutDataWithUserId);
+        const docRef = await addDoc(collection(db, `user_${user.value.uid}_workouts`), workoutDataWithUserId);
         console.log("Document written with ID:", docRef.id);
         return docRef.id; // Return document ID on success
     } catch (error) {
@@ -38,40 +38,15 @@ export async function saveWorkoutDataByUserId(workoutData: any) {
     }
 }
 
-//Fetching the data from database
-export async function fetchWorkoutData(): Promise<WorkoutData[]> {
-    const querySnapshot = await getDocs(collection(db, "WorkoutSet"));
-    const workouts = querySnapshot.docs.map(doc => {
-        //console.log(doc.id)
-        const data = doc.data();
-        // Ensure the date is a Date object
-        const date = data.generalInformation && data.generalInformation.date
-            ? new Timestamp(data.generalInformation.date.seconds, data.generalInformation.date.nanoseconds).toDate()
-            : new Date();
-
-        return {
-            id: doc.id,
-            ...data,
-            generalInformation: {
-                ...data.generalInformation,
-                date: date
-            },
-        };
-    });
-    return workouts;
-}
-
-
-// Method to fetch workout data by userId
 export async function fetchWorkoutDataByUser(userId: string): Promise<WorkoutData[]> {
     try {
-        // Erstellt eine Query mit einer where-Bedingung, die nach Dokumenten sucht, bei denen userId übereinstimmt
-        const workoutsQuery = query(collection(db, "WorkoutSet"), where("userId", "==", userId));
+        // Verwendet die Nutzer-ID, um auf die spezifische Sammlung zuzugreifen
+        const workoutsQuery = query(collection(db, `user_${userId}_workouts`));
         const querySnapshot = await getDocs(workoutsQuery);
 
         const workouts = querySnapshot.docs.map(doc => {
             const data = doc.data();
-            // Stellt sicher, dass das Datum ein Date-Objekt ist
+            // Datumskonvertierung bleibt gleich
             const date = data.generalInformation && data.generalInformation.date
                 ? new Timestamp(data.generalInformation.date.seconds, data.generalInformation.date.nanoseconds).toDate()
                 : new Date();
@@ -106,10 +81,11 @@ export async function fetchAndLogAllData() {
     }
 }
 
+//TODO: Delete and Update Methods need to be modified ==> currently not working
 //Method to delete selected Data Entries
-export async function deleteWorkoutData(documentId: string) {
+export async function deleteWorkoutData(userId: string, documentId: string) {
     try {
-        await deleteDoc(doc(db, "WorkoutSet", documentId));
+        await deleteDoc(doc(db, `user_${userId}_workouts`, documentId));
         console.log("Document successfully deleted!");
     } catch (error) {
         console.error("Error removing document: ", error);
@@ -119,13 +95,13 @@ export async function deleteWorkoutData(documentId: string) {
 
 
 // Method to update a WorkoutData document by documentId without including the id in the document
-export async function updateWorkoutData(documentId: string, workoutData: WorkoutData) {
+export async function updateWorkoutData(userId: string, documentId: string, workoutData: WorkoutData) {
     try {
         // Destructure the workoutData to exclude the id property if it exists
         const {id, ...dataToUpdate} = workoutData;
 
-        // Get a reference to the specific document
-        const docRef = doc(db, "WorkoutSet", documentId);
+        // Get a reference to the specific document in the user's collection
+        const docRef = doc(db, `user_${userId}_workouts`, documentId);
 
         // Update the document with the dataToUpdate, which excludes the id
         await updateDoc(docRef, dataToUpdate);
@@ -136,3 +112,4 @@ export async function updateWorkoutData(documentId: string, workoutData: Workout
         throw new Error("Error updating workout data");
     }
 }
+

@@ -3,6 +3,7 @@ import Fieldset from 'primevue/fieldset';
 import Card from 'primevue/card';
 import PieChart from "~/components/StatisticCharts/PieChart.vue";
 import BarChart from "~/components/StatisticCharts/BarChart.vue";
+import BarChartRunning from "~/components/StatisticCharts/BarChartRunning.vue";
 </script>
 
 <template>
@@ -16,7 +17,7 @@ import BarChart from "~/components/StatisticCharts/BarChart.vue";
         <!--Total Sport-->
         <Card>
           <template #title>
-            Total Sport
+            Sports summary
           </template>
           <template #content>
             <PieChart />
@@ -25,7 +26,7 @@ import BarChart from "~/components/StatisticCharts/BarChart.vue";
         <!--Total Sport-->
         <Card>
           <template #title>
-            Total Sport
+            Total number of Sport
           </template>
           <template #content>
             <BarChart />
@@ -34,12 +35,10 @@ import BarChart from "~/components/StatisticCharts/BarChart.vue";
         <!--Total Sport-->
         <Card>
           <template #title>
-            Total Sport
+            Running overview
           </template>
           <template #content>
-            <p class="m-0">
-              here comes a pie chart for all kind off sports next to a agenda
-            </p>
+            <BarChartRunning />
           </template>
         </Card>
         <!--Total Sport-->
