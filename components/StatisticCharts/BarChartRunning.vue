@@ -15,6 +15,7 @@ const processRunningData = (workoutData: WorkoutData[]): number[] => {
   workoutData.forEach(workout => {
     const runningInfo = workout.runningInformation;
     if (runningInfo) {
+      //@ts-ignore
       const month = new Date(workout.generalInformation.date).getMonth();
       monthlyKm[month] += runningInfo.distanceInKm;
     }

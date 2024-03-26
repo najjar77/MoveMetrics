@@ -126,7 +126,8 @@ const submitData = async (workoutData: WorkoutData) => {
 
 const submitUpdatedData = async (id: string, workoutData: WorkoutData) => {
   try {
-    await updateWorkoutData(id, workoutData);
+    // @ts-ignore
+    await updateWorkoutData(user.value.uid, id, workoutData);
     console.log("Data updated successfully with ID: ", workoutData.id);
     showSuccess();
     await refreshData();
