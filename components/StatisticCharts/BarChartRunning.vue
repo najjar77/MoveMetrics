@@ -54,7 +54,7 @@ const createChart = (monthlyKm: number[]) => {
 
 onMounted(async () => {
   if (user.value?.uid) {
-    const workoutData = await fetchWorkoutDataByUser(user.value.uid) as WorkoutData[]; // Typcast notwendig
+    const workoutData = await fetchWorkoutDataByUser(user.value.uid) as WorkoutData[];
     const monthlyKm = processRunningData(workoutData);
     createChart(monthlyKm);
   }

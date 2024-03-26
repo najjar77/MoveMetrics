@@ -39,15 +39,14 @@ const createPieChart = async (userId: string) => {
       data: {
         labels: labels, // Die Namen der Sportarten
         datasets: [{
-          label: 'Häufigkeit der Aktivitäten',
-          data: dataPoints, // Die Häufigkeit jeder Aktivität
+          label: 'Total time of activities',
+          data: dataPoints,
           backgroundColor: [
-            // Hier kannst du verschiedene Farben für deine PieChart definieren
-            'rgba(178,18,51,0.6)',
+            'rgb(178,18,51)',
             'rgba(8,102,167,0.6)',
-            'rgba(206,151,18,0.6)',
-            'rgb(204,85,14)',
-            'rgba(39,181,8,0.6)',
+            'rgb(255,191,42)',
+            'rgb(248,114,33)',
+            'rgb(39,181,8)',
           ],
           borderColor: [
             'rgba(255,255,255,1)',
@@ -65,6 +64,22 @@ watch(() => user.value?.uid, (newVal) => {
     createPieChart(newVal);
   }
 }, {immediate: true});
+
+
+const initChart = () => {
+  if (user.value?.uid) {
+    createPieChart(user.value.uid);
+  }
+};
+
+onMounted(() => {
+  initChart(); // Versuche, das Chart beim Mounten zu initialisieren
+});
+
+watch(() => user.value?.uid, (newVal) => {
+  initChart(); // Initialisiere das Chart neu, wenn die Benutzer-ID sich ändert
+}, {immediate: true});
+
 </script>
 
 <template>
