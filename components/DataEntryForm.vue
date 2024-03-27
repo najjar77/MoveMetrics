@@ -29,6 +29,7 @@ const editFormText = "Here you can Edit your Workout entry.";
 
 const emit = defineEmits(['update:visible', 'dataSaved', 'showSuccess', 'showError', 'submitData', 'submitUpdatedData']);
 
+
 const defaultWorkoutData = {
   generalInformation: {name: (''), date: new Date(), activities: []},
   cyclingInformation: {distanceInKm: (0), time: "00:00", inside: true},
@@ -49,6 +50,7 @@ const defaultWorkoutData = {
   swimmingInformation: {distanceInM: (0), time: "00:00"},
   boulderingInformation: {inside: false, time: "00:00"}
 };
+
 
 const workoutData = reactive<WorkoutData>(props.prefilledWorkoutData ?? defaultWorkoutData);
 //TODO: does not work here

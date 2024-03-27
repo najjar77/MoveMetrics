@@ -1,12 +1,12 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'auth'
-})
+
 
 </script>
 
 <template>
-  Dashboard so you are logged in
+  <div>
+    <h1>Dashboard</h1>
+  </div>
 </template>
 
 <style scoped>

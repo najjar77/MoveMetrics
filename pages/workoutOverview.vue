@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   deleteWorkoutData,
-  fetchAndLogAllData,
   fetchWorkoutDataByUser,
   saveWorkoutDataByUserId,
   updateWorkoutData
@@ -20,23 +19,31 @@ const toast = useToast();
 const buttonVisibility = computed(() => currentWorkoutSelection.value !== null);
 const {user} = useAuth();
 
-onMounted(async () => {
-  if (user.value) {
-    const data = await fetchWorkoutDataByUser(user.value.uid);
-    workouts.value = data.map((workout) => ({
+const LogCurrentSelectedWorkout = () => {
+  console.log("Current selected workout: ", currentWorkoutSelection.value);
+};
+const loadWorkouts = async (userId: string) => {
+  if (!userId) return;
+  try {
+    const fetchedWorkouts = await fetchWorkoutDataByUser(userId);
+    workouts.value = fetchedWorkouts.map((workout) => ({
       ...workout,
       id: workout.id,
     }));
-    console.log("Data presented: ", JSON.stringify(data))
-  } else {
-    console.log("No user logged in");
-    //TODO: needs to be edited to something else cause it loads too fast and the user is not logged in.
+  } catch (error) {
+    console.error("Failed to fetch workouts", error);
   }
-});
+};
 
-// For debug purposes
-onMounted(() => {
-  fetchAndLogAllData();
+// Load workouts when the user changes
+watch(() => user.value?.uid, (newUserId) => {
+  if (typeof newUserId === 'string') {
+    loadWorkouts(newUserId);
+  }
+}, {immediate: true});
+
+onBeforeUnmount(() => {
+  workouts.value = []; // Clear the workouts when the component is unmounted
 });
 
 //refreshes the DataTable when new data is added or removed
@@ -53,17 +60,15 @@ async function refreshData() {
 
 // deletes the current selected workout
 async function deleteSelectedWorkout() {
-  if (currentWorkoutSelection.value) {
+  if (currentWorkoutSelection.value && user.value && currentWorkoutSelection.value.id) {
     try {
-      //@ts-ignore
-      await deleteWorkoutData(currentWorkoutSelection.value.id);
+      await deleteWorkoutData(user.value.uid, currentWorkoutSelection.value.id);
       await refreshData();
-      console.log("Workout successfully deleted");
     } catch (error) {
       console.error("Failed to delete workout:", error);
     }
   } else {
-    console.log("No workout selected for deletion");
+    console.log("No workout selected for deletion or user not logged in or no workout ID available for deletion");
   }
 }
 
