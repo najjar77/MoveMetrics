@@ -2070,6 +2070,22 @@
     hookable "^5.5.3"
     unhead "1.8.10"
 
+"@vee-validate/nuxt@^4.12.6":
+  version "4.12.6"
+  resolved "https://registry.yarnpkg.com/@vee-validate/nuxt/-/nuxt-4.12.6.tgz#1bd1363e8f148721bd2f0c704d75faa2ee0bb6d2"
+  integrity sha512-QYz8RDgboLoGRr8J3daB2BQ1eMdBY5XRqtTvieeNhRfSBWweUpjuWRZJx6XqNyT1/K3dEgbrRvR07uTFAK4D0g==
+  dependencies:
+    "@nuxt/kit" "^3.8.2"
+    local-pkg "^0.5.0"
+    vee-validate "4.12.6"
+
+"@vee-validate/rules@^4.12.6":
+  version "4.12.6"
+  resolved "https://registry.yarnpkg.com/@vee-validate/rules/-/rules-4.12.6.tgz#a105242ed6df83f46288bbad58337b2297d21fe6"
+  integrity sha512-vXhunbllildEbCWaBI2m6mij7U4pDTeoqX9CQ7/0gVMhtkTZh+QhKsDSaGI2evatECINH2cpLOBaMkubdN82VQ==
+  dependencies:
+    vee-validate "4.12.6"
+
 "@vercel/nft@^0.24.3":
   version "0.24.4"
   resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.24.4.tgz#b8942340c7821e6ff7bdf943b559642dbc9cae78"
@@ -2187,6 +2203,11 @@
   dependencies:
     "@vue/compiler-dom" "3.4.19"
     "@vue/shared" "3.4.19"
+
+"@vue/devtools-api@^6.0.0-beta.15", "@vue/devtools-api@^6.5.1":
+  version "6.6.1"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.6.1.tgz#7c14346383751d9f6ad4bea0963245b30220ef83"
+  integrity sha512-LgPscpE3Vs0x96PzSSB4IGVSZXZBZHpfxs+ZA1d+VEPwHdOXowy/Y2CsvCAIFrf+ssVU1pD1jidj505EpUnfbA==
 
 "@vue/devtools-api@^6.5.0":
   version "6.5.1"
@@ -6306,6 +6327,11 @@ type-fest@^3.8.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.13.1.tgz#bb744c1f0678bea7543a2d1ec24e83e68e8c8706"
   integrity sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==
 
+type-fest@^4.8.3:
+  version "4.14.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.14.0.tgz#46f9a358e605f0ec5ca99ab83deaa7257a7ae379"
+  integrity sha512-on5/Cw89wwqGZQu+yWO0gGMGu8VNxsaW9SB2HE8yJjllEk7IDTwnSN1dUVldYILhYPN5HzD7WAaw2cc/jBfn0Q==
+
 typescript@^5.2.2:
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.2.tgz#0ae9cebcfae970718474fe0da2c090cad6577372"
@@ -6536,6 +6562,21 @@ validate-npm-package-name@^5.0.0:
   integrity sha512-YuKoXDAhBYxY7SfOKxHBDoSyENFeW5VvIIQp2TGQuit8gpK6MnWaQelBKxso72DoxTZfZdcP3W90LqpSkgPzLQ==
   dependencies:
     builtins "^5.0.0"
+
+vee-validate@4.12.6:
+  version "4.12.6"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-4.12.6.tgz#cc1b8ac99ebf00856b40a5118a23787898a70f32"
+  integrity sha512-EKM3YHy8t1miPh30d5X6xOrfG/Ctq0nbN4eMpCK7ezvI6T98/S66vswP+ihL4QqAK/k5KqreWOxof09+JG7N/A==
+  dependencies:
+    "@vue/devtools-api" "^6.5.1"
+    type-fest "^4.8.3"
+
+vee-validate@^4.5.8:
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-4.5.8.tgz#8e394978ef3b74e589b869c626cd2a7d391ac81c"
+  integrity sha512-XZx2J93rlET49CdIIoxG9R6wQNoT3RxUUw9ar3QbIhczpzbtlm4BQ+TpCA9DoYHKFlApcXnE28WU7m4quoPsCA==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.15"
 
 vite-node@^1.2.2:
   version "1.2.2"

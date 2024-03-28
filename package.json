@@ -10,11 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vee-validate/nuxt": "^4.12.6",
+    "@vee-validate/rules": "^4.12.6",
     "chart.js": "^4.4.2",
     "firebase": "^10.8.0",
     "nuxt": "^3.10.1",
     "primeicons": "^6.0.1",
     "primevue": "^3.48.1",
+    "vee-validate": "^4.5.8",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },

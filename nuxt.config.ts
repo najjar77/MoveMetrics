@@ -3,8 +3,18 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
         '@nuxtjs/eslint-module',
-        'nuxt-primevue'
+        'nuxt-primevue',
+        '@vee-validate/nuxt',
     ],
+    veeValidate: {
+        autoImports: true,
+        componentNames: {
+            Form: 'VeeForm',
+            Field: 'VeeField',
+            FieldArray: 'VeeFieldArray',
+            ErrorMessage: 'VeeErrorMessage',
+        },
+    },
     primevue: {
         components: {
             include: ['Button', 'DataTable', 'Sidebar', 'Menu', 'Divider', 'Calendar', 'Dropdown', 'InputText']

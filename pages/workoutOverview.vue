@@ -19,9 +19,6 @@ const toast = useToast();
 const buttonVisibility = computed(() => currentWorkoutSelection.value !== null);
 const {user} = useAuth();
 
-const LogCurrentSelectedWorkout = () => {
-  console.log("Current selected workout: ", currentWorkoutSelection.value);
-};
 const loadWorkouts = async (userId: string) => {
   if (!userId) return;
   try {
