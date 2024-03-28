@@ -12,6 +12,7 @@ import GymDataInput from "~/components/SportDataInputs/GymDataInput.vue";
 import RunningDataInput from "~/components/SportDataInputs/RunningDataInput.vue";
 import SwimmingDataInput from "~/components/SportDataInputs/SwimmingDataInput.vue";
 import BoulderingDataInput from "~/components/SportDataInputs/BoulderingDataInput.vue";
+import {defineRule} from "vee-validate";
 
 const props = defineProps({
       visible: Boolean,
@@ -22,6 +23,7 @@ const props = defineProps({
       prefilledWorkoutData: Object
     }
 );
+const {validate} = useForm();
 
 const isEditMode = ref(props.isEditMode);
 const newFromText = 'Here you can add a new workout entry to your dataset.';
@@ -117,11 +119,21 @@ async function submitUpdatedData() {
 }
 
 async function submitData() {
-  emit('submitData', workoutData);
+  if ((await validate()).valid) {
+    emit('submitData', workoutData);
+  } else {
+    console.log('verpiss dich junge')
+  }
 }
 
-const distanceInM = ref(0);
-const time = ref("");
+onBeforeMount(() => {
+  defineRule('required', (value: any, _, ctx) => {
+    if (!value || !value.length) {
+      return ctx.field + ' is required';
+    }
+    return true;
+  });
+})
 
 //TODO: Add more space between all Activity sections
 </script>

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {ref} from 'vue';
 import Calendar from "primevue/calendar";
-import InputText from "primevue/inputtext";
 import 'primeicons/primeicons.css';
 import MultiSelect from 'primevue/multiselect';
 import type {GeneralInformation} from "~/models/formData/generalInformation";
@@ -10,10 +8,7 @@ const props = defineProps<{
   generalInformation: GeneralInformation
 }>();
 
-const name = ref('');
-const date = ref(null);
-const activities = ref([]); // To hold selected activities
-
+const isVeeFieldValid = ref(true)
 const emits = defineEmits(['update:generalInformation']);
 
 // Define the options for the dropdown
@@ -25,12 +20,19 @@ const activityOptions = [
   {name: 'Running', value: 'Running', icon: 'pi pi-running'}
 ];
 
+function handleUpdateName(value: string) {
+  console.log('handleUpdate', value)
+  emits('update:generalInformation', {...props.generalInformation, name: value})
+  isVeeFieldValid.value = !!value.length
+}
+
 function handleActivitiesUpdate(updatedActivities: Object[]) {
   // Log the changes
   console.log('Activities updated:', updatedActivities);
 
   // Emit the event with the updated information
   emits('update:generalInformation', {...props.generalInformation, activities: updatedActivities});
+
 }
 </script>
 
@@ -48,12 +50,22 @@ function handleActivitiesUpdate(updatedActivities: Object[]) {
           for="name"
           class="label"
         >Name:</label>
-        <InputText
+        <VeeField
           id="name"
+          as="InputText"
+          name="workout-name"
+          label="name"
           :model-value="generalInformation.name"
           placeholder="Name"
-          @update:model-value="$emit('update:generalInformation', {...generalInformation, name: $event})"
+          rules="required"
+          :invalid="!isVeeFieldValid"
+          @update:model-value="handleUpdateName"
         />
+        <div class="error-message">
+          <VeeErrorMessage
+            name="workout-name"
+          />
+        </div>
       </div>
       <div class="field-container">
         <label
@@ -113,6 +125,10 @@ function handleActivitiesUpdate(updatedActivities: Object[]) {
 .label {
   margin-bottom: 5px; /* Space between label and input */
   text-align: left; /* Ensure label text is aligned to the left */
+}
+
+.error-message {
+  color: #f87171;
 }
 </style>
 
