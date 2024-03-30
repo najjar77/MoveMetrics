@@ -24,7 +24,7 @@ const createPieChart = async (userId: string) => {
       acc[activity.value] = (acc[activity.value] || 0) + 1;
     });
     return acc;
-  }, {} as ActivityCounts);
+  }, {});
 
   const labels = Object.keys(activityCounts);
   const dataPoints = labels.map(label => activityCounts[label]);
@@ -32,15 +32,16 @@ const createPieChart = async (userId: string) => {
   const ctx = chartCanvas.value.getContext('2d');
   if (ctx) {
     if (myPieChart) {
-      myPieChart.destroy();
+      myPieChart.destroy(); // Zerstöre das bestehende Chart, bevor ein neues erstellt wird
     }
+    //@ts-ignore
     myPieChart = new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut', // Ändere diesen Wert von 'pie' zu 'doughnut'
       data: {
-        labels: labels, // Die Namen der Sportarten
+        labels: labels, // Die Namen der Aktivitäten
         datasets: [{
-          label: 'Total time of activities',
-          data: dataPoints,
+          label: 'Total number of activities',
+          data: dataPoints, // Die Anzahlen der Aktivitäten
           backgroundColor: [
             'rgb(178,18,51)',
             'rgba(8,102,167,0.6)',
@@ -53,11 +54,19 @@ const createPieChart = async (userId: string) => {
           ],
           borderWidth: 2
         }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'right'
+          }
+        }
       }
     });
   }
   isLoading.value = false;
 };
+
 
 watch(() => user.value?.uid, (newVal) => {
   if (newVal) {

@@ -18,18 +18,18 @@ function isTimestamp(value: any): value is Timestamp {
 }
 
 
-const processRunningData = (workoutData: WorkoutData[]): [number[], number[]] => {
+const processCyclingData = (workoutData: WorkoutData[]): [number[], number[]] => {
   const monthlyKm = Array(12).fill(0);
   const monthlyTimeMinutes = Array(12).fill(0);
 
   workoutData.forEach(workout => {
-    const runningInfo = workout.runningInformation;
-    if (runningInfo && isTimestamp(runningInfo.time)) {
+    const cyclingInfo = workout.cyclingInformation;
+    if (cyclingInfo && isTimestamp(cyclingInfo.time)) {
       //@ts-ignore
       const month = new Date(workout.generalInformation.date).getMonth();
-      monthlyKm[month] += runningInfo.distanceInKm;
+      monthlyKm[month] += cyclingInfo.distanceInKm;
       // Calculate the time in minutes and limit to one decimal place
-      const timeMinutes = parseFloat((runningInfo.time.seconds / 60000000).toFixed(1));
+      const timeMinutes = parseFloat((cyclingInfo.time.seconds / 60000000).toFixed(1));
       monthlyTimeMinutes[month] += timeMinutes;
 
     }
@@ -49,7 +49,7 @@ const createChart = (monthlyKm: number[], monthlyTime: number[]) => {
     data: {
       labels: labels,
       datasets: [{
-        label: 'Kms run per month',
+        label: 'Kms per month',
         data: monthlyKm,
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgb(54, 162, 235)',
@@ -88,7 +88,7 @@ const createChart = (monthlyKm: number[], monthlyTime: number[]) => {
 onMounted(async () => {
   if (user.value?.uid) {
     const workoutData = await fetchWorkoutDataByUser(user.value.uid) as WorkoutData[];
-    const [monthlyKm, monthlyTime] = processRunningData(workoutData);
+    const [monthlyKm, monthlyTime] = processCyclingData(workoutData);
     createChart(monthlyKm, monthlyTime);
   }
 });
@@ -96,7 +96,7 @@ onMounted(async () => {
 const loadDataAndCreateChart = async (userId: string) => {
   if (!userId) return;
   const workoutData = await fetchWorkoutDataByUser(userId);
-  const [monthlyKm, monthlyTime] = processRunningData(workoutData);
+  const [monthlyKm, monthlyTime] = processCyclingData(workoutData);
   createChart(monthlyKm, monthlyTime);
 };
 

@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import Fieldset from 'primevue/fieldset';
 import Card from 'primevue/card';
-import PieChart from "~/components/StatisticCharts/PieChart.vue";
+import PieChart from "~/components/StatisticCharts/DoughnutChart.vue";
 import BarChart from "~/components/StatisticCharts/BarChart.vue";
 import BarChartRunning from "~/components/StatisticCharts/LineChartRunning.vue";
+import LineChartCycling from "~/components/StatisticCharts/LineChartCycling.vue";
+import StackedBarSupplements from "~/components/StatisticCharts/StackedBarSupplements.vue";
 </script>
 
 <template>
   <div>
     <Fieldset legend="Statistics">
-      <p class="m-0">
-        Here is a summary of your sports entries in numbers
+      <p class="title-bold">
+        Here is a summary of your sports entries in numbers/graphics.
       </p>
 
       <div class="cards-container">
@@ -33,7 +35,7 @@ import BarChartRunning from "~/components/StatisticCharts/LineChartRunning.vue";
           </template>
         </Card>
         <!--Running Overview-->
-        <Card class="wide-card">
+        <Card>
           <template #title>
             Running overview
           </template>
@@ -41,15 +43,22 @@ import BarChartRunning from "~/components/StatisticCharts/LineChartRunning.vue";
             <BarChartRunning />
           </template>
         </Card>
-        <!--Total Sport-->
+        <!--Cycling Overview-->
         <Card>
           <template #title>
-            Total Sport
+            Cycling Overview
           </template>
           <template #content>
-            <p class="m-0">
-              here comes a pie chart for all kind off sports next to a agenda
-            </p>
+            <LineChartCycling />
+          </template>
+        </Card>
+        <!--Supplements Intake -->
+        <Card>
+          <template #title>
+            Supplements Intake
+          </template>
+          <template #content>
+            <StackedBarSupplements />
           </template>
         </Card>
       </div>
@@ -73,5 +82,9 @@ import BarChartRunning from "~/components/StatisticCharts/LineChartRunning.vue";
 
 .wide-card {
   flex: 0 0 400px; /* Setzt die Basisgröße auf 400px, aber erlaubt nicht das Schrumpfen oder Wachsen */
+}
+
+.title-bold {
+  font-weight: bold;
 }
 </style>
