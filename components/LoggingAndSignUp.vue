@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useAuth} from "~/composables/useAuth";
-import {loginWithGoogle, logout} from "~/firebase/authServices";
+import {loginWithGoogle, logoutFromGoogle} from "~/firebase/authServices";
 
 const {user} = useAuth();
 </script>
@@ -11,7 +11,7 @@ const {user} = useAuth();
       <Button
         label="Sign Out"
         severity="secondary"
-        @click="logout"
+        @click="logoutFromGoogle"
       />
     </div>
     <div v-else>

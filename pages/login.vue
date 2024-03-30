@@ -2,35 +2,40 @@
 import Card from "primevue/card";
 import {useAuth} from "~/composables/useAuth";
 
+definePageMeta({
+  layout: "login",
+});
 const {user} = useAuth();
 
 </script>
 
 <template>
-  <div class="card-container">
-    <Card class="card-style">
-      <template #title>
-        <div v-if="!user">
-          <img
-            src="~/assets/google_logo.svg"
-            alt="Google Logo"
-            width="20"
-            height="20"
-          >
-          Google Login
-        </div>
-        <div v-else>
-          Logout
-        </div>
-      </template>
-      <template #content>
-        <div class="content-container">
-          <span v-if="!user">Please Login to continue. Notice that you only can login via Google</span>
-          <LoggingAndSignUp />
-        </div>
-      </template>
-    </Card>
-  </div>
+  <NuxtLayout name="login">
+    <div class="card-container">
+      <Card class="card-style">
+        <template #title>
+          <div v-if="!user">
+            <img
+              src="~/assets/google_logo.svg"
+              alt="Google Logo"
+              width="20"
+              height="20"
+            >
+            Google Login
+          </div>
+          <div v-else>
+            Logout
+          </div>
+        </template>
+        <template #content>
+          <div class="content-container">
+            <span v-if="!user">Please Login to continue. Notice that you only can login via Google</span>
+            <LoggingAndSignUp />
+          </div>
+        </template>
+      </Card>
+    </div>
+  </NuxtLayout>
 </template>
 
 <style scoped>
