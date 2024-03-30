@@ -3,7 +3,7 @@ import Fieldset from 'primevue/fieldset';
 import Card from 'primevue/card';
 import PieChart from "~/components/StatisticCharts/PieChart.vue";
 import BarChart from "~/components/StatisticCharts/BarChart.vue";
-import BarChartRunning from "~/components/StatisticCharts/BarChartRunning.vue";
+import BarChartRunning from "~/components/StatisticCharts/LineChartRunning.vue";
 </script>
 
 <template>
@@ -32,8 +32,8 @@ import BarChartRunning from "~/components/StatisticCharts/BarChartRunning.vue";
             <BarChart />
           </template>
         </Card>
-        <!--Total Sport-->
-        <Card>
+        <!--Running Overview-->
+        <Card class="wide-card">
           <template #title>
             Running overview
           </template>
@@ -69,5 +69,9 @@ import BarChartRunning from "~/components/StatisticCharts/BarChartRunning.vue";
   flex: 1;
   min-width: 300px; /* Adjust minimum width as needed */
   max-width: 100%; /* This ensures cards won't grow beyond the container's width */
+}
+
+.wide-card {
+  flex: 0 0 400px; /* Setzt die Basisgröße auf 400px, aber erlaubt nicht das Schrumpfen oder Wachsen */
 }
 </style>

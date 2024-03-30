@@ -3,6 +3,7 @@ import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
 import {useAuth} from "~/composables/useAuth";
+import {logoutFromGoogle} from "~/firebase/authServices";
 
 
 const router = useRouter();
@@ -21,7 +22,7 @@ const menuItems = ref([{
 }, {
   label: 'Data Table',
   value: 'DataTable',
-  icon: 'pi pi-chart-bar',
+  icon: 'pi pi-database',
   command: () => {
     router.push('/workoutOverview');
   }
@@ -32,7 +33,24 @@ const menuItems = ref([{
   command: () => {
     router.push('/statistics');
   }
-}
+},
+  {
+    label: 'Settings',
+    value: 'settings',
+    icon: 'pi pi-cog',
+    command: () => {
+      router.push('/settings');
+    }
+  },
+  {
+    label: 'Sign Out',
+    value: 'signOut',
+    icon: 'pi pi-sign-out',
+    command: () => {
+      logoutFromGoogle();
+    }
+  }
+
 ]);
 
 </script>
