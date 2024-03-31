@@ -1,95 +1,91 @@
 <script setup lang="ts">
 import Calendar from "primevue/calendar";
-import 'primeicons/primeicons.css';
-import MultiSelect from 'primevue/multiselect';
-import type {GeneralInformation} from "~/models/formData/generalInformation";
+import "primeicons/primeicons.css";
+import MultiSelect from "primevue/multiselect";
+import type { GeneralInformation } from "~/models/formData/generalInformation";
 
 const props = defineProps<{
-  generalInformation: GeneralInformation
+  generalInformation?: GeneralInformation;
 }>();
 
-const isVeeFieldValid = ref(true)
-const emits = defineEmits(['update:generalInformation']);
+const isVeeFieldValid = ref(true);
+const emits = defineEmits(["update:generalInformation"]);
 
 // Define the options for the dropdown
 const activityOptions = [
-  {name: 'Bouldering', value: 'Bouldering', icon: 'pi pi-mountain'},
-  {name: 'Cycling', value: 'Cycling', icon: 'pi pi-bicycle'},
-  {name: 'Gym', value: 'Gym', icon: 'pi pi-dumbbell'},
-  {name: 'Swimming', value: 'Swimming', icon: 'pi pi-swimmer'},
-  {name: 'Running', value: 'Running', icon: 'pi pi-running'}
+  { name: "Bouldering", value: "Bouldering", icon: "pi pi-mountain" },
+  { name: "Cycling", value: "Cycling", icon: "pi pi-bicycle" },
+  { name: "Gym", value: "Gym", icon: "pi pi-dumbbell" },
+  { name: "Swimming", value: "Swimming", icon: "pi pi-swimmer" },
+  { name: "Running", value: "Running", icon: "pi pi-running" },
 ];
 
 function handleUpdateName(value: string) {
-  console.log('handleUpdate', value)
-  emits('update:generalInformation', {...props.generalInformation, name: value})
-  isVeeFieldValid.value = !!value.length
+  console.log("handleUpdate", value);
+  emits("update:generalInformation", {
+    ...props.generalInformation,
+    name: value,
+  });
+  isVeeFieldValid.value = !!value.length;
 }
 
 function handleActivitiesUpdate(updatedActivities: Object[]) {
   // Log the changes
-  console.log('Activities updated:', updatedActivities);
+  console.log("Activities updated:", updatedActivities);
 
   // Emit the event with the updated information
-  emits('update:generalInformation', {...props.generalInformation, activities: updatedActivities});
-
+  emits("update:generalInformation", {
+    ...props.generalInformation,
+    activities: updatedActivities,
+  });
 }
 </script>
 
 <template>
-  <Divider
-    align="center"
-    type="Solid"
-  >
+  <Divider align="center" type="solid">
     <b>General Information</b>
   </Divider>
   <div class="container">
     <div class="row">
       <div class="field-container">
-        <label
-          for="name"
-          class="label"
-        >Name:</label>
+        <label for="name" class="label">Name:</label>
         <VeeField
           id="name"
           as="InputText"
           name="workout-name"
           label="name"
-          :model-value="generalInformation.name"
+          :model-value="generalInformation?.name"
           placeholder="Name"
           rules="required"
           :invalid="!isVeeFieldValid"
           @update:model-value="handleUpdateName"
         />
         <div class="error-message">
-          <VeeErrorMessage
-            name="workout-name"
-          />
+          <VeeErrorMessage name="workout-name" />
         </div>
       </div>
       <div class="field-container">
-        <label
-          for="date"
-          class="label"
-        >Date:</label>
+        <label for="date" class="label">Date:</label>
         <Calendar
           id="date"
-          :model-value="generalInformation.date"
+          :model-value="generalInformation?.date"
           date-format="dd/mm/yy"
           placeholder="Date"
           :show-icon="true"
-          @update:model-value="$emit('update:generalInformation', {...generalInformation, date: $event})"
+          @update:model-value="
+            $emit('update:generalInformation', {
+              ...generalInformation,
+              date: $event,
+            })
+          "
         />
       </div>
     </div>
     <div class="field-container">
-      <label
-        for="activities"
-        class="label"
-      >Activities:</label>
+      <label for="activities" class="label">Activities:</label>
       <MultiSelect
         id="activities"
-        :model-value="generalInformation.activities"
+        :model-value="generalInformation?.activities"
         :options="activityOptions"
         option-label="name"
         placeholder="Select Activities"
@@ -99,7 +95,6 @@ function handleActivitiesUpdate(updatedActivities: Object[]) {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .container {
@@ -131,5 +126,3 @@ function handleActivitiesUpdate(updatedActivities: Object[]) {
   color: #f87171;
 }
 </style>
-
-

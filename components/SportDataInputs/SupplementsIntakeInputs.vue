@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import Checkbox from 'primevue/checkbox';
-import InputNumber from 'primevue/inputnumber';
-import type {SuppIntakeInfo} from "~/models/formData/suppIntakeInfo";
+import Checkbox from "primevue/checkbox";
+import InputNumber from "primevue/inputnumber";
+import type { SuppIntakeInfo } from "~/models/formData/suppIntakeInfo";
 
-
-const prop = defineProps<{
-  suppIntakeInfo: SuppIntakeInfo
+defineProps<{
+  suppIntakeInfo?: SuppIntakeInfo;
 }>();
 
-
+defineEmits<{
+  (e: "update:suppIntakeInfo", suppIntakeInfo: SuppIntakeInfo): void;
+}>();
 </script>
 
 <template>
@@ -19,50 +20,115 @@ const prop = defineProps<{
     <div class="field-container">
       <label for="bcaa" class="label">BCAA:</label>
       <div class="input-container">
-        <Checkbox :modelValue="suppIntakeInfo.bcaa"
-                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, bcaa: $event})"
-                  inputId="bcaa" name="bcaa" :binary="true"/>
-        <InputNumber :modelValue="suppIntakeInfo.bcaaAmount"
-                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, bcaaAmount: $event})"
-                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox
+          :model-value="suppIntakeInfo?.bcaa"
+          input-id="bcaa"
+          name="bcaa"
+          :binary="true"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', { ...suppIntakeInfo, bcaa: $event })
+          "
+        />
+        <InputNumber
+          :model-value="suppIntakeInfo?.bcaaAmount"
+          placeholder="Amount in gr"
+          locale="de-DE"
+          :min-fraction-digits="2"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', {
+              ...suppIntakeInfo,
+              bcaaAmount: $event,
+            })
+          "
+        />
       </div>
     </div>
     <div class="field-container">
       <label for="creatin" class="label">Creatin:</label>
       <div class="input-container">
-        <Checkbox :modelValue="suppIntakeInfo.creatin"
-                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, creatin: $event})"
-                  inputId="creatin" name="creatin" :binary="true"/>
-        <InputNumber :modelValue="suppIntakeInfo.creatinAmount"
-                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, creatinAmount: $event})"
-                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox
+          :model-value="suppIntakeInfo?.creatin"
+          input-id="creatin"
+          name="creatin"
+          :binary="true"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', {
+              ...suppIntakeInfo,
+              creatin: $event,
+            })
+          "
+        />
+        <InputNumber
+          :model-value="suppIntakeInfo?.creatinAmount"
+          placeholder="Amount in gr"
+          locale="de-DE"
+          :min-fraction-digits="2"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', {
+              ...suppIntakeInfo,
+              creatinAmount: $event,
+            })
+          "
+        />
       </div>
     </div>
     <div class="field-container">
       <label for="eaa" class="label">EAA:</label>
       <div class="input-container">
-        <Checkbox :modelValue="suppIntakeInfo.eaa"
-                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, eaa: $event})"
-                  inputId="eaa" name="eaa" :binary="true"/>
-        <InputNumber :modelValue="suppIntakeInfo.eaaAmount"
-                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, eaaAmount: $event})"
-                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox
+          :model-value="suppIntakeInfo?.eaa"
+          input-id="eaa"
+          name="eaa"
+          :binary="true"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', { ...suppIntakeInfo, eaa: $event })
+          "
+        />
+        <InputNumber
+          :model-value="suppIntakeInfo?.eaaAmount"
+          placeholder="Amount in gr"
+          locale="de-DE"
+          :min-fraction-digits="2"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', {
+              ...suppIntakeInfo,
+              eaaAmount: $event,
+            })
+          "
+        />
       </div>
     </div>
     <div class="field-container">
       <label for="protein" class="label">Protein:</label>
       <div class="input-container">
-        <Checkbox :modelValue="suppIntakeInfo.protein"
-                  @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, protein: $event})"
-                  inputId="protein" name="protein" :binary="true"/>
-        <InputNumber :modelValue="suppIntakeInfo.proteinAmount"
-                     @update:modelValue="$emit('update:suppIntakeInfo', {...suppIntakeInfo, proteinAmount: $event})"
-                     placeholder="Amount in gr" locale="de-DE" :minFractionDigits="2"/>
+        <Checkbox
+          :model-value="suppIntakeInfo?.protein"
+          input-id="protein"
+          name="protein"
+          :binary="true"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', {
+              ...suppIntakeInfo,
+              protein: $event,
+            })
+          "
+        />
+        <InputNumber
+          :model-value="suppIntakeInfo?.proteinAmount"
+          placeholder="Amount in gr"
+          locale="de-DE"
+          :min-fraction-digits="2"
+          @update:model-value="
+            $emit('update:suppIntakeInfo', {
+              ...suppIntakeInfo,
+              proteinAmount: $event,
+            })
+          "
+        />
       </div>
     </div>
   </div>
 </template>
-
 
 <style scoped>
 /* Styles for the container wrapping all form elements. */
@@ -95,4 +161,3 @@ const prop = defineProps<{
   text-align: left; /* Align text within the label to the left. */
 }
 </style>
-

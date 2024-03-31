@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
-import Chart from 'chart.js/auto';
-import {useAuth} from '~/composables/useAuth';
-import {fetchWorkoutDataByUser} from "~/firebase/DBController";
-import type {WorkoutData} from "~/models/formData/workoutData";
+import { onMounted, ref } from "vue";
+import Chart from "chart.js/auto";
+import { useAuth } from "~/composables/useAuth";
+import { fetchWorkoutDataByUser } from "~/firebase/DBController";
+import type { WorkoutData } from "~/models/formData/workoutData";
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
-const {user} = useAuth();
+const { user } = useAuth();
 
 interface Timestamp {
   seconds: number;
@@ -14,24 +14,26 @@ interface Timestamp {
 }
 
 function isTimestamp(value: any): value is Timestamp {
-  return value && typeof value.seconds === 'number';
+  return value && typeof value.seconds === "number";
 }
 
-
-const processCyclingData = (workoutData: WorkoutData[]): [number[], number[]] => {
+const processCyclingData = (
+  workoutData: WorkoutData[],
+): [number[], number[]] => {
   const monthlyKm = Array(12).fill(0);
   const monthlyTimeMinutes = Array(12).fill(0);
 
-  workoutData.forEach(workout => {
+  workoutData.forEach((workout) => {
     const cyclingInfo = workout.cyclingInformation;
     if (cyclingInfo && isTimestamp(cyclingInfo.time)) {
       //@ts-ignore
       const month = new Date(workout.generalInformation.date).getMonth();
       monthlyKm[month] += cyclingInfo.distanceInKm;
       // Calculate the time in minutes and limit to one decimal place
-      const timeMinutes = parseFloat((cyclingInfo.time.seconds / 60000000).toFixed(1));
+      const timeMinutes = parseFloat(
+        (cyclingInfo.time.seconds / 60000000).toFixed(1),
+      );
       monthlyTimeMinutes[month] += timeMinutes;
-
     }
   });
 
@@ -40,35 +42,51 @@ const processCyclingData = (workoutData: WorkoutData[]): [number[], number[]] =>
 
 const createChart = (monthlyKm: number[], monthlyTime: number[]) => {
   if (!chartCanvas.value) return;
-  const ctx = chartCanvas.value.getContext('2d');
+  const ctx = chartCanvas.value.getContext("2d");
   if (!ctx) return;
 
-  const labels = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"];
+  const labels = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Okt",
+    "Nov",
+    "Dec",
+  ];
   new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
       labels: labels,
-      datasets: [{
-        label: 'Kms per month',
-        data: monthlyKm,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgb(54, 162, 235)',
-        borderWidth: 2,
-        pointRadius: 3,
-        pointBackgroundColor: 'rgb(54, 162, 235)',
-        fill: false,
-        tension: 0.4,
-      }, {
-        label: 'Time per month (in minutes)',
-        data: monthlyTime,
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgb(255,99,132)',
-        borderWidth: 2,
-        pointRadius: 3,
-        pointBackgroundColor: 'rgb(255,99,132)',
-        fill: true,
-        tension: 0.4,
-      }]
+      datasets: [
+        {
+          label: "Kms per month",
+          data: monthlyKm,
+          backgroundColor: "rgba(54, 162, 235, 0.2)",
+          borderColor: "rgb(54, 162, 235)",
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: "rgb(54, 162, 235)",
+          fill: false,
+          tension: 0.4,
+        },
+        {
+          label: "Time per month (in minutes)",
+          data: monthlyTime,
+          backgroundColor: "rgba(255,99,132,0.2)",
+          borderColor: "rgb(255,99,132)",
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: "rgb(255,99,132)",
+          fill: true,
+          tension: 0.4,
+        },
+      ],
     },
     options: {
       scales: {
@@ -76,18 +94,19 @@ const createChart = (monthlyKm: number[], monthlyTime: number[]) => {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Kilometers'
+            text: "Kilometers",
           },
-        }
-      }
-    }
+        },
+      },
+    },
   });
 };
 
-
 onMounted(async () => {
   if (user.value?.uid) {
-    const workoutData = await fetchWorkoutDataByUser(user.value.uid) as WorkoutData[];
+    const workoutData = (await fetchWorkoutDataByUser(
+      user.value.uid,
+    )) as WorkoutData[];
     const [monthlyKm, monthlyTime] = processCyclingData(workoutData);
     createChart(monthlyKm, monthlyTime);
   }
@@ -100,11 +119,15 @@ const loadDataAndCreateChart = async (userId: string) => {
   createChart(monthlyKm, monthlyTime);
 };
 
-watch(() => user.value?.uid, (newUserId) => {
-  if (newUserId && chartCanvas.value) {
-    loadDataAndCreateChart(newUserId);
-  }
-}, {immediate: true});
+watch(
+  () => user.value?.uid,
+  (newUserId) => {
+    if (newUserId && chartCanvas.value) {
+      loadDataAndCreateChart(newUserId);
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
@@ -113,5 +136,4 @@ watch(() => user.value?.uid, (newUserId) => {
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

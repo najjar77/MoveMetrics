@@ -5,59 +5,58 @@ import Button from "primevue/button";
 
 <template>
   <div class="cards-container">
-
     <Card class="custom-card1">
       <template #title>
-        <i class="pi pi-info-circle"/> Table Overview
+        <i class="pi pi-info-circle" /> Table Overview
       </template>
-      <template #content> Here you can have an overview of all your workouts</template>
+      <template #content>
+        Here you can have an overview of all your workouts</template
+      >
       <template #footer>
         <NuxtLink to="tableOverview">
-          <Button label="Let's dive in" severity="secondary"/>
+          <Button label="Let's dive in" severity="secondary" />
         </NuxtLink>
       </template>
     </Card>
     <Card class="custom-card2">
-      <template #title>
-        <i class="pi pi-chart-line"/> Statistics
-      </template>
-      <template #content> Here you can have a deeper look into your overall statistics</template>
+      <template #title> <i class="pi pi-chart-line" /> Statistics </template>
+      <template #content>
+        Here you can have a deeper look into your overall statistics</template
+      >
       <template #footer>
         <NuxtLink to="tableOverview">
-          <Button label="Let's dive in" severity="secondary"/>
+          <Button label="Let's dive in" severity="secondary" />
         </NuxtLink>
       </template>
     </Card>
 
     <Card class="custom-card3">
-      <template #title>
-        <i class="pi pi-user"/> Account
-      </template>
-      <template #content>Here you can change your personal Information</template>
+      <template #title> <i class="pi pi-user" /> Account </template>
+      <template #content
+        >Here you can change your personal Information</template
+      >
       <template #footer>
         <NuxtLink to="tableOverview">
-          <Button label="Let's dive in" severity="secondary"/>
+          <Button label="Let's dive in" severity="secondary" />
         </NuxtLink>
       </template>
     </Card>
 
     <Card class="custom-card4">
-      <template #title>
-        <i class="pi pi-cog"/> Settings
-      </template>
-      <template #content> Here you can change the settings of the website</template>
+      <template #title> <i class="pi pi-cog" /> Settings </template>
+      <template #content>
+        Here you can change the settings of the website</template
+      >
       <template #footer>
         <NuxtLink to="tableOverview">
-          <Button label="Let's dive in" severity="secondary"/>
+          <Button label="Let's dive in" severity="secondary" />
         </NuxtLink>
       </template>
     </Card>
   </div>
-
 </template>
 
 <style scoped>
-
 .cards-container {
   display: flex;
   flex-wrap: wrap;
@@ -71,12 +70,18 @@ import Button from "primevue/button";
     align-items: center;
   }
 
-  .custom-card1, .custom-card2, .custom-card3, .custom-card4 {
+  .custom-card1,
+  .custom-card2,
+  .custom-card3,
+  .custom-card4 {
     width: 90%;
   }
 }
 
-.custom-card1, .custom-card2, .custom-card3, .custom-card4 {
+.custom-card1,
+.custom-card2,
+.custom-card3,
+.custom-card4 {
   width: 25rem;
   background-color: #073b4c; /* Example color, adjust for each card */
   color: white;
@@ -93,7 +98,7 @@ import Button from "primevue/button";
 }
 
 .custom-card3 {
-  background-color: #4C0827;
+  background-color: #4c0827;
 }
 
 .custom-card4 {

@@ -3,13 +3,13 @@ import {
   deleteWorkoutData,
   fetchWorkoutDataByUser,
   saveWorkoutDataByUserId,
-  updateWorkoutData
+  updateWorkoutData,
 } from "~/firebase/DBController";
-import type {WorkoutData} from "~/models/formData/workoutData";
-import {ref} from "vue";
+import type { WorkoutData } from "~/models/formData/workoutData";
+import { ref } from "vue";
 import Toolbar from "primevue/toolbar";
-import {useToast} from "primevue/usetoast";
-import {useAuth} from "~/composables/useAuth";
+import { useToast } from "primevue/usetoast";
+import { useAuth } from "~/composables/useAuth";
 
 const workouts = ref<WorkoutData[]>([]);
 const currentWorkoutSelection = ref<WorkoutData | null>(null);
@@ -17,7 +17,7 @@ const isEditMode = ref(false);
 const dataEntryFormVisible = ref(false);
 const toast = useToast();
 const buttonVisibility = computed(() => currentWorkoutSelection.value !== null);
-const {user} = useAuth();
+const { user } = useAuth();
 
 const loadWorkouts = async (userId: string) => {
   if (!userId) return;
@@ -33,11 +33,15 @@ const loadWorkouts = async (userId: string) => {
 };
 
 // Load workouts when the user changes
-watch(() => user.value?.uid, (newUserId) => {
-  if (typeof newUserId === 'string') {
-    loadWorkouts(newUserId);
-  }
-}, {immediate: true});
+watch(
+  () => user.value?.uid,
+  (newUserId) => {
+    if (typeof newUserId === "string") {
+      loadWorkouts(newUserId);
+    }
+  },
+  { immediate: true },
+);
 
 onBeforeUnmount(() => {
   workouts.value = []; // Clear the workouts when the component is unmounted
@@ -57,7 +61,11 @@ async function refreshData() {
 
 // deletes the current selected workout
 async function deleteSelectedWorkout() {
-  if (currentWorkoutSelection.value && user.value && currentWorkoutSelection.value.id) {
+  if (
+    currentWorkoutSelection.value &&
+    user.value &&
+    currentWorkoutSelection.value.id
+  ) {
     try {
       await deleteWorkoutData(user.value.uid, currentWorkoutSelection.value.id);
       await refreshData();
@@ -65,7 +73,9 @@ async function deleteSelectedWorkout() {
       console.error("Failed to delete workout:", error);
     }
   } else {
-    console.log("No workout selected for deletion or user not logged in or no workout ID available for deletion");
+    console.log(
+      "No workout selected for deletion or user not logged in or no workout ID available for deletion",
+    );
   }
 }
 
@@ -84,29 +94,38 @@ async function openFormInEditMode() {
       console.error("Failed to edit workout:", error);
     }
   } else {
-    console.log("No workout selected for deletion")
+    console.log("No workout selected for deletion");
   }
 }
 
-
 // for debugging purposes
 watch(currentWorkoutSelection, (newValue) => {
-  console.log(JSON.stringify(newValue))
-})
+  console.log(JSON.stringify(newValue));
+});
 
 const showSuccess = () => {
   if (isEditMode.value === false) {
-    toast.add({severity: 'success', summary: 'Success Message', detail: 'Workout added successfully', life: 5000});
+    toast.add({
+      severity: "success",
+      summary: "Success Message",
+      detail: "Workout added successfully",
+      life: 5000,
+    });
   } else {
-    toast.add({severity: 'success', summary: 'Update Message', detail: 'Workout updated successfully', life: 5000});
+    toast.add({
+      severity: "success",
+      summary: "Update Message",
+      detail: "Workout updated successfully",
+      life: 5000,
+    });
   }
 };
 const showError = () => {
   toast.add({
-    severity: 'error',
-    summary: 'Missing Data',
-    detail: 'Please fill out the mandatory fields',
-    life: 5000
+    severity: "error",
+    summary: "Missing Data",
+    detail: "Please fill out the mandatory fields",
+    life: 5000,
   });
 };
 
@@ -118,7 +137,6 @@ const submitData = async (workoutData: WorkoutData) => {
     dataEntryFormVisible.value = false;
     await refreshData();
     console.log("Data saved: ", JSON.stringify(workoutData));
-
   } catch (error) {
     console.error("Failed to save data: ", error);
     showError();
@@ -135,11 +153,10 @@ const submitUpdatedData = async (id: string, workoutData: WorkoutData) => {
     await refreshData();
     dataEntryFormVisible.value = false;
   } catch (error) {
-    console.error("Failed to update entry set: ", error)
+    console.error("Failed to update entry set: ", error);
     showError();
   }
-}
-
+};
 </script>
 
 <template>
@@ -236,7 +253,7 @@ const submitUpdatedData = async (id: string, workoutData: WorkoutData) => {
 }
 
 .custom-table-Design {
-  width: 100%
+  width: 100%;
 }
 
 .toolbar-container {

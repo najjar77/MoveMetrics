@@ -1,4 +1,4 @@
 export interface RunningInformation {
-    distanceInKm: number;
-    time: string;
+  distanceInKm: number;
+  time: string;
 }

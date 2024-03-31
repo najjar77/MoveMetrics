@@ -1,24 +1,17 @@
 <script setup lang="ts">
-import {useAuth} from "~/composables/useAuth";
-import {loginWithGoogle, logoutFromGoogle} from "~/firebase/authServices";
+import { useAuth } from "~/composables/useAuth";
+import { loginWithGoogle, logoutFromGoogle } from "~/firebase/authServices";
 
-const {user} = useAuth();
+const { user } = useAuth();
 </script>
 
 <template>
   <div>
     <div v-if="user">
-      <Button
-        label="Sign Out"
-        severity="secondary"
-        @click="logoutFromGoogle"
-      />
+      <Button label="Sign Out" severity="secondary" @click="logoutFromGoogle" />
     </div>
     <div v-else>
-      <Button
-        label="login"
-        @click="loginWithGoogle"
-      />
+      <Button label="login" @click="loginWithGoogle" />
     </div>
   </div>
 </template>
@@ -29,5 +22,4 @@ const {user} = useAuth();
   width: 50%;
   padding: 10px;
 }
-
 </style>

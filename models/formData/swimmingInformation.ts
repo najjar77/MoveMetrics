@@ -1,4 +1,4 @@
 export interface SwimmingInformation {
-    distanceInM: number;
-    time: string;
+  distanceInM: number;
+  time: string;
 }

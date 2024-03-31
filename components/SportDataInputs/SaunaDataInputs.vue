@@ -1,67 +1,65 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-import Checkbox from 'primevue/checkbox';
-import type {SaunaInformation} from "~/models/formData/saunaInformation";
+import Checkbox from "primevue/checkbox";
+import type { SaunaInformation } from "~/models/formData/saunaInformation";
 
-const prop = defineProps<{
-  saunaInformation: SaunaInformation
+defineProps<{
+  saunaInformation?: SaunaInformation;
 }>();
 
-const finnish = ref(false);
-const steam = ref(false);
-const bio = ref(false);
+defineEmits<{
+  (e: "update:saunaInformation", saunainfo: SaunaInformation): void;
+}>();
 </script>
 
 <template>
-  <Divider
-    align="center"
-    type="solid"
-  >
+  <Divider align="center" type="solid">
     <b>Sauna</b>
   </Divider>
   <div class="container">
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="saunaInformation.finnish"
+        :model-value="saunaInformation?.finnish"
         input-id="finnish"
         name="finnish"
         :binary="true"
-        @update:model-value="$emit('update:saunaInformation', {...saunaInformation, finnish: $event})"
+        @update:model-value="
+          $emit('update:saunaInformation', {
+            ...saunaInformation,
+            finnish: $event,
+          })
+        "
       />
-      <label
-        for="finnish"
-        class="label-margin"
-      > Finnish Sauna</label>
+      <label for="finnish" class="label-margin"> Finnish Sauna</label>
     </div>
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="saunaInformation.bio"
+        :model-value="saunaInformation?.bio"
         input-id="bio"
         name="bio"
         :binary="true"
-        @update:model-value="$emit('update:saunaInformation', {...saunaInformation, bio: $event})"
+        @update:model-value="
+          $emit('update:saunaInformation', { ...saunaInformation, bio: $event })
+        "
       />
-      <label
-        for="bio"
-        class="label-margin"
-      > Bio Sauna</label>
+      <label for="bio" class="label-margin"> Bio Sauna</label>
     </div>
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="saunaInformation.steam"
+        :model-value="saunaInformation?.steam"
         input-id="steam"
         name="steam"
         :binary="true"
-        @update:model-value="$emit('update:saunaInformation', {...saunaInformation, steam: $event})"
+        @update:model-value="
+          $emit('update:saunaInformation', {
+            ...saunaInformation,
+            steam: $event,
+          })
+        "
       />
-      <label
-        for="steam"
-        class="label-margin"
-      > Steam Sauna</label>
+      <label for="steam" class="label-margin"> Steam Sauna</label>
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .container {
@@ -76,5 +74,3 @@ const bio = ref(false);
   margin-left: 5px; /* Adjust the space as needed */
 }
 </style>
-
-

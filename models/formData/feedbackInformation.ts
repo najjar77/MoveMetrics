@@ -1,4 +1,4 @@
 export interface FeedbackInformation {
-    sliderFeedback: number;
-    textFeedback: string;
+  sliderFeedback: number;
+  textFeedback: string;
 }

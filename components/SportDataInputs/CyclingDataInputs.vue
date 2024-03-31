@@ -1,66 +1,66 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-import InputNumber from 'primevue/inputnumber';
-import InputSwitch from 'primevue/inputswitch';
-import type {CyclingInformation} from "~/models/formData/cyclingInformation";
+import InputNumber from "primevue/inputnumber";
+import InputSwitch from "primevue/inputswitch";
+import type { CyclingInformation } from "~/models/formData/cyclingInformation";
 
-const props = defineProps<{
-  cyclingInformation: CyclingInformation
+defineProps<{
+  cyclingInformation?: CyclingInformation;
 }>();
 
-const distanceInKm = ref(0);
-const time = ref("");
-const inside = ref(true);
-
+defineEmits<{
+  (e: "update:cyclingInformation", cyclingInfo: CyclingInformation): void;
+}>();
 </script>
 
 <template>
-  <Divider
-    align="center"
-    type="solid"
-  >
+  <Divider align="center" type="solid">
     <b>Cycling</b>
   </Divider>
   <div class="container">
     <div class="field-container">
-      <label
-        for="CyclingDistance"
-        class="label"
-      >Distance in KM:</label>
+      <label for="CyclingDistance" class="label">Distance in KM:</label>
       <InputNumber
-        :model-value="cyclingInformation.distanceInKm"
+        :model-value="cyclingInformation?.distanceInKm"
         input-id="CyclingDistance"
         locale="de-DE"
         :min-fraction-digits="2"
-        @update:model-value="$emit('update:cyclingInformation' , { ...cyclingInformation, distanceInKm: $event })"
+        @update:model-value="
+          $emit('update:cyclingInformation', {
+            ...cyclingInformation,
+            distanceInKm: $event,
+          })
+        "
       />
     </div>
     <div class="field-container">
-      <label
-        for="CyclingTime"
-        class="label"
-      >Time:</label>
+      <label for="CyclingTime" class="label">Time:</label>
       <Calendar
         id="CyclingTime"
-        :model-value="cyclingInformation.time"
+        :model-value="cyclingInformation?.time"
         time-only
-        @update:model-value="$emit('update:cyclingInformation', { ...cyclingInformation, time: $event })"
+        @update:model-value="
+          $emit('update:cyclingInformation', {
+            ...cyclingInformation,
+            time: $event,
+          })
+        "
       />
     </div>
     <div class="field-container-of-switch">
-      <label
-        for="CyclingWhere"
-        class="label"
-      >Outside / Inside</label>
+      <label for="CyclingWhere" class="label">Outside / Inside</label>
       <InputSwitch
         id="CyclingWhere"
-        :model-value="cyclingInformation.inside"
-        @update:model-value="$emit('update:cyclingInformation', { ...cyclingInformation, inside: $event })"
+        :model-value="cyclingInformation?.inside"
+        @update:model-value="
+          $emit('update:cyclingInformation', {
+            ...cyclingInformation,
+            inside: $event,
+          })
+        "
       />
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .container {

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import Card from "primevue/card";
-import {useAuth} from "~/composables/useAuth";
+import { useAuth } from "~/composables/useAuth";
 
 definePageMeta({
   layout: "login",
 });
-const {user} = useAuth();
-
+const { user } = useAuth();
 </script>
 
 <template>
@@ -20,16 +19,17 @@ const {user} = useAuth();
               alt="Google Logo"
               width="20"
               height="20"
-            >
+            />
             Google Login
           </div>
-          <div v-else>
-            Logout
-          </div>
+          <div v-else>Logout</div>
         </template>
         <template #content>
           <div class="content-container">
-            <span v-if="!user">Please Login to continue. Notice that you only can login via Google</span>
+            <span v-if="!user"
+              >Please Login to continue. Notice that you only can login via
+              Google</span
+            >
             <LoggingAndSignUp />
           </div>
         </template>
@@ -61,5 +61,4 @@ const {user} = useAuth();
 .content-container > span {
   margin-bottom: 20px; /* Fügt einen Abstand unter dem Span-Element hinzu */
 }
-
 </style>

@@ -1,92 +1,80 @@
 <script setup lang="ts">
-import {ref} from 'vue';
 import Checkbox from "primevue/checkbox";
-import type {GymInformation} from "~/models/formData/gymInformation";
+import type { GymInformation } from "~/models/formData/gymInformation";
 
-const prop = defineProps<{
-  gymInformation: GymInformation,
-}>()
-const back = ref(false);
-const biceps = ref(false);
-const chest = ref(false);
-const legs = ref(false);
-const triceps = ref(false);
+defineProps<{
+  gymInformation?: GymInformation;
+}>();
 
-
+defineEmits<{
+  (e: "update:gymInformation", gymInfo: GymInformation): void;
+}>();
 </script>
 
 <template>
-  <Divider
-    align="center"
-    type="Solid"
-  >
+  <Divider align="center" type="solid">
     <b>GYM</b>
   </Divider>
   <div class="container">
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="gymInformation.back"
+        :model-value="gymInformation?.back"
         input-id="back"
         name="back"
         :binary="true"
-        @update:model-value="$emit('update:gymInformation',{...gymInformation,back:$event})"
+        @update:model-value="
+          $emit('update:gymInformation', { ...gymInformation, back: $event })
+        "
       />
-      <label
-        for="back"
-        class="label-margin"
-      >Back</label>
+      <label for="back" class="label-margin">Back</label>
     </div>
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="gymInformation.biceps"
+        :model-value="gymInformation?.biceps"
         input-id="biceps"
         name="biceps"
         :binary="true"
-        @update:model-value="$emit('update:gymInformation',{...gymInformation,biceps:$event})"
+        @update:model-value="
+          $emit('update:gymInformation', { ...gymInformation, biceps: $event })
+        "
       />
-      <label
-        for="biceps"
-        class="label-margin"
-      >Biceps</label>
+      <label for="biceps" class="label-margin">Biceps</label>
     </div>
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="gymInformation.chest"
+        :model-value="gymInformation?.chest"
         input-id="chest"
         name="chest"
         :binary="true"
-        @update:model-value="$emit('update:gymInformation',{...gymInformation,chest:$event})"
+        @update:model-value="
+          $emit('update:gymInformation', { ...gymInformation, chest: $event })
+        "
       />
-      <label
-        for="chest"
-        class="label-margin"
-      >Chest</label>
+      <label for="chest" class="label-margin">Chest</label>
     </div>
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="gymInformation.legs"
+        :model-value="gymInformation?.legs"
         input-id="legs"
         name="legs"
         :binary="true"
-        @update:model-value="$emit('update:gymInformation',{...gymInformation,legs:$event})"
+        @update:model-value="
+          $emit('update:gymInformation', { ...gymInformation, legs: $event })
+        "
       />
-      <label
-        for="legs"
-        class="label-margin"
-      >Legs</label>
+      <label for="legs" class="label-margin">Legs</label>
     </div>
     <div class="flex align-items-center">
       <Checkbox
-        :model-value="gymInformation.triceps"
+        :model-value="gymInformation?.triceps"
         input-id="triceps"
         name="triceps"
         :binary="true"
-        @update:model-value="$emit('update:gymInformation',{...gymInformation,triceps:$event})"
+        @update:model-value="
+          $emit('update:gymInformation', { ...gymInformation, triceps: $event })
+        "
       />
-      <label
-        for="triceps"
-        class="label-margin"
-      >Triceps</label>
+      <label for="triceps" class="label-margin">Triceps</label>
     </div>
   </div>
 </template>

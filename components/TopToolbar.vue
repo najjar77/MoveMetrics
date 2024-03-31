@@ -2,67 +2,63 @@
 import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
-import {useAuth} from "~/composables/useAuth";
-import {logoutFromGoogle} from "~/firebase/authServices";
-
+import { useAuth } from "~/composables/useAuth";
+import { logoutFromGoogle } from "~/firebase/authServices";
 
 const router = useRouter();
-const {user} = useAuth();
+const { user } = useAuth();
 const toggle = (event: Event) => {
   menu.value.toggle(event);
 };
 const menu = ref();
-const menuItems = ref([{
-  label: 'Dashboard',
-  value: 'dashboard',
-  icon: 'pi pi-home',
-  command: () => {
-    router.push('/');
-  }
-}, {
-  label: 'Data Table',
-  value: 'DataTable',
-  icon: 'pi pi-database',
-  command: () => {
-    router.push('/workoutOverview');
-  }
-}, {
-  label: 'Statistics',
-  value: 'statistics',
-  icon: 'pi pi-chart-bar',
-  command: () => {
-    router.push('/statistics');
-  }
-},
+const menuItems = ref([
   {
-    label: 'Settings',
-    value: 'settings',
-    icon: 'pi pi-cog',
+    label: "Dashboard",
+    value: "dashboard",
+    icon: "pi pi-home",
     command: () => {
-      router.push('/settings');
-    }
+      router.push("/");
+    },
   },
   {
-    label: 'Sign Out',
-    value: 'signOut',
-    icon: 'pi pi-sign-out',
+    label: "Data Table",
+    value: "DataTable",
+    icon: "pi pi-database",
+    command: () => {
+      router.push("/workoutOverview");
+    },
+  },
+  {
+    label: "Statistics",
+    value: "statistics",
+    icon: "pi pi-chart-bar",
+    command: () => {
+      router.push("/statistics");
+    },
+  },
+  {
+    label: "Settings",
+    value: "settings",
+    icon: "pi pi-cog",
+    command: () => {
+      router.push("/settings");
+    },
+  },
+  {
+    label: "Sign Out",
+    value: "signOut",
+    icon: "pi pi-sign-out",
     command: () => {
       logoutFromGoogle();
-    }
-  }
-
+    },
+  },
 ]);
-
 </script>
 
 <template>
-  <Toolbar style="border-radius: 4rem;">
+  <Toolbar style="border-radius: 4rem">
     <template #start>
-      <img
-        src="../assets/MMLogo2.png"
-        alt="Icon"
-        class="toolbar-icon"
-      >
+      <img src="../assets/MMLogo2.png" alt="Icon" class="toolbar-icon" />
       <label class="toolbar-label">MoveMetrics</label>
       <Button
         size="medium"
@@ -71,18 +67,10 @@ const menuItems = ref([{
         class="toolbar-button"
         @click="toggle"
       />
-      <Menu
-        id="overlay_menu"
-        ref="menu"
-        :model="menuItems"
-        :popup="true"
-      />
+      <Menu id="overlay_menu" ref="menu" :model="menuItems" :popup="true" />
     </template>
     <template #center>
-      <div
-        v-if="user"
-        class="user-info"
-      >
+      <div v-if="user" class="user-info">
         <span> Hello {{ user.displayName }}</span>
       </div>
     </template>
@@ -93,12 +81,13 @@ const menuItems = ref([{
         severity="secondary"
         class="toolbar-button"
       />
-      <div
-        v-if="user"
-        class="user-info"
-      >
+      <div v-if="user" class="user-info">
         <Avatar
-          :image="user && user.photoURL ? user.photoURL : 'https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp'"
+          :image="
+            user && user.photoURL
+              ? user.photoURL
+              : 'https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp'
+          "
           class="toolbar-avatar"
           shape="circle"
         />
@@ -141,5 +130,4 @@ const menuItems = ref([{
   margin-left: 10px; /* Adds space to the left of the avatar */
   margin-right: 10px; /* Adds space to the right of the avatar */
 }
-
 </style>

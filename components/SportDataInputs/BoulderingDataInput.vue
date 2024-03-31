@@ -1,46 +1,50 @@
 <script setup lang="ts">
-
-import type {BoulderingInformation} from "~/models/formData/boulderingInformation";
+import type { BoulderingInformation } from "~/models/formData/boulderingInformation";
 import InputSwitch from "primevue/inputswitch";
 
-const props = defineProps<{
-  boulderingInformation: BoulderingInformation
-}>()
+defineProps<{
+  boulderingInformation?: BoulderingInformation;
+}>();
 
-const inside = ref(false);
-const time = ref("");
+defineEmits<{
+  (
+    e: "update:boulderingInformation",
+    boulderingInfo: BoulderingInformation,
+  ): void;
+}>();
 </script>
 
 <template>
-  <Divider
-    align="center"
-    type="Solid"
-  >
+  <Divider align="center" type="solid">
     <b>Bouldering</b>
   </Divider>
 
   <div class="container">
     <div class="field-container">
-      <label
-        for="BoulderingTime"
-        class="label"
-      >Time:</label>
+      <label for="BoulderingTime" class="label">Time:</label>
       <Calendar
         id="BoulderingTime"
-        :model-value="boulderingInformation.time"
+        :model-value="boulderingInformation?.time"
         time-only
-        @update:model-value="$emit('update:boulderingInformation', { ...boulderingInformation, time: $event })"
+        @update:model-value="
+          $emit('update:boulderingInformation', {
+            ...boulderingInformation,
+            time: $event,
+          })
+        "
       />
     </div>
     <div class="field-container-of-switch">
-      <label
-        for="BoulderingWhere"
-        class="label"
-      >Outside / Inside</label>
+      <label for="BoulderingWhere" class="label">Outside / Inside</label>
       <InputSwitch
         id="BoulderingWhere"
-        :model-value="boulderingInformation.inside"
-        @update:model-value="$emit('update:boulderingInformation', { ...boulderingInformation, inside: $event })"
+        :model-value="boulderingInformation?.inside"
+        @update:model-value="
+          $emit('update:boulderingInformation', {
+            ...boulderingInformation,
+            inside: $event,
+          })
+        "
       />
     </div>
   </div>

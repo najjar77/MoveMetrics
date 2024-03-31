@@ -1,5 +1,5 @@
 export interface SaunaInformation {
-    finnish: boolean;
-    steam: boolean;
-    bio: boolean;
+  finnish: boolean;
+  steam: boolean;
+  bio: boolean;
 }

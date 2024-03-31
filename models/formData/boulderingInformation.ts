@@ -1,4 +1,4 @@
 export interface BoulderingInformation {
-    inside: boolean;
-    time: string;
+  inside: boolean;
+  time: string;
 }
