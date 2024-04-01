@@ -3,8 +3,14 @@
 <template>
   <div>
     <TopToolbar />
-    <slot />
+    <div class="page-content">
+      <slot />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.page-content {
+  padding: 20px;
+}
+</style>

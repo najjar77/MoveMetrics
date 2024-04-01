@@ -2,12 +2,7 @@
 
 <template>
   <NuxtLayout>
-    <NuxtPage
-      :transition="{
-        name: 'bounce',
-        mode: 'out-in',
-      }"
-    />
+    <NuxtPage />
   </NuxtLayout>
 </template>
 

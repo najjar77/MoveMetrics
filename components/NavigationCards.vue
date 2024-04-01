@@ -2,6 +2,7 @@
 import Card from "primevue/card";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
+import MiniChart from "~/components/StatisticCharts/MiniChart.vue";
 
 const { user } = useAuth();
 </script>
@@ -9,24 +10,29 @@ const { user } = useAuth();
 <template>
   <div class="cards-container">
     <Card class="custom-card1">
-      <template #header>
-        <img
-          src="~/assets/tableOverview.svg"
-          alt="tableOverview"
-          width="75px"
-          height="75px"
-        />
-      </template>
       <template #title>
-        <i class="pi pi-info-circle" /> Table Overview
+        <div class="card-title-center">
+          <i class="pi pi-table" /> Data Table
+        </div>
       </template>
+
       <template #content>
-        Here you can have an overview of all your workouts
+        <div class="content-style">
+          <img
+            src="~/assets/table_overview.svg"
+            alt="table icon"
+            width="100px"
+            height="100px"
+          />
+          Here you can have an overview of all your workouts
+        </div>
       </template>
       <template #footer>
-        <NuxtLink to="workoutOverview">
-          <Button label="Let's dive in" severity="secondary" />
-        </NuxtLink>
+        <div class="card-button-center">
+          <NuxtLink to="workoutOverview">
+            <Button label="Let's dive in" severity="secondary" />
+          </NuxtLink>
+        </div>
       </template>
     </Card>
     <Card class="custom-card2">
@@ -36,12 +42,17 @@ const { user } = useAuth();
         </div>
       </template>
       <template #content>
-        Here you can have a deeper look into your overall statistics
+        <div class="content-style">
+          <MiniChart class="mini-chart-style" />
+          Here you can have a deeper look into your overall statistics
+        </div>
       </template>
       <template #footer>
-        <NuxtLink to="workoutOverview">
-          <Button label="Let's dive in" severity="secondary" />
-        </NuxtLink>
+        <div class="card-button-center">
+          <NuxtLink to="workoutOverview">
+            <Button label="Let's dive in" severity="secondary" />
+          </NuxtLink>
+        </div>
       </template>
     </Card>
 
@@ -50,7 +61,7 @@ const { user } = useAuth();
         <div class="card-title-center"><i class="pi pi-user"></i> Account</div>
       </template>
       <template #content>
-        <div class="avatar-content">
+        <div class="content-style">
           <Avatar
             :image="
               user && user.photoURL
@@ -94,6 +105,10 @@ const { user } = useAuth();
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 1rem; /* Adds space between cards */
+}
+
+.mini-chart-style {
+  margin: 10px 1px 10px 1px; /* Adds space around the mini chart */
 }
 
 @media (max-width: 768px) {
@@ -143,7 +158,7 @@ const { user } = useAuth();
   margin: 10px 1px 10px 1px; /* Adds space to the right of the avatar */
 }
 
-.avatar-content {
+.content-style {
   display: flex;
   flex-direction: column;
   align-items: center;

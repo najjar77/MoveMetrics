@@ -1,13 +1,14 @@
-import { onAuthStateChange } from "~/firebase/authServices";
-import type { User } from "firebase/auth";
+import { onAuthStateChanged, type User } from "firebase/auth";
+import { auth } from "~/firebase/init";
 
-const user = ref<User | null>(null);
+const user = ref<User | null>(auth.currentUser);
 const isAuthCheckComplete = ref(false);
-
+console.log("auth.current = ", auth.currentUser);
 // Monitor authentication status when starting the application
-onAuthStateChange((firebaseUser) => {
+onAuthStateChanged(auth, async (firebaseUser) => {
+  console.log("inAuth is called");
   user.value = firebaseUser;
-  isAuthCheckComplete.value = true;
+  isAuthCheckComplete.value = !!user.value;
 });
 
 export const useAuth = () => {
