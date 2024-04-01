@@ -17,7 +17,7 @@ const menuItems = ref([
     value: "dashboard",
     icon: "pi pi-home",
     command: () => {
-      router.push("/");
+      router.push("/dashboard");
     },
   },
   {
@@ -88,7 +88,7 @@ const menuItems = ref([
               ? user.photoURL
               : 'https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp'
           "
-          class="toolbar-avatar"
+          class="avatar-styling"
           shape="circle"
         />
       </div>
@@ -124,7 +124,7 @@ const menuItems = ref([
 }
 
 /* For the last element in the #end slot, no right margin is needed. Styles for the avatar, sets its size */
-.toolbar-avatar {
+.avatar-styling {
   width: 35px; /* Sets the width of the avatar */
   height: 35px; /* Sets the height of the avatar */
   margin-left: 10px; /* Adds space to the left of the avatar */

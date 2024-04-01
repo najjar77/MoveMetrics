@@ -18,35 +18,35 @@ import StackedBarSupplements from "~/components/StatisticCharts/StackedBarSupple
       <div class="cards-container">
         <!--Total Sport-->
         <Card>
-          <template #title> Sports summary </template>
+          <template #title> Sports summary</template>
           <template #content>
             <PieChart />
           </template>
         </Card>
         <!--Total Sport-->
         <Card>
-          <template #title> Total number of Sport </template>
+          <template #title> Total number of Sport</template>
           <template #content>
             <BarChart />
           </template>
         </Card>
         <!--Running Overview-->
         <Card>
-          <template #title> Running overview </template>
+          <template #title> Running overview</template>
           <template #content>
             <BarChartRunning />
           </template>
         </Card>
         <!--Cycling Overview-->
         <Card>
-          <template #title> Cycling Overview </template>
+          <template #title> Cycling Overview</template>
           <template #content>
             <LineChartCycling />
           </template>
         </Card>
         <!--Supplements Intake -->
         <Card>
-          <template #title> Supplements Intake </template>
+          <template #title> Supplements Intake</template>
           <template #content>
             <StackedBarSupplements />
           </template>
