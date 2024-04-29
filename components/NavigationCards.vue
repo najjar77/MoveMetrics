@@ -49,7 +49,7 @@ const { user } = useAuth();
       </template>
       <template #footer>
         <div class="card-button-center">
-          <NuxtLink to="workoutOverview">
+          <NuxtLink to="statistics">
             <Button label="Let's dive in" severity="secondary" />
           </NuxtLink>
         </div>
